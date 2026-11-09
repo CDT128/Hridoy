@@ -7,25 +7,20 @@
 <meta name="theme-color" content="#101827">
 <title>Company Payment Manager</title>
 <style>
-:root{
---bg:#f2f5fa;--box:#fff;--box2:#f7f9fc;--text:#172033;--muted:#78869b;
---line:#e3e9f1;--primary:#665cf5;--green:#10b981;--red:#ef4444;
-}
+:root{--bg:#f2f5fa;--box:#fff;--box2:#f7f9fc;--text:#172033;--muted:#78869b;--line:#e3e9f1;--primary:#665cf5;--green:#10b981;--red:#ef4444}
 body.dark{--bg:#0b1220;--box:#151f30;--box2:#1c293d;--text:#edf3fb;--muted:#9aaac0;--line:#2b3a51;--primary:#9189ff;--green:#34d399;--red:#fb7185}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;transition:.2s}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{min-height:100vh}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:255px;background:var(--box);border-right:1px solid var(--line);padding:18px 13px;overflow:auto;z-index:10}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--box);border-right:1px solid var(--line);padding:18px 13px;overflow:auto;z-index:10}
 .brand{font-size:20px;font-weight:900;padding:12px;color:var(--primary)}
 .nav-title{font-size:11px;color:var(--muted);padding:18px 12px 7px;text-transform:uppercase}
 .nav button{display:block;width:100%;text-align:left;padding:11px 12px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:var(--muted);font-weight:600}
 .nav button:hover,.nav button.active{background:var(--box2);color:var(--primary)}
-.main{margin-left:255px;padding:22px;max-width:1700px}
+.main{margin-left:250px;padding:22px;max-width:1700px}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
 .topbar h1{font-size:23px;margin:0}
-.actions{display:flex;gap:8px}
 .iconbtn,.btn{border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:var(--box);color:var(--text)}
 .btn{background:var(--primary);color:white;border:0;font-weight:700}
 .btn.green{background:var(--green)}.btn.red{background:var(--red)}
@@ -35,11 +30,10 @@ button{cursor:pointer}
 .page{display:none}.page.active{display:block}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
 .card{background:var(--box);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
-.stat{cursor:pointer;transition:.2s}
-.stat:hover{transform:translateY(-3px);border-color:var(--primary)}
+.stat{cursor:pointer;transition:.2s}.stat:hover{transform:translateY(-3px);border-color:var(--primary)}
 .stat-icon{width:38px;height:38px;display:grid;place-items:center;background:var(--box2);border-radius:10px;font-size:20px;margin-bottom:12px}
 .stat-name{font-size:12px;color:var(--muted);font-weight:700}
-.stat-value{font-size:22px;font-weight:900;margin-top:8px;overflow-wrap:anywhere}
+.stat-value{font-size:21px;font-weight:900;margin-top:8px;overflow-wrap:anywhere}
 .stat-foot{font-size:11px;color:var(--muted);margin-top:7px}
 .heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:22px 0 13px}
 .heading h2{font-size:18px;margin:0}
@@ -49,20 +43,18 @@ button{cursor:pointer}
 .field.full{grid-column:1/-1}
 label{font-size:12px;color:var(--muted);font-weight:700}
 input,select,textarea{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--box2);color:var(--text);outline:none;min-width:0}
-input:focus,select:focus,textarea:focus{border-color:var(--primary)}
 textarea{min-height:75px}
 .formactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
 .tablewrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
+table{width:100%;border-collapse:collapse;min-width:620px}
 td,th{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;font-size:12px}
 th{background:var(--box2);color:var(--muted)}
 .empty{text-align:center;padding:25px;color:var(--muted)}
 .summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
 .sumitem{background:var(--box2);padding:14px;border-radius:10px}
-.sumitem small{color:var(--muted)}.sumitem strong{display:block;font-size:19px;margin-top:7px;overflow-wrap:anywhere}
-.tag{display:inline-block;padding:4px 8px;border-radius:20px;background:#10b98120;color:var(--green);font-size:11px}
+.sumitem small{color:var(--muted)}.sumitem strong{display:block;font-size:17px;margin-top:7px;overflow-wrap:anywhere}
 .muted{color:var(--muted);font-size:12px}
-.hide-card{display:none!important}
+.overlay{display:none}
 .footer{text-align:center;padding:25px;color:var(--muted);font-size:11px}
 @media(max-width:1100px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:750px){
@@ -72,13 +64,9 @@ th{background:var(--box2);color:var(--muted)}
 .menu{display:inline-block}
 .topbar h1{font-size:18px}
 .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.card{padding:12px}
-.stat-value{font-size:18px}
-.stat-name{font-size:11px}
-.formgrid{grid-template-columns:1fr}
-.field.full{grid-column:auto}
-.summary{grid-template-columns:1fr}
-.panel{padding:13px}
+.card{padding:12px}.stat-value{font-size:17px}.stat-name{font-size:11px}
+.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}
+.summary{grid-template-columns:1fr}.panel{padding:13px}
 .overlay.show{display:block;position:fixed;inset:0;background:#0009;z-index:9}
 }
 @media(max-width:350px){.cards{grid-template-columns:1fr}}
@@ -86,9 +74,10 @@ th{background:var(--box2);color:var(--muted)}
 </head>
 <body>
 <div class="overlay" id="overlay" onclick="menuToggle()"></div>
+
 <aside class="sidebar" id="sidebar">
  <div class="brand">✦ COMPANY PANEL</div>
- <nav class="nav" id="nav">
+ <nav class="nav">
   <div class="nav-title">Dashboard</div>
   <button class="active" data-page="dashboard">🏠 Main Dashboard</button>
   <div class="nav-title">User Management</div>
@@ -117,7 +106,7 @@ th{background:var(--box2);color:var(--muted)}
   <button class="iconbtn menu" onclick="menuToggle()">☰</button>
   <h1 id="title">Main Dashboard</h1>
  </div>
- <div class="actions"><button class="iconbtn" onclick="themeToggle()" id="themeBtn">☀️ Light</button></div>
+ <button class="iconbtn" onclick="themeToggle()" id="themeBtn">☀️ Light</button>
 </header>
 
 <section class="page active" id="page-dashboard">
@@ -131,19 +120,19 @@ th{background:var(--box2);color:var(--muted)}
 <section class="page" id="page-adduser">
  <div class="heading"><h2>Add User Information</h2></div>
  <div class="panel"><form id="userForm">
-  <input type="hidden" name="id">
-  <div class="formgrid">
-   <div class="field"><label>User Name *</label><input name="name" required></div>
-   <div class="field"><label>User ID *</label><input name="userId" required></div>
-   <div class="field"><label>User Password</label><input name="password" type="password"></div>
-   <div class="field"><label>User Number</label><input name="number"></div>
-   <div class="field"><label>User Gmail</label><input name="gmail" type="email"></div>
-   <div class="field"><label>User Area</label><input name="area"></div>
-   <div class="field"><label>Active Date</label><input name="activeDate" type="date" class="today"></div>
-   <div class="field"><label>User Picture</label><input name="picture" type="file" accept="image/*" id="picture"></div>
-   <div class="field"><label>Account Status</label><select name="status"><option>Active</option><option>Inactive</option></select></div>
-  </div>
-  <div class="formactions"><button class="btn">Save User</button><button type="reset" class="btn gray">Clear</button></div>
+ <input type="hidden" name="id">
+ <div class="formgrid">
+ <div class="field"><label>User Name *</label><input name="name" required></div>
+ <div class="field"><label>User ID *</label><input name="userId" required></div>
+ <div class="field"><label>User Password</label><input name="password" type="password"></div>
+ <div class="field"><label>User Number</label><input name="number"></div>
+ <div class="field"><label>User Gmail</label><input name="gmail" type="email"></div>
+ <div class="field"><label>User Area</label><input name="area"></div>
+ <div class="field"><label>Active Date</label><input name="activeDate" type="date"></div>
+ <div class="field"><label>User Picture</label><input name="picture" type="file" accept="image/*" id="picture"></div>
+ <div class="field"><label>Status</label><select name="status"><option>Active</option><option>Inactive</option></select></div>
+ </div>
+ <div class="formactions"><button class="btn">Save User</button><button type="reset" class="btn gray">Clear</button></div>
  </form></div>
 </section>
 
@@ -153,81 +142,64 @@ th{background:var(--box2);color:var(--muted)}
 </section>
 
 <section class="page" id="page-deleted">
- <div class="heading"><h2>Deleted Users</h2></div>
- <div class="panel" id="deletedTable"></div>
+ <div class="heading"><h2>Deleted Users</h2></div><div class="panel" id="deletedTable"></div>
 </section>
 
 <section class="page" id="page-addwage">
  <div class="heading"><h2>Add Wage to Company Account</h2></div>
- <div class="panel"><form id="wageForm">
-  <div class="formgrid">
-   <div class="field"><label>Company Name *</label><input name="company" required></div>
-   <div class="field"><label>Wage Type / Currency *</label><select name="currency" class="currencyOptions" required></select></div>
-   <div class="field"><label>Wage Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
-   <div class="field"><label>Add Wage Method</label><select name="method"><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Cash</option></select></div>
-   <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-  </div>
-  <div class="formactions"><button class="btn green">Add Wage</button></div>
- </form></div>
+ <div class="panel"><form id="wageForm"><div class="formgrid">
+ <div class="field"><label>Company Name *</label><input name="company" required></div>
+ <div class="field"><label>Wage Type / Currency *</label><select name="currency" class="currencyOptions" required></select></div>
+ <div class="field"><label>Wage Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
+ <div class="field"><label>Add Wage Method</label><select name="method"><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Cash</option></select></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ </div><div class="formactions"><button class="btn green">Add Wage</button></div></form></div>
 </section>
 
 <section class="page" id="page-makepayment">
  <div class="heading"><h2>Make Payment to User</h2></div>
  <div class="summary" id="walletSummary"></div>
- <div class="panel"><form id="paymentForm">
-  <div class="formgrid">
-   <div class="field"><label>User ID *</label><select name="userId" id="paymentUser" required></select></div>
-   <div class="field"><label>Payment Currency *</label><select name="currency" class="currencyOptions" required></select></div>
-   <div class="field"><label>Payment Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
-   <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-  </div>
-  <div class="formactions"><button class="btn green">Confirm Payment</button></div>
- </form></div>
+ <div class="panel"><form id="paymentForm"><div class="formgrid">
+ <div class="field"><label>User ID *</label><select name="userId" id="paymentUser" required></select></div>
+ <div class="field"><label>Payment Currency *</label><select name="currency" class="currencyOptions" required></select></div>
+ <div class="field"><label>Payment Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ </div><div class="formactions"><button class="btn green">Confirm Payment</button></div></form></div>
 </section>
 
 <section class="page" id="page-undoPayment">
  <div class="heading"><h2>Undo Payment</h2></div>
- <p class="muted">ভুল Payment বাতিল করলে টাকা কোম্পানির Wallet-এ ফেরত আসবে এবং User-এর Balance থেকে বাদ যাবে।</p>
- <div class="panel"><form id="undoPaymentForm">
-  <div class="formgrid">
-   <div class="field"><label>Select Payment *</label><select name="transactionId" id="undoPaymentSelect" required></select></div>
-   <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
-   <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-  </div>
-  <div class="formactions"><button class="btn red">Undo Payment</button></div>
- </form></div>
+ <p class="muted">Payment বাতিল করলে টাকা Company Wallet-এ ফেরত আসবে।</p>
+ <div class="panel"><form id="undoPaymentForm"><div class="formgrid">
+ <div class="field"><label>Select Payment *</label><select name="transactionId" id="undoPaymentSelect" required></select></div>
+ <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ </div><div class="formactions"><button class="btn red">Undo Payment</button></div></form></div>
  <div class="heading"><h2>Undo Payment History</h2></div><div class="panel" id="undoPaymentHistory"></div>
 </section>
 
 <section class="page" id="page-undoWage">
  <div class="heading"><h2>Undo Wage</h2></div>
- <p class="muted">Wage বাতিল করলে কোম্পানির Wallet থেকে টাকা বাদ যাবে। ইতোমধ্যে Payment হয়ে যাওয়া অর্থ Undo Wage করা যাবে না।</p>
- <div class="panel"><form id="undoWageForm">
-  <div class="formgrid">
-   <div class="field"><label>Select Wage *</label><select name="transactionId" id="undoWageSelect" required></select></div>
-   <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
-   <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-  </div>
-  <div class="formactions"><button class="btn red">Undo Wage</button></div>
- </form></div>
+ <p class="muted">কোম্পানির Wallet-এ থাকা টাকা থেকে Wage Undo হবে।</p>
+ <div class="panel"><form id="undoWageForm"><div class="formgrid">
+ <div class="field"><label>Select Wage *</label><select name="transactionId" id="undoWageSelect" required></select></div>
+ <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="any" required></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ </div><div class="formactions"><button class="btn red">Undo Wage</button></div></form></div>
  <div class="heading"><h2>Undo Wage History</h2></div><div class="panel" id="undoWageHistory"></div>
 </section>
 
 <section class="page" id="page-history">
- <div class="heading"><h2>Payment & Wage History</h2></div>
- <div class="panel"><div id="historyTable"></div></div>
+ <div class="heading"><h2>Payment & Wage History</h2></div><div class="panel" id="historyTable"></div>
 </section>
 
 <section class="page" id="page-userlog">
  <div class="heading"><h2>User Log</h2></div>
- <div class="panel">
-  <p class="muted">Login চালু না থাকায় Login/Logout তথ্য এখনো তৈরি হবে না। User তৈরি, Payment ও অন্যান্য কার্যক্রমের Log এখানে দেখা যাবে। Login যোগ হলে Login History-ও এখানে যুক্ত হবে।</p>
-  <div id="userLogTable"></div>
- </div>
+ <div class="panel"><p class="muted">Login এখনো চালু করা হয়নি। এখানে User এবং System Activity Log দেখা যাবে।</p><div id="userLogTable"></div></div>
 </section>
 
 <section class="page" id="page-month">
- <div class="heading"><h2>Current Month Overview</h2><span id="monthLabel" class="tag"></span></div>
+ <div class="heading"><h2>Current Month Overview</h2><span id="monthLabel"></span></div>
  <div class="summary" id="monthSummary"></div>
  <div class="heading"><h2>Current Month Payment Users</h2></div><div class="panel" id="monthPaid"></div>
  <div class="heading"><h2>Current Month Non Payment Users</h2></div><div class="panel" id="monthUnpaid"></div>
@@ -237,104 +209,75 @@ th{background:var(--box2);color:var(--muted)}
 
 <section class="page" id="page-report">
  <div class="heading"><h2>Date Wise Report</h2></div>
- <div class="panel">
-  <div class="formgrid">
-   <div class="field"><label>From Date</label><input type="date" id="fromDate"></div>
-   <div class="field"><label>To Date</label><input type="date" id="toDate"></div>
-  </div>
-  <div class="formactions"><button class="btn" onclick="renderReport()">Show Report</button></div>
- </div>
+ <div class="panel"><div class="formgrid">
+ <div class="field"><label>From Date</label><input type="date" id="fromDate"></div>
+ <div class="field"><label>To Date</label><input type="date" id="toDate"></div>
+ </div><div class="formactions"><button class="btn" onclick="renderReport()">Show Report</button></div></div>
  <div class="summary" id="reportSummary" style="margin-top:15px"></div>
  <div class="heading"><h2>Report Transactions</h2></div><div class="panel" id="reportTable"></div>
 </section>
 
 <section class="page" id="page-currency">
  <div class="heading"><h2>Currency Setting</h2></div>
- <div class="panel">
-  <form id="currencyForm">
-   <div class="formgrid">
-    <div class="field"><label>Currency Name *</label><input name="name" required placeholder="Example: Bangladeshi Taka"></div>
-    <div class="field"><label>Currency Symbol *</label><input name="symbol" required placeholder="৳ / $ / ₹"></div>
-    <div class="field"><label>Currency Code</label><input name="code" placeholder="BDT / USD / INR"></div>
-   </div>
-   <div class="formactions"><button class="btn">Add Currency</button></div>
-  </form>
- </div>
+ <div class="panel"><form id="currencyForm"><div class="formgrid">
+ <div class="field"><label>Currency Name *</label><input name="name" required placeholder="Bangladeshi Taka"></div>
+ <div class="field"><label>Currency Symbol *</label><input name="symbol" required placeholder="৳ / $ / ₹"></div>
+ <div class="field"><label>Currency Code</label><input name="code" placeholder="BDT / USD / INR"></div>
+ </div><div class="formactions"><button class="btn">Add Currency</button></div></form></div>
  <div class="heading"><h2>Available Currencies</h2></div><div class="panel" id="currencyTable"></div>
 </section>
 
 <section class="page" id="page-cards">
  <div class="heading"><h2>Dashboard Card Settings</h2></div>
- <div class="panel">
-  <p class="muted">যে Card Dashboard-এ দেখতে চাও সেটি চালু রাখো। বন্ধ করলে শুধু Dashboard থেকে Hide হবে, ডেটা Delete হবে না।</p>
-  <div id="cardSettings"></div>
-  <div class="formactions"><button class="btn" onclick="showAllCards()">Show All Cards</button></div>
- </div>
+ <div class="panel"><p class="muted">Card Hide/Show করলে ডেটা Delete হবে না।</p><div id="cardSettings"></div>
+ <div class="formactions"><button class="btn" onclick="showAllCards()">Show All Cards</button></div></div>
 </section>
 
 <section class="page" id="page-backup">
  <div class="heading"><h2>Backup & Settings</h2></div>
- <div class="panel">
-  <p class="muted">সব তথ্য এই Browser-এর LocalStorage-এ সংরক্ষিত। নিয়মিত Backup ডাউনলোড করে রাখবে।</p>
-  <div class="formactions">
-   <button class="btn" onclick="exportBackup()">Download Backup</button>
-   <button class="btn gray" onclick="document.getElementById('backupFile').click()">Restore Backup</button>
-   <button class="btn red" onclick="resetAll()">Reset All Data</button>
-   <input type="file" id="backupFile" accept=".json" hidden onchange="importBackup(event)">
-  </div>
- </div>
+ <div class="panel"><p class="muted">ডেটা এই Browser-এর LocalStorage-এ থাকে। নিয়মিত Backup রাখুন।</p>
+ <div class="formactions"><button class="btn" onclick="exportBackup()">Download Backup</button>
+ <button class="btn gray" onclick="$('backupFile').click()">Restore Backup</button>
+ <button class="btn red" onclick="resetAll()">Reset All Data</button>
+ <input type="file" id="backupFile" accept=".json" hidden onchange="importBackup(event)"></div></div>
 </section>
-
 <div class="footer">Company Wage & Payment Manager • Local Edition</div>
 </main>
 
 <script>
-const KEY='company_wage_payment_v3';
+const KEY='company_wage_payment_v4';
 const $=id=>document.getElementById(id);
 const today=()=>new Date().toISOString().slice(0,10);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const defaultDB=()=>({
+
+function defaults(){return {
  users:[],deletedUsers:[],wages:[],payments:[],undoWages:[],undoPayments:[],
  currencies:[
-  {id:'BDT',name:'Bangladeshi Taka',symbol:'৳',code:'BDT',active:true},
-  {id:'USD',name:'US Dollar',symbol:'$',code:'USD',active:true},
-  {id:'INR',name:'Indian Rupee',symbol:'₹',code:'INR',active:true},
-  {id:'EUR',name:'Euro',symbol:'€',code:'EUR',active:true}
- ],
- cards:{},logs:[],theme:'dark'
-});
+ {id:'BDT',name:'Bangladeshi Taka',symbol:'৳',code:'BDT'},
+ {id:'USD',name:'US Dollar',symbol:'$',code:'USD'},
+ {id:'INR',name:'Indian Rupee',symbol:'₹',code:'INR'},
+ {id:'EUR',name:'Euro',symbol:'€',code:'EUR'}
+ ],cards:{},logs:[],theme:'dark'
+}}
 let db;
-try{db=JSON.parse(localStorage.getItem(KEY))||defaultDB()}catch(e){db=defaultDB()}
+try{db=JSON.parse(localStorage.getItem(KEY))||defaults()}catch(e){db=defaults()}
 function save(){localStorage.setItem(KEY,JSON.stringify(db))}
-function currency(id){return db.currencies.find(c=>c.id===id)||{symbol:id||'?',name:id||'Unknown'}}
-function fmt(n,c){return currency(c).symbol+' '+Number(n||0).toLocaleString('en-US',{maximumFractionDigits:2})}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function log(type,details,amount=0,currencyId='BDT'){
- db.logs.unshift({id:uid(),date:today(),time:new Date().toLocaleTimeString(),type,details,amount:Number(amount)||0,currency:currencyId});
- save();
+function cur(id){return db.currencies.find(c=>c.id===id)||{name:id,symbol:id}}
+function fmt(n,id){return cur(id).symbol+' '+Number(n||0).toLocaleString('en-US',{maximumFractionDigits:2})}
+function sum(a){return a.reduce((s,x)=>s+Number(x.amount||0),0)}
+function log(type,details,amount=0,currency='BDT'){
+ db.logs.unshift({id:uid(),date:today(),time:new Date().toLocaleTimeString(),type,details,amount:Number(amount)||0,currency});save()
 }
-function monthNow(){return today().slice(0,7)}
-function isMonth(x){return (x.date||'').slice(0,7)===monthNow()}
-function activeUsers(){return db.users.filter(u=>u.status==='Active')}
-function findUser(id){return db.users.find(u=>u.id===id)||db.deletedUsers.find(u=>u.id===id)}
-function userLabel(id){let u=findUser(id);return u?u.userId+' — '+u.name:id}
-function totalWage(c){return db.wages.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)-db.undoWages.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)}
-function totalPayment(c){return db.payments.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)-db.undoPayments.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)}
-function wallet(c){return totalWage(c)-db.payments.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)+db.undoPayments.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)-db.undoWages.filter(x=>x.currency===c).reduce((s,x)=>s+x.amount,0)}
-function allCurrencyTotals(fn){return db.currencies.filter(c=>c.active).map(c=>({id:c.id,name:c.name,value:fn(c.id)}))}
-function amountList(fn){return allCurrencyTotals(fn).map(x=>`${fmt(x.value,x.id)}`).join(' / ')||'0'}
-function allEvents(){
- return [
- ...db.wages.map(x=>({...x,kind:'Wage',details:x.company,amount:x.amount})),
- ...db.payments.map(x=>({...x,kind:'Payment',details:userLabel(x.userId),amount:x.amount})),
- ...db.undoWages.map(x=>({...x,kind:'Undo Wage',details:x.comment,amount:-x.amount})),
- ...db.undoPayments.map(x=>({...x,kind:'Undo Payment',details:x.comment,amount:-x.amount}))
- ].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-}
-function theme(){
- document.body.classList.toggle('dark',db.theme==='dark');
- $('themeBtn').textContent=db.theme==='dark'?'☀️ Light':'🌙 Dark';
-}
+function month(x){return (x.date||'').slice(0,7)===today().slice(0,7)}
+function user(id){return db.users.find(u=>u.id===id)||db.deletedUsers.find(u=>u.id===id)}
+function userName(id){let u=user(id);return u?u.userId+' — '+u.name:id}
+function sumBy(a){return a.reduce((s,x)=>s+Number(x.amount||0),0)}
+function totalWage(c){return sumBy(db.wages.filter(x=>x.currency===c))-sumBy(db.undoWages.filter(x=>x.currency===c))}
+function totalPayment(c){return sumBy(db.payments.filter(x=>x.currency===c))-sumBy(db.undoPayments.filter(x=>x.currency===c))}
+function wallet(c){return totalWage(c)-totalPayment(c)}
+function amountList(fn){return db.currencies.map(c=>fmt(fn(c.id),c.id)).join(' / ')}
+function theme(){document.body.classList.toggle('dark',db.theme==='dark');$('themeBtn').textContent=db.theme==='dark'?'☀️ Light':'🌙 Dark'}
 function themeToggle(){db.theme=db.theme==='dark'?'light':'dark';save();theme()}
 function menuToggle(){$('sidebar').classList.toggle('open');$('overlay').classList.toggle('show')}
 function go(p){
@@ -347,12 +290,12 @@ function go(p){
 }
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
 
-const cardDefs=[
+const cards=[
  ['adduser','➕','Add User','adduser',()=>db.users.length],
  ['users','👥','Total User','users',()=>db.users.length],
  ['userpayment','💳','Total User Payment','history',()=>amountList(totalPayment)],
  ['wage','💰','Total Wage','history',()=>amountList(totalWage)],
- ['earn','📈','Total Earn','history',c=>amountList(c=>totalWage(c)-totalPayment(c))],
+ ['earn','📈','Total Earn','history',()=>amountList(c=>totalWage(c)-totalPayment(c))],
  ['addwage','➕','Add Wage','addwage',()=> 'Add funds'],
  ['makepayment','💸','Make Payment','makepayment',()=> 'Pay user'],
  ['userlog','🔐','User Log','userlog',()=>db.logs.length],
@@ -361,38 +304,52 @@ const cardDefs=[
  ['undoWage','↩️','Undo Wage','undoWage',()=>db.undoWages.length],
  ['history','📚','Payment History','history',()=>allEvents().length],
  ['currency','💱','Currency Setting','currency',()=>db.currencies.length],
- ['monthWage','📅','Current Month Wage','month',()=>amountList(c=>sumBy(db.wages.filter(x=>x.currency===c&&isMonth(x))))],
- ['monthPayment','💳','Current Month Total Payment','month',()=>amountList(c=>sumBy(db.payments.filter(x=>x.currency===c&&isMonth(x))-db.undoPayments.filter(x=>x.currency===c&&isMonth(x))))],
- ['monthEarn','📊','Current Month Earn','month',()=>amountList(c=>sumBy(db.wages.filter(x=>x.currency===c&&isMonth(x)))-sumBy(db.payments.filter(x=>x.currency===c&&isMonth(x)))+sumBy(db.undoPayments.filter(x=>x.currency===c&&isMonth(x)))-sumBy(db.undoWages.filter(x=>x.currency===c&&isMonth(x))))],
- ['monthPaid','👤','Current Month Payment User','month',()=>db.users.filter(u=>db.payments.some(p=>p.userId===u.id&&isMonth(p))).length+' Users'],
- ['monthUnpaid','⏳','Current Month NON Payment User','month',()=>activeUsers().filter(u=>!db.payments.some(p=>p.userId===u.id&&isMonth(p))).length+' Users'],
+ ['monthWage','📅','Current Month Wage','month',()=>amountList(c=>sumBy(db.wages.filter(x=>x.currency===c&&month(x))))],
+ ['monthPayment','💳','Current Month Total Payment','month',()=>amountList(c=>sumBy(db.payments.filter(x=>x.currency===c&&month(x)))-sumBy(db.undoPayments.filter(x=>x.currency===c&&month(x))))],
+ ['monthEarn','📊','Current Month Earn','month',()=>amountList(c=>sumBy(db.wages.filter(x=>x.currency===c&&month(x)))-sumBy(db.undoWages.filter(x=>x.currency===c&&month(x)))-sumBy(db.payments.filter(x=>x.currency===c&&month(x)))+sumBy(db.undoPayments.filter(x=>x.currency===c&&month(x))))],
+ ['monthPaid','👤','Current Month Payment User','month',()=>new Set(db.payments.filter(month).map(x=>x.userId)).size+' Users'],
+ ['monthUnpaid','⏳','Current Month NON Payment User','month',()=>db.users.filter(u=>u.status==='Active'&&!db.payments.some(p=>p.userId===u.id&&month(p))).length+' Users'],
  ['report','📊','Report','report',()=> 'From / To Date']
 ];
-function sumBy(arr){return arr.reduce((s,x)=>s+(x.amount||0),0)}
+
 function renderCards(){
- $('dashboardCards').innerHTML=cardDefs.filter(d=>db.cards[d[0]]!==false).map(d=>`
- <div class="card stat" onclick="go('${d[3]}')">
- <div class="stat-icon">${d[1]}</div><div class="stat-name">${d[2]}</div>
- <div class="stat-value">${esc(d[4]())}</div><div class="stat-foot">Open →</div>
- </div>`).join('');
+ const root=$('dashboardCards');
+ root.innerHTML='';
+ cards.forEach(d=>{
+  if(db.cards[d[0]]===false)return;
+  let value='—';
+  try{value=d[4]()}catch(e){console.error('Card error:',d[2],e);value='Error'}
+  const el=document.createElement('div');
+  el.className='card stat';
+  el.innerHTML=`<div class="stat-icon">${d[1]}</div><div class="stat-name">${d[2]}</div><div class="stat-value">${esc(value)}</div><div class="stat-foot">Open →</div>`;
+  el.onclick=()=>go(d[3]);
+  root.appendChild(el);
+ });
+ if(!root.children.length)root.innerHTML='<div class="empty">সব Card Hide করা হয়েছে। Card Settings থেকে Show All Cards চাপুন।</div>';
 }
 function table(cols,rows){
  if(!rows.length)return '<div class="empty">কোনো তথ্য পাওয়া যায়নি</div>';
  return '<div class="tablewrap"><table><thead><tr>'+cols.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>'+
  rows.map(r=>'<tr>'+cols.map(c=>`<td>${esc(r[c[1]]??'')}</td>`).join('')+'</tr>').join('')+'</tbody></table></div>';
 }
+function allEvents(){
+ return [
+ ...db.wages.map(x=>({...x,kind:'Wage',details:x.company})),
+ ...db.payments.map(x=>({...x,kind:'Payment',details:userName(x.userId)})),
+ ...db.undoWages.map(x=>({...x,kind:'Undo Wage',details:x.comment,amount:-x.amount})),
+ ...db.undoPayments.map(x=>({...x,kind:'Undo Payment',details:x.comment,amount:-x.amount}))
+ ].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+}
 function renderUsers(){
  const q=($('userSearch')?.value||'').toLowerCase();
- let rows=db.users.filter(u=>(u.name+' '+u.userId+' '+u.number+' '+u.gmail).toLowerCase().includes(q));
- $('usersTable').innerHTML=rows.length?'<div class="tablewrap"><table><thead><tr><th>Picture</th><th>Name / ID</th><th>Number</th><th>Email</th><th>Area</th><th>Active Date</th><th>Status</th><th>Balance</th><th>Action</th></tr></thead><tbody>'+
- rows.map(u=>`<tr><td>${u.picture?`<img src="${u.picture}" style="width:35px;height:35px;object-fit:cover;border-radius:50%">`:'—'}</td><td>${esc(u.name)}<br>${esc(u.userId)}</td><td>${esc(u.number)}</td><td>${esc(u.gmail)}</td><td>${esc(u.area)}</td><td>${esc(u.activeDate)}</td><td>${esc(u.status)}</td><td>${userBalanceText(u.id)}</td><td><button class="btn small gray" onclick="editUser('${u.id}')">Edit</button> <button class="btn small red" onclick="deleteUser('${u.id}')">Delete</button></td></tr>`).join('')+
- '</tbody></table></div>':'<div class="empty">কোনো User নেই</div>';
+ const rows=db.users.filter(u=>(u.name+' '+u.userId+' '+u.number+' '+u.gmail).toLowerCase().includes(q));
+ $('usersTable').innerHTML=rows.length?'<div class="tablewrap"><table><thead><tr><th>Picture</th><th>Name / ID</th><th>Number</th><th>Email</th><th>Area</th><th>Active Date</th><th>Status</th><th>Action</th></tr></thead><tbody>'+
+ rows.map(u=>`<tr><td>${u.picture?`<img src="${u.picture}" style="width:35px;height:35px;object-fit:cover;border-radius:50%">`:'—'}</td><td>${esc(u.name)}<br>${esc(u.userId)}</td><td>${esc(u.number)}</td><td>${esc(u.gmail)}</td><td>${esc(u.area)}</td><td>${esc(u.activeDate)}</td><td>${esc(u.status)}</td><td><button class="btn small gray" onclick="editUser('${u.id}')">Edit</button> <button class="btn small red" onclick="deleteUser('${u.id}')">Delete</button></td></tr>`).join('')+'</tbody></table></div>':'<div class="empty">কোনো User নেই</div>';
 }
-function userBalanceText(id){return db.currencies.map(c=>fmt(db.payments.filter(p=>p.userId===id&&p.currency===c.id).reduce((s,p)=>s+p.amount,0)-db.undoPayments.filter(p=>p.originalUserId===id&&p.currency===c.id).reduce((s,p)=>s+p.amount,0),c.id)).join(' / ')}
 function renderDeleted(){
- $('deletedTable').innerHTML=table([['User ID','userId'],['Name','name'],['Number','number'],['Deleted Date','deletedDate'],['Action','action']],db.deletedUsers.map(u=>({...u,action:`Restore` })));
+ $('deletedTable').innerHTML=table([['User ID','userId'],['Name','name'],['Number','number'],['Deleted Date','deletedDate']],db.deletedUsers.map(u=>({...u})));
  if(db.deletedUsers.length){
-  $('deletedTable').innerHTML='<div class="tablewrap"><table><thead><tr><th>User ID</th><th>Name</th><th>Number</th><th>Deleted Date</th><th>Action</th></tr></thead><tbody>'+db.deletedUsers.map(u=>`<tr><td>${esc(u.userId)}</td><td>${esc(u.name)}</td><td>${esc(u.number)}</td><td>${esc(u.deletedDate)}</td><td><button class="btn small green" onclick="restoreUser('${u.id}')">Restore</button></td></tr>`).join('')+'</tbody></table></div>';
+ $('deletedTable').innerHTML='<div class="tablewrap"><table><thead><tr><th>User ID</th><th>Name</th><th>Number</th><th>Deleted Date</th><th>Action</th></tr></thead><tbody>'+db.deletedUsers.map(u=>`<tr><td>${esc(u.userId)}</td><td>${esc(u.name)}</td><td>${esc(u.number)}</td><td>${esc(u.deletedDate)}</td><td><button class="btn small green" onclick="restoreUser('${u.id}')">Restore</button></td></tr>`).join('')+'</tbody></table></div>';
  }
 }
 function editUser(id){
@@ -401,10 +358,8 @@ function editUser(id){
  go('adduser');
 }
 function deleteUser(id){
- const u=db.users.find(x=>x.id===id);if(!u)return;
- if(!confirm('এই User Delete করবেন?'))return;
- db.users=db.users.filter(x=>x.id!==id);
- db.deletedUsers.unshift({...u,deletedDate:today()});
+ const u=db.users.find(x=>x.id===id);if(!u||!confirm('এই User Delete করবেন?'))return;
+ db.users=db.users.filter(x=>x.id!==id);db.deletedUsers.unshift({...u,deletedDate:today()});
  log('User Deleted',u.userId+' — '+u.name);renderAll();
 }
 function restoreUser(id){
@@ -421,26 +376,26 @@ $('userForm').onsubmit=async e=>{
  const u={...old,...d,id:d.id||uid(),picture};
  if(old)db.users=db.users.map(x=>x.id===u.id?u:x);else db.users.push(u);
  log(old?'User Updated':'User Added',u.userId+' — '+u.name);
- f.reset();f.elements.id.value='';$('picture').value='';renderAll();go('users');
+ f.reset();$('picture').value='';renderAll();go('users');
 };
 function refreshOptions(){
- const userOpts='<option value="">Select User</option>'+db.users.map(u=>`<option value="${u.id}">${esc(u.userId)} — ${esc(u.name)}</option>`).join('');
- $('paymentUser').innerHTML=userOpts;
- const curOpts=db.currencies.filter(c=>c.active).map(c=>`<option value="${c.id}">${esc(c.name)} (${esc(c.symbol)})</option>`).join('');
- document.querySelectorAll('.currencyOptions').forEach(s=>s.innerHTML=curOpts);
- $('undoPaymentSelect').innerHTML='<option value="">Select Payment</option>'+db.payments.map(p=>`<option value="${p.id}">${esc(userLabel(p.userId))} • ${fmt(p.amount,p.currency)} • ${p.date} • Remaining ${fmt(paymentRemaining(p),p.currency)}</option>`).join('');
+ const users='<option value="">Select User</option>'+db.users.map(u=>`<option value="${u.id}">${esc(u.userId)} — ${esc(u.name)}</option>`).join('');
+ $('paymentUser').innerHTML=users;
+ const currencies=db.currencies.map(c=>`<option value="${c.id}">${esc(c.name)} (${esc(c.symbol)})</option>`).join('');
+ document.querySelectorAll('.currencyOptions').forEach(s=>s.innerHTML=currencies);
+ $('undoPaymentSelect').innerHTML='<option value="">Select Payment</option>'+db.payments.map(p=>`<option value="${p.id}">${esc(userName(p.userId))} • ${fmt(p.amount,p.currency)} • ${p.date} • Remaining ${fmt(paymentRemaining(p),p.currency)}</option>`).join('');
  $('undoWageSelect').innerHTML='<option value="">Select Wage</option>'+db.wages.map(w=>`<option value="${w.id}">${esc(w.company)} • ${fmt(w.amount,w.currency)} • ${w.date} • Remaining ${fmt(wageRemaining(w),w.currency)}</option>`).join('');
 }
-function paymentRemaining(p){return p.amount-db.undoPayments.filter(x=>x.originalId===p.id).reduce((s,x)=>s+x.amount,0)}
-function wageRemaining(w){return w.amount-db.undoWages.filter(x=>x.originalId===w.id).reduce((s,x)=>s+x.amount,0)}
+function paymentRemaining(p){return p.amount-sumBy(db.undoPayments.filter(x=>x.originalId===p.id))}
+function wageRemaining(w){return w.amount-sumBy(db.undoWages.filter(x=>x.originalId===w.id))}
 function renderWallet(){
- $('walletSummary').innerHTML=allCurrencyTotals(wallet).map(x=>`<div class="sumitem"><small>${esc(currency(x.id).name)} Wallet</small><strong>${fmt(x.value,x.id)}</strong></div>`).join('');
+ $('walletSummary').innerHTML=db.currencies.map(c=>`<div class="sumitem"><small>${esc(c.name)} Wallet</small><strong>${fmt(wallet(c.id),c.id)}</strong></div>`).join('');
 }
 $('wageForm').onsubmit=e=>{
  e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),a=Number(d.amount);
  if(!(a>0))return alert('সঠিক Amount দিন');
- const w={...d,id:uid(),amount:a,date:today()};
- db.wages.unshift(w);log('Wage Added',d.company+' / '+d.method,a,d.currency);
+ db.wages.unshift({...d,id:uid(),amount:a,date:today()});
+ log('Wage Added',d.company+' / '+d.method,a,d.currency);
  e.target.reset();renderAll();alert('Wage সফলভাবে যোগ হয়েছে');
 };
 $('paymentForm').onsubmit=e=>{
@@ -449,61 +404,60 @@ $('paymentForm').onsubmit=e=>{
  if(!u)return alert('User নির্বাচন করুন');
  if(!(a>0))return alert('সঠিক Amount দিন');
  if(wallet(d.currency)<a)return alert('Company Wallet-এ পর্যাপ্ত টাকা নেই। Available: '+fmt(wallet(d.currency),d.currency));
- const p={...d,id:uid(),amount:a,date:today()};
- db.payments.unshift(p);log('Payment Made',u.userId+' — '+u.name,a,d.currency);
- e.target.reset();renderAll();alert('Payment সফলভাবে দেওয়া হয়েছে');
+ db.payments.unshift({...d,id:uid(),amount:a,date:today()});
+ log('Payment Made',u.userId+' — '+u.name,a,d.currency);
+ e.target.reset();renderAll();alert('Payment সফল হয়েছে');
 };
 $('undoPaymentForm').onsubmit=e=>{
  e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),p=db.payments.find(x=>x.id===d.transactionId),a=Number(d.amount);
  if(!p)return alert('Payment নির্বাচন করুন');
- if(!(a>0)||a>paymentRemaining(p)+1e-9)return alert('Undo Amount অবশিষ্ট Payment-এর বেশি হতে পারবে না।');
+ if(!(a>0)||a>paymentRemaining(p)+1e-9)return alert('Undo Amount অবশিষ্ট Payment-এর বেশি হতে পারবে না');
  db.undoPayments.unshift({id:uid(),originalId:p.id,originalUserId:p.userId,amount:a,currency:p.currency,date:today(),comment:d.comment});
- log('Undo Payment',userLabel(p.userId)+' / '+(d.comment||''),a,p.currency);
- e.target.reset();renderAll();alert('Payment Undo হয়েছে। টাকা Wallet-এ ফেরত এসেছে।');
+ log('Undo Payment',userName(p.userId)+' / '+(d.comment||''),a,p.currency);
+ e.target.reset();renderAll();alert('Payment Undo হয়েছে');
 };
 $('undoWageForm').onsubmit=e=>{
  e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),w=db.wages.find(x=>x.id===d.transactionId),a=Number(d.amount);
  if(!w)return alert('Wage নির্বাচন করুন');
- if(!(a>0)||a>wageRemaining(w)+1e-9)return alert('Undo Amount অবশিষ্ট Wage-এর বেশি হতে পারবে না।');
- if(a>wallet(w.currency)+1e-9)return alert('এই Currency Wallet-এ এত টাকা নেই। আগে Payment Undo করুন।');
+ if(!(a>0)||a>wageRemaining(w)+1e-9)return alert('Undo Amount অবশিষ্ট Wage-এর বেশি হতে পারবে না');
+ if(a>wallet(w.currency)+1e-9)return alert('Wallet-এ এত টাকা নেই। আগে প্রয়োজন হলে Payment Undo করুন।');
  db.undoWages.unshift({id:uid(),originalId:w.id,amount:a,currency:w.currency,date:today(),comment:d.comment});
  log('Undo Wage',w.company+' / '+(d.comment||''),a,w.currency);
- e.target.reset();renderAll();alert('Wage Undo হয়েছে।');
+ e.target.reset();renderAll();alert('Wage Undo হয়েছে');
 };
 function renderHistory(){
  const rows=allEvents().map(x=>({date:x.date,type:x.kind,details:x.details,amount:fmt(x.amount,x.currency),comment:x.comment||x.method||''}));
  $('historyTable').innerHTML=table([['Date','date'],['Type','type'],['Details','details'],['Amount (+/-)','amount'],['Comment','comment']],rows);
  $('recent').innerHTML=table([['Date','date'],['Type','type'],['Details','details'],['Amount','amount']],rows.slice(0,7));
  $('userLogTable').innerHTML=table([['Date','date'],['Time','time'],['Activity','type'],['Details','details']],db.logs.map(x=>({date:x.date,time:x.time,type:x.type,details:x.details})));
- $('undoPaymentHistory').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Comment','comment']],db.undoPayments.map(x=>({date:x.date,user:userLabel(x.originalUserId),amount:fmt(x.amount,x.currency),comment:x.comment})));
+ $('undoPaymentHistory').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Comment','comment']],db.undoPayments.map(x=>({date:x.date,user:userName(x.originalUserId),amount:fmt(x.amount,x.currency),comment:x.comment})));
  $('undoWageHistory').innerHTML=table([['Date','date'],['Original Wage','wage'],['Amount','amount'],['Comment','comment']],db.undoWages.map(x=>({date:x.date,wage:db.wages.find(w=>w.id===x.originalId)?.company||'Wage',amount:fmt(x.amount,x.currency),comment:x.comment})));
 }
 function renderMonth(){
- const m=monthNow();$('monthLabel').textContent=m;
- const wages=db.wages.filter(isMonth),payments=db.payments.filter(isMonth),uw=db.undoWages.filter(isMonth),up=db.undoPayments.filter(isMonth);
- const currencies=db.currencies.filter(c=>c.active);
- $('monthSummary').innerHTML=currencies.map(c=>{
-  const w=sumBy(wages.filter(x=>x.currency===c.id))-sumBy(uw.filter(x=>x.currency===c.id));
-  const p=sumBy(payments.filter(x=>x.currency===c.id))-sumBy(up.filter(x=>x.currency===c.id));
+ $('monthLabel').textContent=monthNow();
+ $('monthSummary').innerHTML=db.currencies.map(c=>{
+  const w=sumBy(db.wages.filter(x=>x.currency===c.id&&month(x)))-sumBy(db.undoWages.filter(x=>x.currency===c.id&&month(x)));
+  const p=sumBy(db.payments.filter(x=>x.currency===c.id&&month(x)))-sumBy(db.undoPayments.filter(x=>x.currency===c.id&&month(x)));
   return `<div class="sumitem"><small>${esc(c.name)}</small><strong>Wage: ${fmt(w,c.id)}</strong><strong>Payment: ${fmt(p,c.id)}</strong><strong>Earn: ${fmt(w-p,c.id)}</strong></div>`;
  }).join('');
+ const payments=db.payments.filter(month);
  const paidIds=[...new Set(payments.map(x=>x.userId))];
- const unpaid=activeUsers().filter(u=>!paidIds.includes(u.id));
- $('monthPaid').innerHTML=table([['User ID','userId'],['Name','name'],['Payment Count','count'],['Paid Amount','amount']],paidIds.map(id=>({userId:findUser(id)?.userId,name:findUser(id)?.name,count:payments.filter(p=>p.userId===id).length,amount:db.currencies.map(c=>fmt(sumBy(payments.filter(p=>p.userId===id&&p.currency===c.id))-sumBy(up.filter(p=>p.originalUserId===id&&p.currency===c.id)),c.id)).join(' / ')})));
+ const unpaid=db.users.filter(u=>u.status==='Active'&&!paidIds.includes(u.id));
+ $('monthPaid').innerHTML=table([['User ID','userId'],['Name','name'],['Paid Amount','amount']],paidIds.map(id=>({userId:user(id)?.userId,name:user(id)?.name,amount:db.currencies.map(c=>fmt(sumBy(payments.filter(p=>p.userId===id&&p.currency===c.id))-sumBy(db.undoPayments.filter(p=>p.originalUserId===id&&p.currency===c.id&&month(p))),c.id)).join(' / ')})));
  $('monthUnpaid').innerHTML=table([['User ID','userId'],['Name','name'],['Number','number'],['Status','status']],unpaid);
- $('monthWage').innerHTML=table([['Date','date'],['Company','company'],['Amount','amount'],['Currency','currency'],['Method','method']],wages.map(x=>({...x,amount:fmt(x.amount,x.currency)})));
- $('monthPayment').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Currency','currency']],payments.map(x=>({date:x.date,user:userLabel(x.userId),amount:fmt(x.amount,x.currency),currency:x.currency})));
+ $('monthWage').innerHTML=table([['Date','date'],['Company','company'],['Amount','amount'],['Currency','currency']],db.wages.filter(month).map(x=>({...x,amount:fmt(x.amount,x.currency)})));
+ $('monthPayment').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Currency','currency']],payments.map(x=>({date:x.date,user:userName(x.userId),amount:fmt(x.amount,x.currency),currency:x.currency})));
 }
 function renderReport(){
  const from=$('fromDate').value,to=$('toDate').value;
- if(!from||!to||from>to){alert('সঠিক From এবং To Date দিন');return}
- const events=allEvents().filter(x=>x.date>=from&&x.date<=to);
- $('reportSummary').innerHTML=db.currencies.filter(c=>c.active).map(c=>{
-  const w=sumBy(events.filter(x=>x.kind==='Wage'&&x.currency===c.id))-sumBy(events.filter(x=>x.kind==='Undo Wage'&&x.currency===c.id));
-  const p=sumBy(events.filter(x=>x.kind==='Payment'&&x.currency===c.id))-sumBy(events.filter(x=>x.kind==='Undo Payment'&&x.currency===c.id));
-  return `<div class="sumitem"><small>${esc(c.name)} (${from} – ${to})</small><strong>Wage: ${fmt(w,c.id)}</strong><strong>Payment: ${fmt(p,c.id)}</strong><strong>Earn: ${fmt(w-p,c.id)}</strong></div>`;
+ if(!from||!to||from>to)return alert('সঠিক From এবং To Date দিন');
+ const ev=allEvents().filter(x=>x.date>=from&&x.date<=to);
+ $('reportSummary').innerHTML=db.currencies.map(c=>{
+  const w=sumBy(ev.filter(x=>x.kind==='Wage'&&x.currency===c.id))-sumBy(ev.filter(x=>x.kind==='Undo Wage'&&x.currency===c.id));
+  const p=sumBy(ev.filter(x=>x.kind==='Payment'&&x.currency===c.id))-sumBy(ev.filter(x=>x.kind==='Undo Payment'&&x.currency===c.id));
+  return `<div class="sumitem"><small>${esc(c.name)}</small><strong>Wage: ${fmt(w,c.id)}</strong><strong>Payment: ${fmt(p,c.id)}</strong><strong>Earn: ${fmt(w-p,c.id)}</strong></div>`;
  }).join('');
- $('reportTable').innerHTML=table([['Date','date'],['Type','kind'],['Details','details'],['Amount','amount'],['Currency','currency']],events.map(x=>({...x,amount:fmt(x.amount,x.currency)})));
+ $('reportTable').innerHTML=table([['Date','date'],['Type','kind'],['Details','details'],['Amount','amount'],['Currency','currency']],ev.map(x=>({...x,amount:fmt(x.amount,x.currency)})));
 }
 function renderCurrencies(){
  $('currencyTable').innerHTML='<div class="tablewrap"><table><thead><tr><th>Name</th><th>Symbol</th><th>Code</th><th>Action</th></tr></thead><tbody>'+db.currencies.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.symbol)}</td><td>${esc(c.code)}</td><td><button class="btn small gray" onclick="editCurrency('${c.id}')">Edit</button> ${c.id==='BDT'?'':`<button class="btn small red" onclick="deleteCurrency('${c.id}')">Delete</button>`}</td></tr>`).join('')+'</tbody></table></div>';
@@ -511,30 +465,25 @@ function renderCurrencies(){
 $('currencyForm').onsubmit=e=>{
  e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
  const id=(d.code||d.symbol).toUpperCase().replace(/\s/g,'');
- if(db.currencies.some(c=>c.id===id)){alert('এই Currency Code আগে থেকেই আছে');return}
- db.currencies.push({id,name:d.name,symbol:d.symbol,code:d.code||id,active:true});
- log('Currency Added',d.name+' '+d.symbol);e.target.reset();renderAll();
+ if(db.currencies.some(c=>c.id===id))return alert('এই Currency Code আগে থেকেই আছে');
+ db.currencies.push({id,name:d.name,symbol:d.symbol,code:d.code||id});
+ log('Currency Added',d.name);e.target.reset();renderAll();
 };
 function editCurrency(id){
- const c=currency(id);const name=prompt('Currency Name',c.name);if(name===null)return;
+ const c=cur(id),name=prompt('Currency Name',c.name);if(name===null)return;
  const symbol=prompt('Currency Symbol',c.symbol);if(symbol===null)return;
  const code=prompt('Currency Code',c.code);if(code===null)return;
  c.name=name;c.symbol=symbol;c.code=code;log('Currency Edited',name);renderAll();
 }
 function deleteCurrency(id){
- if(db.wages.some(x=>x.currency===id)||db.payments.some(x=>x.currency===id)){alert('এই Currency-তে Transaction আছে, তাই Delete করা যাবে না।');return}
- if(!confirm('Currency Delete করবেন?'))return;
- db.currencies=db.currencies.filter(c=>c.id!==id);save();renderAll();
+ if(db.wages.some(x=>x.currency===id)||db.payments.some(x=>x.currency===id)){alert('এই Currency-তে Transaction আছে, তাই Delete করা যাবে না');return}
+ if(confirm('Currency Delete করবেন?')){db.currencies=db.currencies.filter(c=>c.id!==id);save();renderAll()}
 }
 function renderCardSettings(){
- $('cardSettings').innerHTML=cardDefs.map(d=>`<label style="display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line);color:var(--text)"><input type="checkbox" style="width:auto" ${db.cards[d[0]]!==false?'checked':''} onchange="setCard('${d[0]}',this.checked)"><span>${d[1]} ${d[2]}</span></label>`).join('');
+ $('cardSettings').innerHTML=cards.map(d=>`<label style="display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line);color:var(--text)"><input type="checkbox" style="width:auto" ${db.cards[d[0]]!==false?'checked':''} onchange="setCard('${d[0]}',this.checked)">${d[1]} ${d[2]}</label>`).join('');
 }
-function setCard(id,value){db.cards[id]=value;save();renderCards()}
+function setCard(id,v){db.cards[id]=v;save();renderCards()}
 function showAllCards(){db.cards={};save();renderAll()}
-function renderAll(){
- theme();refreshOptions();renderCards();renderUsers();renderDeleted();renderWallet();
- renderHistory();renderMonth();renderCurrencies();renderCardSettings();
-}
 function exportBackup(){
  const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='company-payment-backup.json';a.click();URL.revokeObjectURL(a.href);
@@ -542,26 +491,36 @@ function exportBackup(){
 function importBackup(e){
  const f=e.target.files[0];if(!f)return;
  const r=new FileReader();r.onload=()=>{
-  try{
-   const d=JSON.parse(r.result);
-   if(!d.users||!d.wages||!d.payments||!d.currencies)throw Error();
-   if(!confirm('বর্তমান ডেটা Replace করে Backup Restore করবেন?'))return;
-   db={...defaultDB(),...d};save();renderAll();alert('Backup Restore হয়েছে');
+  try{const d=JSON.parse(r.result);if(!d.users||!d.wages||!d.payments||!d.currencies)throw Error();
+   if(!confirm('বর্তমান ডেটা Replace করে Restore করবেন?'))return;
+   db={...defaults(),...d};save();renderAll();alert('Backup Restore হয়েছে');
   }catch(err){alert('ভুল Backup File')}
  };r.readAsText(f);e.target.value='';
 }
 function resetAll(){
- if(!confirm('সব User, Wage, Payment এবং History স্থায়ীভাবে Delete হবে। নিশ্চিত?'))return;
- db=defaultDB();save();renderAll();go('dashboard');
+ if(!confirm('সব ডেটা Delete হবে। নিশ্চিত?'))return;
+ db=defaults();save();renderAll();go('dashboard');
 }
-document.querySelectorAll('.today').forEach(x=>x.value=today());
+function renderAll(){
+ theme();
+ refreshOptions();
+ renderCards();
+ renderUsers();
+ renderDeleted();
+ renderWallet();
+ renderHistory();
+ renderMonth();
+ renderCurrencies();
+ renderCardSettings();
+}
 if(!db.undoWages)db.undoWages=[];
 if(!db.undoPayments)db.undoPayments=[];
 if(!db.logs)db.logs=[];
 if(!db.deletedUsers)db.deletedUsers=[];
 if(!db.cards)db.cards={};
-if(!db.currencies)db.currencies=defaultDB().currencies;
-save();renderAll();
+if(!db.currencies)db.currencies=defaults().currencies;
+save();
+renderAll();
 </script>
 </body>
 </html>
