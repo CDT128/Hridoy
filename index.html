@@ -1,1368 +1,526 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
-<title>NOVA ADMIN Dashboard</title>
-
+<meta name="theme-color" content="#111827">
+<title>Admin Dashboard</title>
 <style>
 :root{
- --bg:#f4f6fb;
- --panel:#fff;
- --ink:#172033;
- --muted:#748096;
- --line:#e8edf4;
- --brand:#635bff;
- --green:#159b72;
- --red:#e05260;
- --amber:#d58a24;
- --shadow:0 10px 30px rgba(27,39,69,.06);
+ --bg:#f3f5f9;--panel:#fff;--panel2:#f8fafc;--text:#172033;
+ --muted:#718096;--line:#e5eaf1;--primary:#635bff;
+ --green:#10b981;--red:#ef4444;--shadow:0 5px 20px #0000000a;
+}
+body.dark{
+ --bg:#0b1120;--panel:#151e30;--panel2:#1b273b;--text:#edf2f7;
+ --muted:#9aa9bd;--line:#2a3850;--primary:#8b83ff;
+ --shadow:0 5px 20px #00000020;
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:var(--bg);color:var(--ink);
- font:14px/1.5 Inter,system-ui,Arial;
-}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0}
-.hidden{display:none!important}
-
-.login-screen{
- min-height:100vh;display:grid;place-items:center;
- padding:18px;
- background:radial-gradient(circle at 15% 15%,#dcdcff,transparent 35%),#f5f6fb;
-}
-.login-card{
- width:min(420px,100%);background:white;padding:30px;
- border-radius:22px;box-shadow:0 24px 80px #25345b1a;
-}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px}
-.logo-mark{
- width:42px;height:42px;border-radius:13px;
- background:linear-gradient(135deg,#635bff,#938aff);
- display:grid;place-items:center;color:white;font-size:20px;
-}
-.login-card h1{font-size:25px;margin:28px 0 5px}
-.muted{color:var(--muted)}
-.field{display:grid;gap:6px;margin:14px 0}
-.field label{font-size:12px;font-weight:700;color:#59657a}
-.field input,.field select,.toolbar input,.toolbar select{
- width:100%;border:1px solid var(--line);
- border-radius:10px;padding:11px;background:white;color:var(--ink);
- outline:none;
-}
-.btn{
- padding:10px 14px;border-radius:10px;background:var(--brand);
- color:white;font-weight:700;
-}
-.btn.secondary{background:#f0efff;color:var(--brand)}
-.btn.ghost{background:#f5f7fb;color:#526078}
-.btn.danger{background:#fff0f1;color:var(--red)}
-.btn.small{padding:7px 10px;font-size:12px}
-.demo-hint{
- margin-top:18px;background:#f5f6ff;
- border-radius:12px;padding:12px;font-size:12px;
-}
-
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;transition:.2s}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 .app{display:flex;min-height:100vh}
-.sidebar{
- width:245px;background:#111a2b;color:#c5cde0;
- padding:20px 14px;display:flex;flex-direction:column;
- position:fixed;inset:0 auto 0 0;z-index:5;
- transition:.25s;
-}
-.sidebar .logo{color:white;padding:0 8px 25px}
-.nav-label{
- font-size:10px;letter-spacing:1.4px;
- color:#74809b;padding:15px 12px 8px;font-weight:800;
-}
-.nav{display:grid;gap:4px}
-.nav button{
- width:100%;display:flex;align-items:center;gap:12px;
- padding:11px 12px;border-radius:10px;
- background:transparent;color:#aeb9cf;text-align:left;
- font-weight:600;
-}
-.nav button:hover,.nav button.active{
- background:#252e47;color:white;
-}
-.nav button.active{box-shadow:inset 3px 0 #8982ff}
-.sidebar-bottom{
- margin-top:auto;padding:12px;background:#1c2740;
- border-radius:13px;font-size:12px;color:#aab5ca;
-}
-.main{margin-left:245px;width:calc(100% - 245px)}
-.topbar{
- height:72px;background:#ffffffed;
- border-bottom:1px solid var(--line);
- display:flex;align-items:center;justify-content:space-between;
- padding:0 25px;position:sticky;top:0;z-index:4;
-}
-.topbar h2{font-size:18px;margin:0}
-.top-actions{display:flex;align-items:center;gap:12px}
-.avatar{
- width:36px;height:36px;border-radius:50%;
- display:grid;place-items:center;background:#e9e7ff;
- color:var(--brand);font-weight:800;
-}
-.menu-btn{display:none;padding:8px 11px;border-radius:9px}
-.content{padding:25px;max-width:1500px;margin:auto}
-.page-head{
- display:flex;align-items:flex-end;justify-content:space-between;
- gap:12px;margin-bottom:20px;
-}
-.page-head h1{font-size:25px;margin:0 0 4px}
-.page-head p{margin:0;color:var(--muted)}
-
-.grid{
- display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
- gap:15px;
-}
-.stat-card{
- background:white;border:1px solid var(--line);
- border-radius:16px;padding:17px;
- box-shadow:var(--shadow);text-align:left;
- min-height:130px;transition:.2s;
-}
-.stat-card:hover{transform:translateY(-3px)}
-.stat-top{
- display:flex;justify-content:space-between;
- align-items:center;color:var(--muted);
- font-weight:700;font-size:12px;gap:5px;
-}
-.stat-icon{
- width:37px;height:37px;border-radius:12px;
- display:grid;place-items:center;
- background:#efefff;color:var(--brand);font-size:18px;
-}
-.stat-value{font-size:25px;font-weight:800;margin:13px 0 2px}
-.stat-foot{font-size:11px;color:var(--muted)}
-.green .stat-icon{background:#e8f8f1;color:var(--green)}
-.orange .stat-icon{background:#fff5e8;color:var(--amber)}
-.red .stat-icon{background:#fff0f1;color:var(--red)}
-.dark .stat-icon{background:#edf1f8;color:#53627b}
-
-.panel{
- background:white;border:1px solid var(--line);
- border-radius:16px;padding:18px;
- box-shadow:var(--shadow);margin-top:17px;
-}
-.panel-head{
- display:flex;justify-content:space-between;
- align-items:center;gap:10px;margin-bottom:15px;
-}
-.panel-head h3{margin:0;font-size:15px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-.toolbar input{min-width:170px;width:auto}
-.toolbar select{width:auto}
-table{width:100%;border-collapse:collapse;min-width:600px}
+.sidebar{width:250px;background:var(--panel);border-right:1px solid var(--line);padding:20px 14px;position:fixed;inset:0 auto 0 0;z-index:10;overflow:auto}
+.brand{font-size:21px;font-weight:900;padding:10px 12px 25px;color:var(--primary)}
+.nav-title{font-size:11px;color:var(--muted);padding:15px 12px 8px;text-transform:uppercase;letter-spacing:1px}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;color:var(--muted);padding:12px;border-radius:10px;text-align:left;margin:3px 0;font-weight:600}
+.nav button.active,.nav button:hover{background:var(--panel2);color:var(--primary)}
+.main{margin-left:250px;width:calc(100% - 250px);padding:24px;max-width:1700px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}
+.topbar h1{font-size:25px;margin:0}
+.top-actions{display:flex;gap:9px;align-items:center}
+.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 13px;border-radius:10px}
+.menu-btn{display:none}
+.page{display:none}.page.active{display:block}
+.welcome{margin-bottom:20px}
+.welcome h2{margin:0 0 6px;font-size:21px}.welcome p{margin:0;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.stat-card{cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.stat-card:hover{transform:translateY(-3px);border-color:var(--primary)}
+.stat-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--panel2);font-size:21px;margin-bottom:14px}
+.stat-label{font-size:13px;color:var(--muted);font-weight:600}
+.stat-value{font-size:25px;font-weight:800;margin-top:7px;overflow-wrap:anywhere}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:7px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:25px 0 14px}
+.section-head h2{font-size:18px;margin:0}
+.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;background:var(--primary);color:white}
+.btn.green{background:var(--green)}.btn.red{background:var(--red)}
+.btn.gray{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn.small{padding:7px 10px;font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+label{font-size:13px;color:var(--muted);font-weight:600}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+textarea{min-height:75px;resize:vertical}
+.form-actions{display:flex;gap:9px;margin-top:15px;flex-wrap:wrap}
 .table-wrap{overflow-x:auto}
-th{
- text-align:left;color:#8490a4;font-size:11px;
- text-transform:uppercase;padding:12px;
- border-bottom:1px solid var(--line);
-}
-td{padding:12px;border-bottom:1px solid #f0f2f6;font-size:13px}
-.pill{
- display:inline-flex;padding:4px 9px;border-radius:30px;
- font-size:11px;font-weight:700;background:#eef1f7;color:#647089;
-}
-.pill.paid,.pill.active{background:#e8f8f1;color:#16845f}
-.pill.unpaid,.pill.inactive{background:#fff0f1;color:#d34b5a}
-.actions{display:flex;gap:5px}
-.empty{text-align:center;padding:25px;color:var(--muted)}
-.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:15px}
-.kpi-line{display:flex;gap:10px;flex-wrap:wrap}
-.kpi{background:#f7f8fc;padding:12px;border-radius:12px}
-.kpi b{display:block;font-size:19px}
-.kpi span{color:var(--muted);font-size:11px}
-.bar-row{
- display:grid;grid-template-columns:90px 1fr 35px;
- gap:8px;align-items:center;margin:13px 0;font-size:12px;
-}
-.bar{height:8px;border-radius:20px;background:#eff0f6;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--brand)}
-
-.modal-backdrop{
- position:fixed;inset:0;background:#10182780;z-index:20;
- display:grid;place-items:center;padding:15px;
-}
-.modal{
- width:min(520px,100%);max-height:90vh;overflow:auto;
- background:white;border-radius:18px;padding:20px;
-}
-.modal-head{display:flex;justify-content:space-between;margin-bottom:12px}
-.close{background:#f2f4f8;border-radius:8px;padding:7px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-.full{grid-column:1/-1}
-.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
-.notice{padding:12px;background:#f4f5ff;color:#5b5c99;border-radius:10px;font-size:12px}
-.toast{
- position:fixed;right:15px;bottom:15px;
- background:#172033;color:white;padding:12px 17px;
- border-radius:11px;z-index:50;
-}
-
-@media(max-width:1100px){
- .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
- .two-col{grid-template-columns:1fr}
-}
-@media(max-width:760px){
- .sidebar{transform:translateX(-100%)}
- .sidebar.open{transform:translateX(0);box-shadow:20px 0 60px #10182744}
- .main{margin-left:0;width:100%}
- .menu-btn{display:block}
- .topbar{padding:0 12px;height:65px}
- .content{padding:18px 12px 35px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .stat-card{padding:12px;min-height:120px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}
+th{color:var(--muted);font-weight:700;background:var(--panel2)}
+td{color:var(--text)}
+.tag{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.tag.green{background:#10b98120;color:#10b981}.tag.red{background:#ef444420;color:#ef4444}
+.tag.blue{background:#635bff20;color:var(--primary)}
+.search{max-width:300px}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:15px}
+.summary{background:var(--panel2);padding:15px;border-radius:11px}
+.summary small{color:var(--muted)}.summary strong{display:block;font-size:20px;margin-top:6px}
+.mobile-overlay{display:none}
+.footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:750px){
+ .sidebar{transform:translateX(-100%);transition:.25s;width:270px}
+ .sidebar.open{transform:translateX(0)}
+ .mobile-overlay.show{display:block;position:fixed;inset:0;background:#0008;z-index:9}
+ .main{margin:0;width:100%;padding:15px}
+ .menu-btn{display:inline-block}
+ .topbar{margin-bottom:20px}
+ .topbar h1{font-size:19px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{padding:13px}
  .stat-value{font-size:20px}
- .stat-top{font-size:11px}
- .page-head{align-items:flex-start;flex-direction:column}
- .top-actions .user-mini{display:none}
+ .stat-icon{width:35px;height:35px;margin-bottom:10px}
+ .stat-label{font-size:12px}
+ .form-grid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .summary-row{grid-template-columns:1fr}
+ .panel{padding:13px}
+ .section-head{align-items:flex-start;flex-wrap:wrap}
 }
-@media(max-width:360px){
- .grid{grid-template-columns:1fr}
-}
+@media(max-width:360px){.cards{grid-template-columns:1fr}.top-actions{gap:5px}}
 </style>
 </head>
-
 <body>
-
-<!-- LOGIN -->
-<div id="loginScreen" class="login-screen">
- <div class="login-card">
-  <div class="logo">
-   <div class="logo-mark">N</div>NOVA ADMIN
-  </div>
-  <h1>Welcome Back</h1>
-  <p class="muted">Sign in to your dashboard.</p>
-
-  <form id="loginForm">
-   <div class="field">
-    <label>USERNAME</label>
-    <input id="loginUser" value="admin" required>
-   </div>
-   <div class="field">
-    <label>PASSWORD</label>
-    <input id="loginPass" type="password" value="admin123" required>
-   </div>
-   <button class="btn" style="width:100%">Sign In →</button>
-  </form>
-
-  <div class="demo-hint">
-   <b>Demo Login</b><br>
-   Username: admin<br>
-   Password: admin123
-  </div>
- </div>
-</div>
-
-<!-- APPLICATION -->
-<div id="app" class="app hidden">
-
+<div class="mobile-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="app">
 <aside class="sidebar" id="sidebar">
- <div class="logo">
-  <div class="logo-mark">N</div>NOVA ADMIN
- </div>
-
- <div class="nav-label">WORKSPACE</div>
- <nav class="nav">
-  <button data-page="dashboard" class="active">▦ Dashboard</button>
-  <button data-page="users">♙ Total User</button>
-  <button data-page="adduser">＋ Add User</button>
-  <button data-page="payments">▣ Total Payment</button>
-  <button data-page="earn">↗ Total Earn</button>
-  <button data-page="money">◈ Current Money</button>
-  <button data-page="today">◷ Current Payment</button>
-  <button data-page="monthly">▤ Monthly Payment</button>
-  <button data-page="paid">✓ Payment Users</button>
-  <button data-page="unpaid">! Non Payment Users</button>
- </nav>
-
- <div class="nav-label">MANAGEMENT</div>
- <nav class="nav">
-  <button data-page="history">↶ History</button>
-  <button data-page="roles">⚿ Role Setting</button>
-  <button data-page="logins">◉ User Login History</button>
-  <button data-page="settings">⚙ Taka Setting</button>
- </nav>
-
- <div class="sidebar-bottom">
-  DEMO MODE<br>
-  <b style="color:white">Browser LocalStorage</b><br>
-  Data saved in this browser.
+ <div class="brand">✦ ADMIN PANEL</div>
+ <div class="nav">
+  <div class="nav-title">Main Menu</div>
+  <button class="active" data-page="dashboard">🏠 Dashboard</button>
+  <button data-page="users">👥 Total User</button>
+  <button data-page="adduser">➕ Add User</button>
+  <button data-page="payments">💳 Total Payment</button>
+  <button data-page="income">📈 Total Earn</button>
+  <button data-page="money">💰 Current Money</button>
+  <button data-page="userpayment">💸 User Payment</button>
+  <button data-page="currentpayment">🧾 Current Payment</button>
+  <button data-page="monthly">📅 Monthly Payment</button>
+  <button data-page="unpaid">⏳ Non Payment User</button>
+  <div class="nav-title">Management</div>
+  <button data-page="history">📚 History</button>
+  <button data-page="roles">🛡️ Role Setting</button>
+  <button data-page="loginhistory">🔐 User Login History</button>
+  <button data-page="settings">⚙️ Taka Setting</button>
  </div>
 </aside>
 
 <main class="main">
-
-<header class="topbar">
- <div style="display:flex;align-items:center;gap:12px">
-  <button class="menu-btn" id="menuBtn">☰</button>
-  <div>
-   <h2 id="topTitle">Dashboard</h2>
-   <small class="muted" id="todayDate"></small>
+ <header class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+   <button class="iconbtn menu-btn" onclick="toggleMenu()">☰</button>
+   <h1 id="pageTitle">Dashboard</h1>
   </div>
- </div>
-
- <div class="top-actions">
-  <button class="btn secondary small" id="quickAdd">＋ Add User</button>
-  <div class="avatar" id="avatar">A</div>
-  <div class="user-mini">
-   <b id="currentUserName">Admin</b><br>
-   <span class="muted" id="currentRole">Administrator</span>
+  <div class="top-actions">
+   <button class="iconbtn" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
   </div>
-  <button class="btn ghost small" id="logoutBtn">Logout</button>
- </div>
-</header>
+ </header>
 
-<div class="content" id="content"></div>
+ <section class="page active" id="page-dashboard">
+  <div class="welcome"><h2>Welcome to Dashboard 👋</h2><p>আপনার সম্পূর্ণ হিসাব ও User Management</p></div>
+  <div class="cards" id="dashboardCards"></div>
+  <div class="section-head"><h2>Recent Transactions</h2><button class="btn small gray" onclick="go('history')">View All</button></div>
+  <div class="panel" id="recentTransactions"></div>
+ </section>
+
+ <section class="page" id="page-users">
+  <div class="section-head"><h2>All Users</h2><button class="btn" onclick="go('adduser')">+ Add User</button></div>
+  <div class="panel">
+   <input class="search" id="userSearch" placeholder="Search user..." oninput="renderUsers()">
+   <div id="usersTable"></div>
+  </div>
+ </section>
+
+ <section class="page" id="page-adduser">
+  <div class="section-head"><h2>Add New User</h2></div>
+  <div class="panel">
+   <form id="userForm">
+    <input type="hidden" name="id">
+    <div class="form-grid">
+     <div class="field"><label>User Name *</label><input name="name" required placeholder="User name"></div>
+     <div class="field"><label>Phone</label><input name="phone" placeholder="Phone number"></div>
+     <div class="field"><label>Email</label><input name="email" type="email" placeholder="Email address"></div>
+     <div class="field"><label>Role</label><select name="role" id="userRole"></select></div>
+     <div class="field"><label>Status</label><select name="status"><option>Active</option><option>Inactive</option></select></div>
+     <div class="field"><label>Opening Due (৳)</label><input name="due" type="number" min="0" value="0"></div>
+    </div>
+    <div class="form-actions"><button class="btn" type="submit">Save User</button><button class="btn gray" type="reset">Clear</button></div>
+   </form>
+  </div>
+ </section>
+
+ <section class="page" id="page-payments">
+  <div class="section-head"><h2>Payment Received</h2><button class="btn" onclick="go('currentpayment')">+ Add Payment</button></div>
+  <div id="paymentSummary"></div><div class="panel" id="paymentsTable"></div>
+ </section>
+
+ <section class="page" id="page-income">
+  <div class="section-head"><h2>Income Management</h2></div>
+  <div class="panel">
+   <form id="incomeForm">
+    <div class="form-grid">
+     <div class="field"><label>Income Title *</label><input name="title" required placeholder="Income details"></div>
+     <div class="field"><label>Amount (৳) *</label><input name="amount" type="number" min="0.01" step="0.01" required></div>
+     <div class="field"><label>Date</label><input name="date" type="date" class="today"></div>
+     <div class="field"><label>Note</label><input name="note" placeholder="Optional"></div>
+    </div>
+    <div class="form-actions"><button class="btn green">Add Income</button></div>
+   </form>
+  </div>
+  <div class="section-head"><h2>Income History</h2></div><div class="panel" id="incomeTable"></div>
+ </section>
+
+ <section class="page" id="page-money">
+  <div class="section-head"><h2>Current Money & Expense</h2></div>
+  <div class="summary-row" id="moneySummary"></div>
+  <div class="panel">
+   <h3>Add Expense</h3>
+   <form id="expenseForm">
+    <div class="form-grid">
+     <div class="field"><label>Expense Title *</label><input name="title" required placeholder="Expense details"></div>
+     <div class="field"><label>Amount (৳) *</label><input name="amount" type="number" min="0.01" step="0.01" required></div>
+     <div class="field"><label>Date</label><input name="date" type="date" class="today"></div>
+     <div class="field"><label>Note</label><input name="note"></div>
+    </div>
+    <div class="form-actions"><button class="btn red">Add Expense</button></div>
+   </form>
+  </div>
+  <div class="section-head"><h2>Expense History</h2></div><div class="panel" id="expenseTable"></div>
+ </section>
+
+ <section class="page" id="page-userpayment">
+  <div class="section-head"><h2>Give Payment to User</h2></div>
+  <div class="panel">
+   <form id="userPaymentForm">
+    <div class="form-grid">
+     <div class="field"><label>Select User *</label><select name="userId" id="payUser" required></select></div>
+     <div class="field"><label>Amount (৳) *</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="Enter amount"></div>
+     <div class="field"><label>Payment Date</label><input name="date" type="date" class="today"></div>
+     <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
+     <div class="field full"><label>Reason / Description *</label><textarea name="note" required placeholder="কেন টাকা দেওয়া হচ্ছে লিখুন"></textarea></div>
+    </div>
+    <div class="form-actions"><button class="btn green">Confirm User Payment</button></div>
+   </form>
+  </div>
+  <div class="section-head"><h2>User Payment Summary</h2></div>
+  <div class="summary-row" id="userPaySummary"></div>
+  <div class="section-head"><h2>User Payment History</h2></div>
+  <div class="panel" id="userPaymentTable"></div>
+ </section>
+
+ <section class="page" id="page-currentpayment">
+  <div class="section-head"><h2>Receive Payment from User</h2></div>
+  <div class="panel">
+   <form id="receiveForm">
+    <div class="form-grid">
+     <div class="field"><label>Select User *</label><select name="userId" id="receiveUser" required></select></div>
+     <div class="field"><label>Amount (৳) *</label><input name="amount" type="number" min="0.01" step="0.01" required></div>
+     <div class="field"><label>Date</label><input name="date" type="date" class="today"></div>
+     <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>bKash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
+     <div class="field full"><label>Note</label><input name="note" placeholder="Optional"></div>
+    </div>
+    <div class="form-actions"><button class="btn green">Receive Payment</button></div>
+   </form>
+  </div>
+  <div class="section-head"><h2>Recent Received Payments</h2></div><div class="panel" id="currentPaymentTable"></div>
+ </section>
+
+ <section class="page" id="page-monthly">
+  <div class="section-head"><h2>Current Month Payment</h2></div>
+  <div class="summary-row" id="monthlySummary"></div>
+  <div class="panel" id="monthlyTable"></div>
+ </section>
+
+ <section class="page" id="page-unpaid">
+  <div class="section-head"><h2>Non Payment Users</h2></div>
+  <div class="panel" id="unpaidTable"></div>
+ </section>
+
+ <section class="page" id="page-history">
+  <div class="section-head"><h2>All History</h2><button class="btn small gray" onclick="exportData()">Export JSON</button></div>
+  <div class="panel" id="historyTable"></div>
+ </section>
+
+ <section class="page" id="page-roles">
+  <div class="section-head"><h2>Role Setting</h2></div>
+  <div class="panel">
+   <form id="roleForm">
+    <div class="form-grid"><div class="field"><label>New Role Name</label><input name="role" required placeholder="Example: Manager"></div></div>
+    <div class="form-actions"><button class="btn">Add Role</button></div>
+   </form>
+   <div id="rolesList" style="margin-top:18px"></div>
+  </div>
+ </section>
+
+ <section class="page" id="page-loginhistory">
+  <div class="section-head"><h2>User Login History</h2></div>
+  <div class="panel"><p style="color:var(--muted)">Login এখনো চালু করা হয়নি। পরে Admin + Multiple User Login যুক্ত হলে এখানে Login History দেখা যাবে।</p></div>
+ </section>
+
+ <section class="page" id="page-settings">
+  <div class="section-head"><h2>Taka Setting</h2></div>
+  <div class="panel">
+   <form id="settingsForm">
+    <div class="form-grid">
+     <div class="field"><label>Currency</label><select name="currency"><option value="৳">BDT (৳)</option><option value="$">USD ($)</option><option value="₹">INR (₹)</option><option value="€">EUR (€)</option></select></div>
+     <div class="field"><label>Opening Balance (৳)</label><input name="opening" type="number" step="0.01"></div>
+    </div>
+    <div class="form-actions"><button class="btn">Save Settings</button></div>
+   </form>
+   <p style="color:var(--muted);font-size:12px">Current Money = Opening Balance + Total Income + Received Payments − Expenses − User Payments.</p>
+  </div>
+  <div class="section-head"><h2>Data Backup</h2></div>
+  <div class="panel">
+   <p style="color:var(--muted);font-size:13px">আপনার ডেটা এই ব্রাউজারের LocalStorage-এ থাকে। নিয়মিত Backup রাখুন।</p>
+   <div class="form-actions"><button class="btn" onclick="exportData()">Download Backup</button><button class="btn gray" onclick="document.getElementById('importFile').click()">Restore Backup</button><button class="btn red" onclick="resetData()">Reset Demo Data</button><input id="importFile" type="file" accept=".json" hidden onchange="importData(event)"></div>
+  </div>
+ </section>
+ <div class="footer">Admin Dashboard • LocalStorage Edition</div>
 </main>
 </div>
 
-<div id="modalRoot"></div>
-<div id="toastRoot"></div>
-
 <script>
-const KEY='nova_admin_demo_v1';
-
-const dateNow=()=>new Date().toISOString().slice(0,10);
-const monthNow=()=>dateNow().slice(0,7);
-const uid=()=>Math.random().toString(36).slice(2,9);
-
-const moneyFmt=n=>new Intl.NumberFormat('en-BD',{
- style:'currency',
- currency:db.settings.currency||'BDT',
- maximumFractionDigits:0
-}).format(Number(n)||0);
-
-const fmtDate=d=>d?new Date(d+'T00:00:00').toLocaleDateString('en-GB'):'—';
-
-function seed(){
- return {
- settings:{
-  currency:'BDT',
-  symbol:'৳',
-  openingBalance:15000,
-  appName:'Nova Admin'
- },
-
- users:[
-  {id:'U-1001',name:'Rahim Uddin',phone:'01711000001',email:'rahim@example.com',role:'User',joined:dateNow(),status:'Active'},
-  {id:'U-1002',name:'Karim Ahmed',phone:'01812000002',email:'karim@example.com',role:'User',joined:dateNow(),status:'Active'},
-  {id:'U-1003',name:'Nusrat Jahan',phone:'01913000003',email:'nusrat@example.com',role:'Manager',joined:dateNow(),status:'Active'},
-  {id:'U-1004',name:'Sabbir Hasan',phone:'01614000004',email:'sabbir@example.com',role:'User',joined:dateNow(),status:'Active'},
-  {id:'U-1005',name:'Mim Akter',phone:'01515000005',email:'mim@example.com',role:'User',joined:dateNow(),status:'Active'}
- ],
-
- payments:[
-  {id:'P-5001',userId:'U-1001',amount:1200,date:dateNow(),method:'Cash',note:'Monthly service'},
-  {id:'P-5002',userId:'U-1002',amount:800,date:dateNow(),method:'bKash',note:'Subscription'}
- ],
-
- expenses:[
-  {id:'E-7001',amount:2500,date:dateNow(),category:'Office',note:'Office rent'}
- ],
-
- roles:[
-  {name:'Administrator',permissions:['all']},
-  {name:'Manager',permissions:['dashboard','users','payments','history']},
-  {name:'User',permissions:['dashboard']}
- ],
-
- loginHistory:[],
- history:[]
- };
-}
-
-function loadDB(){
- try{
-  const raw=localStorage.getItem(KEY);
-  return raw?JSON.parse(raw):seed();
- }catch(e){return seed()}
-}
-
-let db=loadDB();
-let currentUser=null;
-let currentPage='dashboard';
-
-function save(){
- localStorage.setItem(KEY,JSON.stringify(db));
-}
-
-function esc(s=''){
- return String(s).replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;',
- '"':'&quot;',"'":'&#39;'
- }[c]));
-}
-
-function toast(msg){
- const root=document.getElementById('toastRoot');
- root.innerHTML='<div class="toast">'+esc(msg)+'</div>';
- setTimeout(()=>root.innerHTML='',2500);
-}
-
-function userById(id){
- return db.users.find(u=>u.id===id);
-}
-
-function logAction(action,details=''){
- db.history.unshift({
-  id:uid(),
-  date:new Date().toISOString(),
-  actor:currentUser?.username||'System',
-  action,details
- });
- save();
-}
-
-function totals(){
- const income=db.payments.reduce((s,p)=>s+Number(p.amount),0);
- const expense=db.expenses.reduce((s,e)=>s+Number(e.amount),0);
-
- const today=db.payments.filter(p=>p.date===dateNow());
- const monthly=db.payments.filter(p=>p.date.startsWith(monthNow()));
-
- const paidIds=new Set(monthly.map(p=>p.userId));
-
- return {
-  income,
-  expense,
-  balance:Number(db.settings.openingBalance||0)+income-expense,
-  today:today.reduce((s,p)=>s+Number(p.amount),0),
-  monthly:monthly.reduce((s,p)=>s+Number(p.amount),0),
-  paidUsers:paidIds.size,
-  unpaidUsers:Math.max(0,db.users.length-paidIds.size),
-  todayCount:today.length
- };
-}
-
-/* LOGIN */
-
-function login(username,role='Administrator'){
- currentUser={username,role};
-
- document.getElementById('loginScreen').classList.add('hidden');
- document.getElementById('app').classList.remove('hidden');
-
- document.getElementById('currentUserName').textContent=username;
- document.getElementById('currentRole').textContent=role;
- document.getElementById('avatar').textContent=username[0].toUpperCase();
-
- db.loginHistory.unshift({
-  id:uid(),username,role,
-  time:new Date().toISOString(),
-  event:'Login'
- });
-
- save();
- render();
-}
-
-function logout(){
- if(currentUser){
-  db.loginHistory.unshift({
-   id:uid(),
-   username:currentUser.username,
-   role:currentUser.role,
-   time:new Date().toISOString(),
-   event:'Logout'
-  });
-  save();
- }
-
- currentUser=null;
- document.getElementById('app').classList.add('hidden');
- document.getElementById('loginScreen').classList.remove('hidden');
-}
-
-document.getElementById('loginForm').onsubmit=e=>{
- e.preventDefault();
-
- const u=document.getElementById('loginUser').value.trim();
- const p=document.getElementById('loginPass').value;
-
- if(u==='admin'&&p==='admin123'){
-  login('admin','Administrator');
-  return;
- }
-
- const found=db.users.find(x=>x.email===u&&x.phone===p);
-
- if(found){
-  login(found.name,found.role);
- }else{
-  toast('Invalid login details');
- }
-};
-
-document.getElementById('logoutBtn').onclick=logout;
-
-document.getElementById('quickAdd').onclick=()=>openUserModal();
-
-document.getElementById('menuBtn').onclick=()=>{
- document.getElementById('sidebar').classList.toggle('open');
-};
-
-document.getElementById('todayDate').textContent=
- new Date().toLocaleDateString('en-GB',{
-  weekday:'short',day:'numeric',month:'short',year:'numeric'
- });
-
-document.querySelectorAll('[data-page]').forEach(b=>{
- b.onclick=()=>go(b.dataset.page);
+const KEY='admin_dashboard_mobile_v2';
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const seed=()=>({
+ users:[],income:[],expenses:[],received:[],userPayments:[],
+ roles:['Admin','Manager','Staff'],history:[],
+ settings:{currency:'৳',opening:0},theme:'dark'
 });
-
+let db;
+try{db=JSON.parse(localStorage.getItem(KEY))||seed()}catch(e){db=seed()}
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function money(n){return (db.settings.currency||'৳')+' '+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function sum(arr){return arr.reduce((s,x)=>s+Number(x.amount||0),0)}
+function currentMonth(x){return (x.date||'').slice(0,7)===today().slice(0,7)}
+function log(type,details,amount=0){
+ db.history.unshift({id:uid(),date:today(),type,details,amount:Number(amount),time:new Date().toLocaleTimeString()});
+ save();
+}
+function totalReceived(){return sum(db.received)}
+function totalIncome(){return sum(db.income)}
+function totalExpense(){return sum(db.expenses)+sum(db.userPayments)}
+function currentMoney(){return Number(db.settings.opening||0)+totalIncome()+totalReceived()-totalExpense()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toggleTheme(){
+ db.theme=db.theme==='dark'?'light':'dark';save();applyTheme();
+}
+function applyTheme(){
+ document.body.classList.toggle('dark',db.theme==='dark');
+ $('themeBtn').textContent=db.theme==='dark'?'☀️ Light':'🌙 Dark';
+}
+function toggleMenu(){
+ $('sidebar').classList.toggle('open');$('overlay').classList.toggle('show');
+}
 function go(page){
- currentPage=page;
-
- document.querySelectorAll('[data-page]').forEach(b=>{
-  b.classList.toggle('active',b.dataset.page===page);
- });
-
- document.getElementById('sidebar').classList.remove('open');
- render();
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ $('page-'+page).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ const btn=document.querySelector('[data-page="'+page+'"]');
+ $('pageTitle').textContent=btn?btn.textContent.trim():'Dashboard';
+ $('sidebar').classList.remove('open');$('overlay').classList.remove('show');
+ renderAll();
 }
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 
-/* COMMON UI */
-
-function card(title,value,icon,foot,page,color=''){
- return `
- <button class="stat-card ${color}" data-go="${page}">
-  <div class="stat-top">
-   <span>${title}</span>
-   <span class="stat-icon">${icon}</span>
-  </div>
-  <div class="stat-value">${value}</div>
-  <div class="stat-foot">${foot} ↗</div>
- </button>`;
+const cardInfo=[
+ ['Total User','👥','users',()=>db.users.length,'Registered users'],
+ ['Add User','➕','adduser',()=>'+','Create new user'],
+ ['Total Payment','💳','payments',()=>money(totalReceived()),'All received payments'],
+ ['Total Earn','📈','income',()=>money(totalIncome()),'Additional income'],
+ ['Current Money','💰','money',()=>money(currentMoney()),'Available balance'],
+ ['Current Payment','🧾','currentpayment',()=>money(totalReceived()),'Receive user payments'],
+ ['Current Month Total Payment','📅','monthly',()=>money(sum(db.received.filter(currentMonth))),'This month received'],
+ ['Current Month Payment User','✅','monthly',()=>new Set(db.received.filter(currentMonth).map(x=>x.userId)).size,'Users paid this month'],
+ ['Current Month Non Payment User','⏳','unpaid',()=>db.users.filter(u=>u.status==='Active'&&!db.received.some(p=>p.userId===u.id&&currentMonth(p))).length,'Active users with no payment this month'],
+ ['History','📚','history',()=>db.history.length,'All activity'],
+ ['Role Setting','🛡️','roles',()=>db.roles.length,'Available roles'],
+ ['User Login History','🔐','loginhistory',()=>0,'Login not enabled'],
+ ['Taka Setting','⚙️','settings',()=>db.settings.currency,'Currency & balance'],
+ ['User Payment','💸','userpayment',()=>money(sum(db.userPayments)),'Money given to users']
+];
+function renderDashboard(){
+ $('dashboardCards').innerHTML=cardInfo.map(([name,icon,page,value,sub])=>`
+ <div class="card stat-card" onclick="go('${page}')">
+  <div class="stat-icon">${icon}</div><div class="stat-label">${name}</div>
+  <div class="stat-value">${typeof value()==='number'?value():esc(value())}</div>
+  <div class="stat-sub">${sub} →</div>
+ </div>`).join('');
+ $('recentTransactions').innerHTML=table([
+ ['Date','date'],['Type','type'],['Details','details'],['Amount','amount']
+ ],db.history.slice(0,6).map(x=>({...x,amount:money(x.amount)})));
 }
-
-function pageHead(title,desc,action=''){
- return `
- <div class="page-head">
-  <div><h1>${title}</h1><p>${desc}</p></div>
-  ${action}
- </div>`;
+function table(cols,rows){
+ if(!rows.length)return '<div class="empty">কোনো ডেটা পাওয়া যায়নি</div>';
+ return '<div class="table-wrap"><table><thead><tr>'+cols.map(c=>'<th>'+c[0]+'</th>').join('')+'</tr></thead><tbody>'+
+ rows.map(r=>'<tr>'+cols.map(c=>'<td>'+esc(r[c[1]]??'')+'</td>').join('')+'</tr>').join('')+
+ '</tbody></table></div>';
 }
-
-function table(headers,rows){
- return `
- <div class="table-wrap">
- <table>
-  <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
-  <tbody>${rows||`<tr><td colspan="${headers.length}" class="empty">No records found</td></tr>`}</tbody>
- </table>
- </div>`;
+function userName(id){return db.users.find(u=>u.id===id)?.name||'Deleted User'}
+function renderUsers(){
+ const q=($('userSearch')?.value||'').toLowerCase();
+ const rows=db.users.filter(u=>(u.name+' '+u.phone+' '+u.email).toLowerCase().includes(q));
+ $('usersTable').innerHTML=rows.length?'<div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Role</th><th>Status</th><th>Opening Due</th><th>Action</th></tr></thead><tbody>'+
+ rows.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.phone)}</td><td>${esc(u.role)}</td><td><span class="tag ${u.status==='Active'?'green':'red'}">${esc(u.status)}</span></td><td>${money(u.due)}</td><td><button class="btn small gray" onclick="editUser('${u.id}')">Edit</button> <button class="btn small red" onclick="deleteUser('${u.id}')">Delete</button></td></tr>`).join('')+
+ '</tbody></table></div>':'<div class="empty">কোনো User নেই</div>';
 }
-
-/* MAIN RENDER */
-
-function render(){
-
- const t=totals();
- const c=document.getElementById('content');
-
- const titles={
- dashboard:'Dashboard',
- users:'Total User',
- adduser:'Add User',
- payments:'Total Payment',
- earn:'Total Earn',
- money:'Current Money',
- today:'Current Payment',
- monthly:'Current Month Total Payment',
- paid:'Current Month Payment User',
- unpaid:'Current Month Non Payment User',
- history:'History',
- roles:'Role Setting',
- logins:'User Login History',
- settings:'Taka Setting'
- };
-
- document.getElementById('topTitle').textContent=titles[currentPage];
-
- if(currentPage==='dashboard'){
-
- c.innerHTML=
- pageHead(
-  'Good day, '+esc(currentUser.username)+' 👋',
-  'Here is your dashboard overview.',
-  '<button class="btn" onclick="openPaymentModal()">＋ Add Payment</button>'
- )+
- `<div class="grid">
-
- ${card('Total User',db.users.length,'♙','All registered users','users')}
- ${card('Add User','＋','♧','Create a new account','adduser')}
- ${card('Total Payment',moneyFmt(t.income),'▣','All collected amount','payments','green')}
- ${card('Total Earn',moneyFmt(t.income),'↗','Total income','earn','green')}
- ${card('Current Money',moneyFmt(t.balance),'◈','Income - Expense + Opening','money','dark')}
- ${card('Current Payment',moneyFmt(t.today),'◷','Today payment','today','orange')}
- ${card('Current Month Total Payment',moneyFmt(t.monthly),'▤','Monthly collection','monthly','green')}
- ${card('Current Month Payment User',t.paidUsers,'✓','Paid this month','paid','green')}
- ${card('Current Month Non Payment User',t.unpaidUsers,'!','Not paid this month','unpaid','red')}
- ${card('History',db.history.length+db.payments.length+db.expenses.length,'↶','Transaction history','history','dark')}
- ${card('Role Setting',db.roles.length,'⚿','Manage roles','roles','dark')}
- ${card('User Login History',db.loginHistory.length,'◉','Login records','logins','dark')}
- ${card('Taka Setting',db.settings.symbol+' '+db.settings.currency,'⚙','Currency settings','settings','dark')}
-
- </div>
-
- <div class="two-col">
-
- <div class="panel">
-  <div class="panel-head">
-   <h3>Recent Payments</h3>
-   <button class="btn ghost small" onclick="go('payments')">View All</button>
-  </div>
-
-  ${table(
-   ['Payment ID','User','Date','Amount'],
-   db.payments.slice(0,5).map(p=>`
-   <tr>
-    <td>${p.id}</td>
-    <td>${esc(userById(p.userId)?.name||'Deleted user')}</td>
-    <td>${fmtDate(p.date)}</td>
-    <td><b>${moneyFmt(p.amount)}</b></td>
-   </tr>`).join('')
-  )}
- </div>
-
- <div class="panel">
-  <div class="panel-head"><h3>Monthly Overview</h3></div>
-
-  <div class="kpi-line">
-   <div class="kpi">
-    <b>${moneyFmt(t.monthly)}</b>
-    <span>Collected</span>
-   </div>
-   <div class="kpi">
-    <b>${t.paidUsers}</b>
-    <span>Paid Users</span>
-   </div>
-  </div>
-
-  <div class="bar-row">
-   <span>Paid</span>
-   <div class="bar">
-    <i style="width:${db.users.length?t.paidUsers/db.users.length*100:0}%"></i>
-   </div>
-   <b>${t.paidUsers}</b>
-  </div>
-
-  <div class="bar-row">
-   <span>Unpaid</span>
-   <div class="bar">
-    <i style="width:${db.users.length?t.unpaidUsers/db.users.length*100:0}%;background:#e05260"></i>
-   </div>
-   <b>${t.unpaidUsers}</b>
-  </div>
- </div>
-
- </div>`;
-
- }
-
- /* USER PAGES */
-
- else if(['users','paid','unpaid'].includes(currentPage)){
-
- let list=db.users;
-
- const ids=new Set(
-  db.payments.filter(p=>p.date.startsWith(monthNow()))
-  .map(p=>p.userId)
- );
-
- if(currentPage==='paid')list=list.filter(u=>ids.has(u.id));
- if(currentPage==='unpaid')list=list.filter(u=>!ids.has(u.id));
-
- c.innerHTML=
- pageHead(
-  currentPage==='users'?'All Users':
-  currentPage==='paid'?'Payment Users This Month':
-  'Non Payment Users This Month',
-  list.length+' users found',
-  '<button class="btn" onclick="openUserModal()">＋ Add User</button>'
- )+
- `<div class="panel">
- <div class="panel-head">
-  <h3>User Directory</h3>
-  <div class="toolbar">
-   <input id="userSearch" placeholder="Search users..." oninput="filterTable('userSearch','userTable')">
-   <select id="statusFilter" onchange="filterTable('userSearch','userTable')">
-    <option value="">All Status</option>
-    <option>Active</option>
-    <option>Inactive</option>
-   </select>
-  </div>
- </div>
-
- ${table(
- ['ID','Name','Phone','Email','Role','Joined','Status','Actions'],
- list.map(u=>`
- <tr data-search="${esc((u.name+' '+u.phone+' '+u.email).toLowerCase())}" data-status="${u.status}">
- <td>${u.id}</td>
- <td><b>${esc(u.name)}</b></td>
- <td>${esc(u.phone)}</td>
- <td>${esc(u.email)}</td>
- <td>${esc(u.role)}</td>
- <td>${fmtDate(u.joined)}</td>
- <td><span class="pill ${u.status==='Active'?'active':'inactive'}">${u.status}</span></td>
- <td>
-  <div class="actions">
-   <button class="btn ghost small" onclick="openUserModal('${u.id}')">Edit</button>
-   <button class="btn danger small" onclick="deleteUser('${u.id}')">Delete</button>
-  </div>
- </td>
- </tr>`).join('')
- ).replace('<tbody>','<tbody id="userTable">')}
- </div>`;
- }
-
- /* ADD USER */
-
- else if(currentPage==='adduser'){
-
- c.innerHTML=pageHead('Add New User','Create a new user profile.')+
- `<div class="panel" style="max-width:700px">
- <form id="addUserForm">
-  <div class="form-grid">${userFields()}</div>
-  <div class="modal-actions"><button class="btn">Save User</button></div>
- </form>
- </div>`;
-
- document.getElementById('addUserForm').onsubmit=e=>{
-  e.preventDefault();
-  saveUserFromForm(e.target);
-  go('users');
- };
- }
-
- /* PAYMENT PAGES */
-
- else if(['payments','today','monthly'].includes(currentPage)){
-
- let list=db.payments;
-
- if(currentPage==='today')list=list.filter(p=>p.date===dateNow());
- if(currentPage==='monthly')list=list.filter(p=>p.date.startsWith(monthNow()));
-
- c.innerHTML=pageHead(
-  currentPage==='today'?'Current Payment':
-  currentPage==='monthly'?'Current Month Payment':'Total Payment',
-  list.length+' payment records',
-  '<button class="btn" onclick="openPaymentModal()">＋ Add Payment</button>'
- )+
- `<div class="panel">
- <div class="panel-head">
-  <h3>Payment Records</h3>
-  <div class="toolbar">
-   <input id="paySearch" placeholder="Search payment..." oninput="filterTable('paySearch','payTable')">
-  </div>
- </div>
- ${table(
- ['Payment ID','User','Date','Method','Note','Amount','Action'],
- list.map(p=>`
- <tr data-search="${esc((p.id+' '+(userById(p.userId)?.name||'')+' '+p.method).toLowerCase())}">
- <td>${p.id}</td>
- <td>${esc(userById(p.userId)?.name||'Deleted user')}</td>
- <td>${fmtDate(p.date)}</td>
- <td>${esc(p.method)}</td>
- <td>${esc(p.note)}</td>
- <td><b>${moneyFmt(p.amount)}</b></td>
- <td><button class="btn danger small" onclick="deletePayment('${p.id}')">Delete</button></td>
- </tr>`).join('')
- ).replace('<tbody>','<tbody id="payTable">')}
- </div>`;
- }
-
- /* EARN */
-
- else if(currentPage==='earn'){
-
- c.innerHTML=pageHead('Total Earn','All recorded income.')+
- `<div class="grid">
- ${card('Total Earn',moneyFmt(t.income),'↗','All payments','payments','green')}
- ${card('This Month',moneyFmt(t.monthly),'▤','Monthly income','monthly','green')}
- ${card('Today',moneyFmt(t.today),'◷','Today income','today','orange')}
- </div>
- <div class="panel">
- <h3>Income Transactions</h3>
- ${table(['ID','User','Date','Amount'],
- db.payments.map(p=>`
- <tr>
- <td>${p.id}</td>
- <td>${esc(userById(p.userId)?.name||'Deleted user')}</td>
- <td>${fmtDate(p.date)}</td>
- <td>${moneyFmt(p.amount)}</td>
- </tr>`).join(''))}
- </div>`;
- }
-
- /* CURRENT MONEY */
-
- else if(currentPage==='money'){
-
- c.innerHTML=pageHead(
- 'Current Money',
- 'Opening balance + Income - Expense'
- )+
- `<div class="grid">
- ${card('Current Money',moneyFmt(t.balance),'◈','Current balance','money','green')}
- ${card('Total Income',moneyFmt(t.income),'↗','All payments','earn','green')}
- ${card('Total Expense',moneyFmt(t.expense),'↘','All expenses','money','red')}
- </div>
-
- <div class="panel">
- <div class="panel-head">
-  <h3>Expense Records</h3>
-  <button class="btn" onclick="openExpenseModal()">＋ Add Expense</button>
- </div>
-
- ${table(
- ['ID','Date','Category','Note','Amount','Action'],
- db.expenses.map(x=>`
- <tr>
- <td>${x.id}</td>
- <td>${fmtDate(x.date)}</td>
- <td>${esc(x.category)}</td>
- <td>${esc(x.note)}</td>
- <td>${moneyFmt(x.amount)}</td>
- <td><button class="btn danger small" onclick="deleteExpense('${x.id}')">Delete</button></td>
- </tr>`).join('')
- )}
- </div>`;
- }
-
- /* HISTORY */
-
- else if(currentPage==='history'){
-
- const rows=[
- ...db.payments.map(p=>({
-  date:p.date,type:'Payment',
-  details:(userById(p.userId)?.name||'User')+' payment',
-  amount:p.amount,id:p.id
- })),
- ...db.expenses.map(x=>({
-  date:x.date,type:'Expense',
-  details:x.category+' - '+x.note,
-  amount:-x.amount,id:x.id
- })),
- ...db.history.map(h=>({
-  date:h.date.slice(0,10),type:'Activity',
-  details:h.actor+' - '+h.action+' '+h.details,
-  amount:null,id:h.id
- }))
- ].sort((a,b)=>b.date.localeCompare(a.date));
-
- c.innerHTML=pageHead('History','Transaction and activity records.')+
- `<div class="panel">
- ${table(
- ['Date','Type','Details','Amount','Reference'],
- rows.map(r=>`
- <tr>
- <td>${fmtDate(r.date)}</td>
- <td><span class="pill">${r.type}</span></td>
- <td>${esc(r.details)}</td>
- <td>${r.amount===null?'—':moneyFmt(r.amount)}</td>
- <td>${r.id}</td>
- </tr>`).join('')
- )}
- </div>`;
- }
-
- /* ROLE SETTING */
-
- else if(currentPage==='roles'){
-
- c.innerHTML=pageHead(
- 'Role Setting',
- 'Create roles and manage permissions.',
- '<button class="btn" onclick="openRoleModal()">＋ Add Role</button>'
- )+
- `<div class="grid">
- ${db.roles.map(r=>`
- <div class="panel" style="margin:0">
-  <h3>${esc(r.name)}</h3>
-  <p class="muted">${esc(r.permissions.join(', '))}</p>
-  <button class="btn secondary small" onclick="openRoleModal('${esc(r.name)}')">Edit Role</button>
- </div>`).join('')}
- </div>
- <div class="notice" style="margin-top:15px">
- Demo only. Real permission security requires a backend.
- </div>`;
- }
-
- /* LOGIN HISTORY */
-
- else if(currentPage==='logins'){
-
- c.innerHTML=pageHead(
- 'User Login History',
- 'Login and logout activity.'
- )+
- `<div class="panel">
- ${table(
- ['User','Role','Event','Date & Time'],
- db.loginHistory.map(l=>`
- <tr>
- <td>${esc(l.username)}</td>
- <td>${esc(l.role)}</td>
- <td><span class="pill">${l.event}</span></td>
- <td>${new Date(l.time).toLocaleString()}</td>
- </tr>`).join('')
- )}
- </div>`;
- }
-
- /* TAKA SETTINGS */
-
- else if(currentPage==='settings'){
-
- c.innerHTML=pageHead(
- 'Taka Setting',
- 'Currency and opening balance configuration.'
- )+
- `<div class="panel" style="max-width:700px">
- <form id="settingsForm">
-
- <div class="field">
-  <label>Currency Code</label>
-  <select name="currency">
-   <option value="BDT">BDT - Bangladeshi Taka</option>
-   <option value="USD">USD - US Dollar</option>
-   <option value="INR">INR - Indian Rupee</option>
-   <option value="EUR">EUR - Euro</option>
-  </select>
- </div>
-
- <div class="field">
-  <label>Currency Symbol</label>
-  <input name="symbol" value="${esc(db.settings.symbol)}" required>
- </div>
-
- <div class="field">
-  <label>Opening Balance</label>
-  <input name="openingBalance" type="number" min="0" value="${db.settings.openingBalance}" required>
- </div>
-
- <div class="field">
-  <label>Dashboard Name</label>
-  <input name="appName" value="${esc(db.settings.appName)}">
- </div>
-
- <button class="btn">Save Settings</button>
- </form>
-
- <div class="notice" style="margin-top:15px">
- Current Money = Opening Balance + Total Income - Total Expense
- </div>
-
- <button class="btn danger" onclick="resetDemo()" style="margin-top:15px">
- Reset Demo Data
- </button>
- </div>`;
-
- document.querySelector('#settingsForm [name=currency]').value=db.settings.currency;
-
- document.getElementById('settingsForm').onsubmit=e=>{
-  e.preventDefault();
-  const f=e.target;
-
-  db.settings={
-   ...db.settings,
-   currency:f.currency.value,
-   symbol:f.symbol.value,
-   openingBalance:Number(f.openingBalance.value),
-   appName:f.appName.value
-  };
-
-  save();
-  logAction('Updated money settings');
-  toast('Settings saved');
-  render();
- };
- }
-
- /* CARD NAVIGATION */
-
- document.querySelectorAll('[data-go]').forEach(b=>{
-  b.onclick=()=>go(b.dataset.go);
- });
+function refreshUserOptions(){
+ const opts='<option value="">Select User</option>'+db.users.map(u=>`<option value="${u.id}">${esc(u.name)} (${esc(u.phone||'No phone')})</option>`).join('');
+ $('payUser').innerHTML=opts;$('receiveUser').innerHTML=opts;
+ $('userRole').innerHTML=db.roles.map(r=>`<option>${esc(r)}</option>`).join('');
 }
-
-/* USER FORM */
-
-function userFields(u={}){
- return `
- <div class="field">
-  <label>Full Name *</label>
-  <input name="name" value="${esc(u.name||'')}" required>
- </div>
- <div class="field">
-  <label>Phone *</label>
-  <input name="phone" value="${esc(u.phone||'')}" required>
- </div>
- <div class="field">
-  <label>Email</label>
-  <input name="email" type="email" value="${esc(u.email||'')}">
- </div>
- <div class="field">
-  <label>Role</label>
-  <select name="role">
-   ${db.roles.map(r=>`
-   <option ${u.role===r.name?'selected':''}>${esc(r.name)}</option>
-   `).join('')}
-  </select>
- </div>
- <div class="field">
-  <label>Status</label>
-  <select name="status">
-   <option ${u.status!=='Inactive'?'selected':''}>Active</option>
-   <option ${u.status==='Inactive'?'selected':''}>Inactive</option>
-  </select>
- </div>
- <div class="field">
-  <label>Joined Date</label>
-  <input name="joined" type="date" value="${u.joined||dateNow()}">
- </div>`;
+function editUser(id){
+ const u=db.users.find(x=>x.id===id);if(!u)return;
+ const f=$('userForm');Object.keys(u).forEach(k=>{if(f.elements[k])f.elements[k].value=u[k]});
+ go('adduser');
 }
-
-function modal(title,body){
- document.getElementById('modalRoot').innerHTML=`
- <div class="modal-backdrop" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-   <div class="modal-head">
-    <h3>${title}</h3>
-    <button class="close" onclick="closeModal()">✕</button>
-   </div>
-   ${body}
-  </div>
- </div>`;
-}
-
-function closeModal(){
- document.getElementById('modalRoot').innerHTML='';
-}
-
-function openUserModal(id){
-
- const u=id?userById(id):{};
-
- modal(id?'Edit User':'Add New User',`
- <form id="userForm">
-  <div class="form-grid">${userFields(u)}</div>
-  <div class="modal-actions">
-   <button type="button" class="btn ghost" onclick="closeModal()">Cancel</button>
-   <button class="btn">Save User</button>
-  </div>
- </form>`);
-
- document.getElementById('userForm').onsubmit=e=>{
-  e.preventDefault();
-  saveUserFromForm(e.target,id);
-  closeModal();
-  render();
- };
-}
-
-function saveUserFromForm(f,id){
-
- const v=Object.fromEntries(new FormData(f));
-
- if(id){
-  Object.assign(userById(id),v);
-  logAction('Updated user',v.name);
- }else{
-  db.users.unshift({
-   id:'U-'+(1000+Math.floor(Math.random()*8999)),
-   ...v
-  });
-  logAction('Added user',v.name);
- }
-
- save();
- toast(id?'User updated':'User added');
-}
-
 function deleteUser(id){
- if(!confirm('Delete this user?'))return;
-
- const u=userById(id);
- db.users=db.users.filter(x=>x.id!==id);
-
- logAction('Deleted user',u?.name||id);
- save();
- render();
- toast('User deleted');
+ if(!confirm('এই User-কে Delete করবেন?'))return;
+ db.users=db.users.filter(u=>u.id!==id);log('User Deleted',userName(id));renderAll();
 }
-
-/* PAYMENT */
-
-function openPaymentModal(){
-
- if(!db.users.length){
-  toast('Add a user first');
-  return;
- }
-
- modal('Record Payment',`
- <form id="paymentForm">
-
- <div class="field">
-  <label>User *</label>
-  <select name="userId" required>
-   ${db.users.map(u=>`
-   <option value="${u.id}">${esc(u.name)}</option>
-   `).join('')}
-  </select>
- </div>
-
- <div class="form-grid">
-
- <div class="field">
-  <label>Amount *</label>
-  <input name="amount" type="number" min="1" required>
- </div>
-
- <div class="field">
-  <label>Date</label>
-  <input name="date" type="date" value="${dateNow()}" required>
- </div>
-
- <div class="field">
-  <label>Method</label>
-  <select name="method">
-   <option>Cash</option>
-   <option>bKash</option>
-   <option>Nagad</option>
-   <option>Bank</option>
-   <option>Card</option>
-   <option>Other</option>
-  </select>
- </div>
-
- <div class="field">
-  <label>Note</label>
-  <input name="note" placeholder="Payment note">
- </div>
-
- </div>
-
- <div class="modal-actions">
-  <button type="button" class="btn ghost" onclick="closeModal()">Cancel</button>
-  <button class="btn">Save Payment</button>
- </div>
- </form>`);
-
- document.getElementById('paymentForm').onsubmit=e=>{
-  e.preventDefault();
-
-  const v=Object.fromEntries(new FormData(e.target));
-
-  db.payments.unshift({
-   id:'P-'+Date.now().toString().slice(-6),
-   ...v,
-   amount:Number(v.amount)
-  });
-
-  logAction('Added payment',moneyFmt(v.amount));
-  save();
-  closeModal();
-  render();
-  toast('Payment saved');
+$('userForm').addEventListener('submit',e=>{
+ e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));const id=d.id||uid();
+ const old=db.users.find(u=>u.id===id);
+ const user={...old,...d,id,due:Number(d.due||0)};
+ if(old)db.users=db.users.map(u=>u.id===id?user:u);else db.users.push(user);
+ log(old?'User Updated':'User Added',user.name);
+ f.reset();f.elements.id.value='';renderAll();go('users');
+});
+$('incomeForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ db.income.unshift({...d,id:uid(),amount:Number(d.amount)});log('Income Added',d.title,d.amount);
+ e.target.reset();renderAll();
+});
+$('expenseForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ db.expenses.unshift({...d,id:uid(),amount:Number(d.amount)});log('Expense Added',d.title,d.amount);
+ e.target.reset();renderAll();
+});
+$('userPaymentForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ if(!db.users.some(u=>u.id===d.userId)){alert('আগে User নির্বাচন করুন');return}
+ const p={...d,id:uid(),amount:Number(d.amount),userName:userName(d.userId)};
+ db.userPayments.unshift(p);
+ log('User Payment','Paid '+p.userName+' — '+(p.note||'User payment'),p.amount);
+ e.target.reset();renderAll();alert('User Payment সফলভাবে যোগ হয়েছে।');
+});
+$('receiveForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ if(!db.users.some(u=>u.id===d.userId)){alert('আগে User নির্বাচন করুন');return}
+ const p={...d,id:uid(),amount:Number(d.amount),userName:userName(d.userId)};
+ db.received.unshift(p);
+ log('Payment Received',p.userName+' — '+(p.method||'Cash'),p.amount);
+ e.target.reset();renderAll();alert('Payment Received সফল হয়েছে।');
+});
+$('roleForm').addEventListener('submit',e=>{
+ e.preventDefault();const role=new FormData(e.target).get('role').trim();
+ if(db.roles.some(x=>x.toLowerCase()===role.toLowerCase()))return alert('এই Role আগে থেকেই আছে');
+ db.roles.push(role);log('Role Added',role);e.target.reset();renderAll();
+});
+$('settingsForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ db.settings.currency=d.currency;db.settings.opening=Number(d.opening||0);
+ save();log('Settings Updated','Currency and opening balance');renderAll();alert('Settings saved');
+});
+function renderPayments(){
+ const rows=db.received.map(p=>({date:p.date,user:userName(p.userId),amount:money(p.amount),method:p.method,note:p.note||''}));
+ $('paymentsTable').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Method','method'],['Note','note']],rows);
+ $('paymentSummary').innerHTML='<div class="summary-row"><div class="summary"><small>Total Received</small><strong>'+money(totalReceived())+'</strong></div><div class="summary"><small>Payment Count</small><strong>'+db.received.length+'</strong></div><div class="summary"><small>This Month</small><strong>'+money(sum(db.received.filter(currentMonth)))+'</strong></div></div>';
+ $('currentPaymentTable').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Method','method'],['Note','note']],rows.slice(0,30));
+}
+function renderIncomeExpense(){
+ $('incomeTable').innerHTML=table([['Date','date'],['Title','title'],['Amount','amount'],['Note','note']],db.income.map(x=>({...x,amount:money(x.amount)})));
+ $('expenseTable').innerHTML=table([['Date','date'],['Title','title'],['Amount','amount'],['Note','note']],db.expenses.map(x=>({...x,amount:money(x.amount)})));
+ $('moneySummary').innerHTML=[
+ ['Opening Balance',money(db.settings.opening)],['Total Income + Received',money(totalIncome()+totalReceived())],
+ ['Total Expense + User Payment',money(totalExpense())],['Current Money',money(currentMoney())]
+ ].map(x=>`<div class="summary"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('');
+}
+function renderUserPayments(){
+ const rows=db.userPayments.map(p=>({date:p.date,user:userName(p.userId),amount:money(p.amount),method:p.method,note:p.note}));
+ $('userPaymentTable').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Method','method'],['Reason','note']],rows);
+ $('userPaySummary').innerHTML=[
+ ['Total User Payment',money(sum(db.userPayments))],
+ ['Total Payment Count',db.userPayments.length],
+ ['This Month',money(sum(db.userPayments.filter(currentMonth)))]
+ ].map(x=>`<div class="summary"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('');
+}
+function renderMonthly(){
+ const data=db.received.filter(currentMonth);
+ const paid=new Set(data.map(x=>x.userId));
+ const unpaid=db.users.filter(u=>u.status==='Active'&&!paid.has(u.id));
+ $('monthlySummary').innerHTML=[
+ ['This Month Received',money(sum(data))],['Paid Users',paid.size],['Non Payment Users',unpaid.length]
+ ].map(x=>`<div class="summary"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('');
+ $('monthlyTable').innerHTML=table([['Date','date'],['User','user'],['Amount','amount'],['Method','method']],data.map(p=>({date:p.date,user:userName(p.userId),amount:money(p.amount),method:p.method})));
+ $('unpaidTable').innerHTML=table([['User','name'],['Phone','phone'],['Role','role'],['Status','status']],unpaid);
+}
+function renderHistory(){
+ $('historyTable').innerHTML=table([['Date','date'],['Time','time'],['Type','type'],['Details','details'],['Amount','amount']],db.history.map(x=>({...x,amount:money(x.amount)})));
+}
+function renderRoles(){
+ $('rolesList').innerHTML=db.roles.map((r,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid var(--line)"><b>${esc(r)}</b>${r==='Admin'?'':`<button class="btn small red" onclick="deleteRole(${i})">Delete</button>`}</div>`).join('');
+}
+function deleteRole(i){
+ const role=db.roles[i];if(!confirm('Delete '+role+' role?'))return;
+ db.roles.splice(i,1);log('Role Deleted',role);renderAll();
+}
+function renderSettings(){
+ const f=$('settingsForm');f.elements.currency.value=db.settings.currency||'৳';f.elements.opening.value=db.settings.opening||0;
+}
+function renderAll(){
+ applyTheme();refreshUserOptions();renderDashboard();renderUsers();renderPayments();
+ renderIncomeExpense();renderUserPayments();renderMonthly();renderHistory();renderRoles();renderSettings();
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='admin-dashboard-backup.json';a.click();URL.revokeObjectURL(a.href);
+}
+function importData(e){
+ const file=e.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const d=JSON.parse(reader.result);
+   if(!d.users||!d.settings)throw Error('Invalid backup');
+   db={...seed(),...d};save();renderAll();alert('Backup restored');
+  }catch(err){alert('Invalid backup file')}
  };
+ reader.readAsText(file);e.target.value='';
 }
-
-function deletePayment(id){
- if(!confirm('Delete this payment?'))return;
-
- db.payments=db.payments.filter(p=>p.id!==id);
- logAction('Deleted payment',id);
- save();
- render();
- toast('Payment deleted');
+function resetData(){
+ if(!confirm('সব ডেটা মুছে Demo Dashboard Reset করবেন? আগে Backup রাখুন।'))return;
+ db=seed();save();renderAll();go('dashboard');
 }
-
-/* EXPENSE */
-
-function openExpenseModal(){
-
- modal('Add Expense',`
- <form id="expenseForm">
-
- <div class="form-grid">
-
- <div class="field">
-  <label>Amount *</label>
-  <input name="amount" type="number" min="1" required>
- </div>
-
- <div class="field">
-  <label>Date</label>
-  <input name="date" type="date" value="${dateNow()}" required>
- </div>
-
- <div class="field">
-  <label>Category</label>
-  <select name="category">
-   <option>Office</option>
-   <option>Salary</option>
-   <option>Transport</option>
-   <option>Equipment</option>
-   <option>Marketing</option>
-   <option>Other</option>
-  </select>
- </div>
-
- <div class="field">
-  <label>Note</label>
-  <input name="note" placeholder="Expense details">
- </div>
-
- </div>
-
- <div class="modal-actions">
-  <button type="button" class="btn ghost" onclick="closeModal()">Cancel</button>
-  <button class="btn">Save Expense</button>
- </div>
- </form>`);
-
- document.getElementById('expenseForm').onsubmit=e=>{
-  e.preventDefault();
-
-  const v=Object.fromEntries(new FormData(e.target));
-
-  db.expenses.unshift({
-   id:'E-'+Date.now().toString().slice(-6),
-   ...v,
-   amount:Number(v.amount)
-  });
-
-  logAction('Added expense',v.category+' '+moneyFmt(v.amount));
-  save();
-  closeModal();
-  render();
-  toast('Expense saved');
- };
-}
-
-function deleteExpense(id){
- if(!confirm('Delete this expense?'))return;
-
- db.expenses=db.expenses.filter(x=>x.id!==id);
- logAction('Deleted expense',id);
- save();
- render();
- toast('Expense deleted');
-}
-
-/* ROLE SETTING */
-
-function openRoleModal(name){
-
- const r=db.roles.find(x=>x.name===name)||{
-  name:'',
-  permissions:[]
- };
-
- const opts=[
-  'dashboard','users','payments',
-  'history','roles','logins','settings'
- ];
-
- modal(name?'Edit Role':'Add Role',`
- <form id="roleForm">
-
- <div class="field">
-  <label>Role Name</label>
-  <input name="name" value="${esc(r.name)}" required>
- </div>
-
- <div class="field">
-  <label>Permissions</label>
-
-  ${opts.map(p=>`
-  <label style="display:flex;gap:8px;align-items:center;margin:8px 0">
-   <input type="checkbox" name="permissions" value="${p}"
-   ${r.permissions.includes('all')||r.permissions.includes(p)?'checked':''}>
-   ${p}
-  </label>
-  `).join('')}
-
- </div>
-
- <div class="modal-actions">
-  <button type="button" class="btn ghost" onclick="closeModal()">Cancel</button>
-  <button class="btn">Save Role</button>
- </div>
- </form>`);
-
- document.getElementById('roleForm').onsubmit=e=>{
-  e.preventDefault();
-
-  const f=e.target;
-
-  const v={
-   name:f.name.value.trim(),
-   permissions:[...f.querySelectorAll('[name=permissions]:checked')].map(x=>x.value)
-  };
-
-  if(!v.permissions.length){
-   toast('Select a permission');
-   return;
-  }
-
-  if(name)Object.assign(r,v);
-  else db.roles.push(v);
-
-  save();
-  logAction('Saved role',v.name);
-  closeModal();
-  render();
-  toast('Role saved');
- };
-}
-
-/* SEARCH */
-
-function filterTable(inputId,bodyId){
-
- const q=(document.getElementById(inputId)?.value||'').toLowerCase();
- const status=document.getElementById('statusFilter')?.value||'';
-
- document.querySelectorAll('#'+bodyId+' tr').forEach(r=>{
-
-  const match=(!q||(r.dataset.search||'').includes(q));
-  const statusMatch=(!status||r.dataset.status===status);
-
-  r.style.display=match&&statusMatch?'':'none';
- });
-}
-
-/* RESET */
-
-function resetDemo(){
-
- if(!confirm('Reset all demo data?'))return;
-
- db=seed();
- save();
- logAction('Reset demo data');
-
- render();
- toast('Demo data reset');
-}
-
-if(!localStorage.getItem(KEY)){
- save();
-}
+document.querySelectorAll('.today').forEach(x=>x.value=today());
+if(!db.userPayments)db.userPayments=[];
+if(!db.received)db.received=[];
+if(!db.income)db.income=[];
+if(!db.expenses)db.expenses=[];
+if(!db.users)db.users=[];
+if(!db.roles)db.roles=['Admin','Manager','Staff'];
+if(!db.history)db.history=[];
+if(!db.settings)db.settings={currency:'৳',opening:0};
+save();renderAll();
 </script>
-
 </body>
 </html>
