@@ -3,618 +3,588 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Company Wage & Payment Manager</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
- --bg:#f4f6fb;--panel:#fff;--text:#182235;--muted:#778198;
- --border:#e7eaf1;--primary:#635bdb;--primary2:#5148c9;
- --green:#0d9b70;--red:#e05260;--orange:#e69b32;
- --shadow:0 5px 22px rgba(25,35,60,.055);
-}
-body.dark{
- --bg:#101827;--panel:#192538;--text:#edf2fc;--muted:#9aa9c0;
- --border:#293950;--primary:#9289ff;--primary2:#756be8;
- --green:#37c99a;--red:#ff7885;--orange:#f3b95d;
- --shadow:0 5px 22px rgba(0,0,0,.15);
-}
+:root{--bg:#f3f6fa;--panel:#fff;--text:#172033;--muted:#778398;--line:#e5eaf1;--green:#07976d;--red:#df4d5b;--blue:#3979d8;--orange:#dc9224;--shadow:0 5px 22px #1b2b4410}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:14px;transition:.2s}
+body{margin:0;background:var(--bg);color:var(--text);font:14px Arial,sans-serif}
+body.dark{--bg:#101824;--panel:#192536;--text:#edf3fc;--muted:#a1aec1;--line:#304056;--shadow:0 5px 22px #0003}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{display:flex;min-height:100vh}
-.sidebar{width:245px;background:var(--panel);border-right:1px solid var(--border);padding:22px 15px;position:fixed;inset:0 auto 0 0;z-index:20;overflow:auto;transition:.25s}
-.brand{display:flex;align-items:center;gap:11px;padding:5px 8px 25px}
-.brand-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#7168ed,#4038b8);display:grid;place-items:center;color:white;font-size:20px;font-weight:800}
-.brand h2{font-size:16px;margin:0 0 4px}
-.brand small{color:var(--muted);font-size:10px}
-.nav-label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1.2px;padding:15px 10px 8px}
-.nav button{width:100%;border:0;background:transparent;color:var(--muted);padding:12px 11px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:12px;margin:3px 0;font-weight:600}
-.nav button:hover,.nav button.active{background:color-mix(in srgb,var(--primary) 11%,transparent);color:var(--primary)}
-.nav button span:first-child{width:21px;text-align:center;font-size:17px}
-.sidebar-bottom{border-top:1px solid var(--border);margin-top:20px;padding-top:15px}
-.main{margin-left:245px;width:calc(100% - 245px);padding:24px 28px 50px;min-width:0}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
-.top-left{display:flex;align-items:center;gap:12px}
-.topbar h1{font-size:23px;margin:0 0 5px;font-weight:800}
-.topbar p{color:var(--muted);margin:0;font-size:12px}
-.top-actions{display:flex;gap:9px;align-items:center}
-.icon-btn{width:40px;height:40px;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;font-size:17px}
-.menu-btn{display:none}
-.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;background:var(--primary);color:white}
-.btn:hover{background:var(--primary2)}
-.btn.secondary{background:var(--panel);border:1px solid var(--border);color:var(--text)}
+.app{min-height:100vh}
+.sidebar{width:245px;position:fixed;inset:0 auto 0 0;background:var(--panel);border-right:1px solid var(--line);padding:18px 13px;overflow:auto;z-index:10}
+.brand{display:flex;align-items:center;gap:10px;padding:7px 8px 22px;font-weight:800;font-size:17px}
+.logo{width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,#16bd89,#087c5b);display:grid;place-items:center;color:white;font-size:20px}
+.brand small{display:block;color:var(--muted);font-size:10px;font-weight:400;margin-top:3px}
+.nav-label{font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:800;padding:14px 10px 6px}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:var(--muted);padding:11px;border-radius:9px;text-align:left;margin:2px 0;font-weight:600}
+.nav button:hover,.nav button.active{background:#07976d16;color:var(--green)}
+.main{margin-left:245px;padding:22px 25px 45px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
+.topbar h1{font-size:22px;margin:0}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.btn{background:var(--green);color:white;border:0;padding:9px 13px;border-radius:9px;font-weight:700}
+.btn.secondary{background:var(--panel);border:1px solid var(--line);color:var(--text)}
 .btn.danger{background:var(--red)}
-.btn.success{background:var(--green)}
-.btn.small{padding:7px 10px;font-size:12px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.balance-bar{background:linear-gradient(115deg,#25215f,#635bdb 60%,#8177ed);color:#fff;border-radius:17px;padding:21px 23px;margin-bottom:23px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:18px;align-items:center;box-shadow:0 10px 30px rgba(81,72,201,.18)}
-.balance-title{font-size:12px;opacity:.8;margin-bottom:9px}
-.balance-value{font-size:27px;font-weight:800;letter-spacing:-.8px;word-break:break-word}
-.balance-sub{font-size:11px;opacity:.75;margin-top:6px}
-.balance-stat{border-left:1px solid #ffffff38;padding-left:18px}
-.balance-stat strong{display:block;font-size:18px;margin-top:8px;word-break:break-word}
-.balance-stat small{opacity:.8}
-.balance-controls{display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
-.balance-controls select{max-width:180px}
-.card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:17px;box-shadow:var(--shadow);cursor:pointer;min-height:122px;transition:.18s;position:relative;overflow:hidden}
-.stat-card:hover{transform:translateY(-3px);border-color:var(--primary)}
-.stat-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.stat-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:color-mix(in srgb,var(--primary) 12%,transparent)}
-.stat-card .stat-label{color:var(--muted);font-size:12px;font-weight:600;margin-top:13px}
-.stat-card .stat-value{font-size:23px;font-weight:800;margin-top:6px;overflow-wrap:anywhere}
-.stat-card .stat-hint{font-size:10px;color:var(--muted);margin-top:5px}
-.page{display:none}.page.active{display:block}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-bottom:17px}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;flex-wrap:wrap}
-.panel-head h3{font-size:16px;margin:0}
-.panel-head p{color:var(--muted);font-size:12px;margin:5px 0 0}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.field{display:flex;flex-direction:column;gap:7px}
+.btn.small{padding:6px 9px;font-size:12px}
+.panel,.stat,.dash-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow)}
+.panel{padding:17px;margin-bottom:17px}
+.panel h3{margin:0 0 14px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:17px}
+.stat{padding:15px;min-width:0}
+.stat-label{color:var(--muted);font-size:12px;font-weight:700}
+.stat-value{font-size:21px;font-weight:800;margin-top:9px;overflow-wrap:anywhere}
+.stat-icon{float:right;font-size:20px}
+.cards-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dash-card{padding:15px;text-align:left;color:var(--text);min-height:105px}
+.dash-card:hover{border-color:var(--green)}
+.dash-card .ico{font-size:22px}
+.dash-card b{display:block;margin:7px 0}
+.dash-card small,.muted,.smalltext{color:var(--muted)}
+.dash-card small,.smalltext{font-size:11px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:6px}
 .field.full{grid-column:1/-1}
-.field label{font-size:12px;font-weight:700;color:var(--muted)}
-input,select,textarea{width:100%;padding:11px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);outline:none;min-width:0}
-input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 12%,transparent)}
-textarea{min-height:80px;resize:vertical}
-.form-actions{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap}
-.table-wrap{width:100%;overflow:auto}
+.field label{font-size:12px;color:var(--muted);font-weight:700}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{min-height:75px;resize:vertical}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+.toolbar input,.toolbar select{max-width:230px}
+.table-wrap{overflow:auto}
 table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:12px 11px;text-align:left;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap}
-th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
-td{font-weight:500}
-.empty{text-align:center;padding:35px;color:var(--muted)}
-.badge{display:inline-block;padding:5px 9px;border-radius:30px;font-size:10px;font-weight:800;background:color-mix(in srgb,var(--green) 12%,transparent);color:var(--green)}
-.badge.red{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red)}
-.badge.orange{background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange)}
-.actions{display:flex;gap:6px}
-.search-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
-.search-row input{max-width:280px}
-.profile-card{display:flex;align-items:center;gap:15px;padding:17px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:15px}
-.avatar{width:55px;height:55px;border-radius:50%;object-fit:cover;background:var(--primary);color:white;display:grid;place-items:center;font-size:20px;font-weight:800}
-.profile-info{flex:1;min-width:0}
-.profile-info h3{margin:0 0 5px;font-size:16px}
-.profile-info p{margin:3px 0;color:var(--muted);font-size:11px;overflow-wrap:anywhere}
-.profile-balance{font-size:19px;font-weight:800;color:var(--green)}
-.progress{height:9px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:12px}
-.progress>div{height:100%;background:linear-gradient(90deg,#635bdb,#29b78c);border-radius:20px}
-.setting-row{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:13px 0;border-bottom:1px solid var(--border)}
-.setting-row:last-child{border:0}
-.toggle{width:42px;height:23px;border-radius:20px;background:var(--border);position:relative;border:0;flex-shrink:0}
-.toggle:after{content:"";position:absolute;width:17px;height:17px;background:white;border-radius:50%;left:3px;top:3px;transition:.2s}
-.toggle.on{background:var(--primary)}
-.toggle.on:after{left:22px}
-.hidden{display:none!important}
-.notice{padding:12px 14px;background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--orange);border-radius:10px;font-size:12px;margin-bottom:15px;line-height:1.6}
-.toast{position:fixed;bottom:20px;right:20px;background:#182235;color:white;padding:13px 18px;border-radius:10px;z-index:100;box-shadow:var(--shadow);display:none;max-width:90vw}
-.modal-backdrop{position:fixed;inset:0;background:#0009;z-index:80;display:none;align-items:center;justify-content:center;padding:15px}
-.modal-backdrop.open{display:flex}
-.modal{background:var(--panel);width:min(500px,100%);max-height:90vh;overflow:auto;border-radius:16px;padding:22px}
-.modal h3{margin:0 0 17px}
-.footer-note{color:var(--muted);font-size:10px;text-align:center;padding:25px 0}
-@media(max-width:1100px){.card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.balance-bar{grid-template-columns:repeat(2,1fr)}}
+th,td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:11px;color:var(--muted);background:var(--bg);text-transform:uppercase}
+td{font-size:13px}
+.avatar{width:35px;height:35px;border-radius:50%;object-fit:cover;background:#dce6e2;border:1px solid var(--line);flex:none}
+.user-cell{display:flex;align-items:center;gap:9px;min-width:135px}
+.user-cell b{display:block}
+.user-cell small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#07976d18;color:var(--green);font-size:11px;font-weight:700}
+.pill.red{background:#df4d5b18;color:var(--red)}
+.pill.orange{background:#dc922418;color:var(--orange)}
+.empty{text-align:center;padding:25px;color:var(--muted)}
+.balancebar{display:flex;gap:10px;flex-wrap:wrap}
+.balance{flex:1;min-width:145px;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.balance b{display:block;font-size:18px;margin-top:5px}
+.profile-preview{display:flex;align-items:center;gap:12px}
+.profile-preview img{width:65px;height:65px;border-radius:50%;object-fit:cover}
+.mobile-menu{display:none}
+@media(max-width:1050px){.grid,.cards-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){
- .sidebar{transform:translateX(-105%);box-shadow:var(--shadow)}
- .sidebar.open{transform:translateX(0)}
- .main{margin-left:0;width:100%;padding:17px 13px 35px}
- .menu-btn{display:block}
- .topbar h1{font-size:19px}
- .topbar p{font-size:10px}
- .card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .stat-card{padding:13px;min-height:112px}
- .stat-card .stat-value{font-size:19px}
- .balance-bar{padding:17px;gap:15px}
- .balance-value{font-size:22px}
- .balance-stat{padding-left:12px}
- .balance-stat strong{font-size:15px}
- .form-grid{grid-template-columns:1fr}
- .field.full{grid-column:auto}
- .panel{padding:14px}
- .top-actions{gap:5px}
+.sidebar{transform:translateX(-100%);transition:.2s;width:250px}
+.sidebar.open{transform:translateX(0)}
+.main{margin:0;padding:14px}
+.mobile-menu{display:inline-block}
+.grid,.cards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.form-grid{grid-template-columns:1fr}
+.field.full{grid-column:auto}
+.topbar h1{font-size:18px}
 }
-@media(max-width:380px){.card-grid{grid-template-columns:1fr 1fr}.balance-value{font-size:19px}}
+@media(max-width:420px){.grid,.cards-grid{gap:8px}.stat{padding:11px}.stat-value{font-size:17px}.dash-card{padding:11px}}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar" id="sidebar">
- <div class="brand">
-  <div class="brand-icon">W</div>
-  <div><h2>Wage Manager</h2><small>COMPANY FINANCE SYSTEM</small></div>
+<div class="sidebar" id="sidebar">
+ <div class="brand"><div class="logo">W</div><div>Wage Manager<small>Company Finance System</small></div></div>
+ <div class="nav">
+  <div class="nav-label">MAIN MENU</div>
+  <button data-page="dashboard" class="active">▦ Dashboard</button>
+  <button data-page="users">👥 Users</button>
+  <button data-page="adduser">＋ Add User</button>
+  <button data-page="addwage">💰 Add Wage</button>
+  <button data-page="payment">💳 Make Payment</button>
+  <div class="nav-label">HISTORY & MANAGEMENT</div>
+  <button data-page="history">▤ Payment History</button>
+  <button data-page="wagehistory">▤ Wage History</button>
+  <button data-page="userlog">◷ User Log</button>
+  <button data-page="deleted">♻ Deleted User</button>
+  <button data-page="undopayment">↶ Undo Payment</button>
+  <button data-page="undowage">↶ Undo Wage</button>
+  <div class="nav-label">REPORT & SETTINGS</div>
+  <button data-page="monthly">▣ Monthly Summary</button>
+  <button data-page="report">📊 Report</button>
+  <button data-page="currency">৳ Currency Setting</button>
+  <button data-page="cards">⚙ Dashboard Cards</button>
+  <button data-page="backup">☁ Backup & Restore</button>
  </div>
- <div class="nav-label">MAIN MENU</div>
- <nav class="nav">
-  <button class="active" data-page="dashboard"><span>▦</span> Dashboard</button>
-  <button data-page="users"><span>♙</span> Users</button>
-  <button data-page="adduser"><span>＋</span> Add User</button>
-  <button data-page="wage"><span>＋</span> Add Wage</button>
-  <button data-page="payment"><span>↗</span> Make Payment</button>
-  <button data-page="history"><span>▤</span> Payment History</button>
-  <button data-page="wagehistory"><span>◷</span> Wage History</button>
-  <button data-page="month"><span>▣</span> Monthly Summary</button>
-  <button data-page="report"><span>▥</span> Reports</button>
-  <button data-page="userlog"><span>◉</span> User Log</button>
-  <button data-page="deleted"><span>⌫</span> Deleted Users</button>
- </nav>
- <div class="nav-label">MANAGEMENT</div>
- <nav class="nav">
-  <button data-page="undopayment"><span>↶</span> Undo Payment</button>
-  <button data-page="undowage"><span>↶</span> Undo Wage</button>
-  <button data-page="currencies"><span>৳</span> Currency Settings</button>
-  <button data-page="settings"><span>⚙</span> Settings</button>
- </nav>
- <div class="sidebar-bottom">
-  <button class="btn secondary" style="width:100%" onclick="backupData()">⇩ Backup Data</button>
-  <button class="btn secondary" style="width:100%;margin-top:8px" onclick="document.getElementById('restoreFile').click()">⇧ Restore Backup</button>
-  <input type="file" id="restoreFile" accept=".json" hidden onchange="restoreData(event)">
- </div>
-</aside>
+</div>
 
 <main class="main">
  <header class="topbar">
-  <div class="top-left">
-   <button class="icon-btn menu-btn" onclick="toggleSidebar()">☰</button>
-   <div><h1 id="pageTitle">Dashboard</h1><p id="pageSubtitle">Company financial overview</p></div>
+  <div class="row">
+   <button class="btn secondary mobile-menu" onclick="toggleSidebar()">☰</button>
+   <h1 id="pageTitle">Dashboard</h1>
   </div>
-  <div class="top-actions">
-   <button class="icon-btn" onclick="toggleTheme()" title="Theme">◐</button>
-   <button class="icon-btn" onclick="go('settings')" title="Settings">⚙</button>
+  <div class="row">
+   <button class="btn secondary" onclick="toggleTheme()">◐ Theme</button>
+   <button class="btn" onclick="go('adduser')">＋ Add User</button>
   </div>
  </header>
-
- <section id="dashboard" class="page active">
-  <div class="balance-controls">
-   <strong>Wallet Currency:</strong>
-   <select id="walletCurrency" onchange="renderAll()" style="width:auto"></select>
-   <button class="btn small" onclick="go('wage')">＋ Add Wage</button>
-   <button class="btn small success" onclick="go('payment')">↗ Make Payment</button>
-  </div>
-  <div class="balance-bar">
-   <div>
-    <div class="balance-title">AVAILABLE COMPANY BALANCE</div>
-    <div class="balance-value" id="walletBalance">৳0.00</div>
-    <div class="balance-sub">Current available amount</div>
-   </div>
-   <div class="balance-stat"><small>Total Wage Added</small><strong id="walletWage">৳0.00</strong></div>
-   <div class="balance-stat"><small>Total Payments</small><strong id="walletPaid">৳0.00</strong></div>
-   <div class="balance-stat"><small>Net Company Earn</small><strong id="walletEarn">৳0.00</strong></div>
-  </div>
-  <div class="panel">
-   <div class="panel-head">
-    <div><h3>Dashboard Overview</h3><p>Your company financial summary</p></div>
-    <button class="btn secondary small" onclick="go('settings')">⚙ Manage Cards</button>
-   </div>
-   <div class="card-grid" id="cardGrid"></div>
-  </div>
-  <div class="footer-note">Company Wage & Payment Manager · Local Data Storage</div>
- </section>
-
- <section id="users" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>All Users</h3><p>Manage your company users</p></div><button class="btn" onclick="go('adduser')">＋ Add User</button></div>
-   <div class="search-row"><input id="userSearch" placeholder="Search user name or ID..." oninput="renderUsers()"><select id="userFilter" onchange="renderUsers()"><option value="all">All Users</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
-   <div class="table-wrap" id="usersTable"></div>
-  </div>
- </section>
-
- <section id="adduser" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3 id="userFormTitle">Add New User</h3><p>Enter user information</p></div></div>
-   <form id="userForm">
-    <input type="hidden" name="id">
-    <div class="form-grid">
-     <div class="field"><label>User Name *</label><input name="name" required placeholder="Full name"></div>
-     <div class="field"><label>User ID *</label><input name="uid" required placeholder="Unique user ID"></div>
-     <div class="field"><label>User Password</label><input name="password" placeholder="Password"></div>
-     <div class="field"><label>User Number</label><input name="phone" placeholder="Phone number"></div>
-     <div class="field"><label>User Gmail</label><input name="email" type="email" placeholder="Email address"></div>
-     <div class="field"><label>User Area</label><input name="area" placeholder="Area"></div>
-     <div class="field"><label>User Active Date</label><input name="activeDate" type="date"></div>
-     <div class="field"><label>User Status</label><select name="status"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
-     <div class="field full"><label>User Picture</label><input name="picture" type="file" accept="image/*"></div>
-    </div>
-    <div class="form-actions"><button class="btn" type="submit">Save User</button><button class="btn secondary" type="button" onclick="resetUserForm()">Clear</button></div>
-   </form>
-  </div>
- </section>
-
- <section id="wage" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Add Company Wage</h3><p>Add money to your company wallet</p></div></div>
-   <div class="notice">Wage Add করলে নির্বাচিত Currency-এর Company Balance বাড়বে।</div>
-   <form id="wageForm">
-    <div class="form-grid">
-     <div class="field"><label>Company Name *</label><input name="company" required placeholder="Company name"></div>
-     <div class="field"><label>Wage Type / Currency *</label><select name="currency" id="wageCurrency" required></select></div>
-     <div class="field"><label>Wage Amount *</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div>
-     <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
-     <div class="field"><label>Date</label><input name="date" type="date" required></div>
-     <div class="field full"><label>Comment</label><textarea name="comment" placeholder="Write a note..."></textarea></div>
-    </div>
-    <div class="form-actions"><button class="btn success">＋ Add Wage</button></div>
-   </form>
-  </div>
- </section>
-
- <section id="payment" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Make User Payment</h3><p>Pay a user from available company funds</p></div></div>
-   <div class="notice">Payment দেওয়ার আগে Wallet Currency এবং Available Balance দেখে নিন।</div>
-   <form id="paymentForm">
-    <div class="form-grid">
-     <div class="field"><label>Select User *</label><select name="userId" id="paymentUser" required></select></div>
-     <div class="field"><label>Currency *</label><select name="currency" id="paymentCurrency" required></select></div>
-     <div class="field"><label>Payment Amount *</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div>
-     <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
-     <div class="field"><label>Date</label><input name="date" type="date" required></div>
-     <div class="field full"><label>Comment</label><textarea name="comment" placeholder="Payment details..."></textarea></div>
-    </div>
-    <div class="form-actions"><button class="btn success">Confirm Payment</button></div>
-   </form>
-  </div>
- </section>
-
- <section id="undopayment" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Undo Payment</h3><p>Reverse a previous payment</p></div></div>
-   <div class="notice">Undo Payment করলে টাকা Company Wallet-এ ফেরত যোগ হবে।</div>
-   <form id="undoPaymentForm">
-    <div class="form-grid">
-     <div class="field"><label>Select Payment *</label><select name="paymentId" id="undoPaymentSelect" required></select></div>
-     <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="0.01" required></div>
-     <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-    </div>
-    <div class="form-actions"><button class="btn danger">Undo Payment</button></div>
-   </form>
-  </div>
- </section>
-
- <section id="undowage" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Undo Wage</h3><p>Reverse an incorrect wage entry</p></div></div>
-   <div class="notice">শুধু অবশিষ্ট Wallet Balance-এর মধ্যে থাকা Wage Undo করা যাবে।</div>
-   <form id="undoWageForm">
-    <div class="form-grid">
-     <div class="field"><label>Select Wage *</label><select name="wageId" id="undoWageSelect" required></select></div>
-     <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min="0.01" step="0.01" required></div>
-     <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
-    </div>
-    <div class="form-actions"><button class="btn danger">Undo Wage</button></div>
-   </form>
-  </div>
- </section>
-
- <section id="history" class="page"><div class="panel"><div class="panel-head"><div><h3>Payment History</h3><p>All user payment records</p></div></div><div class="search-row"><input id="paymentSearch" placeholder="Search payment..." oninput="renderHistory()"></div><div class="table-wrap" id="paymentTable"></div></div></section>
- <section id="wagehistory" class="page"><div class="panel"><div class="panel-head"><div><h3>Wage History</h3><p>All company wage records</p></div></div><div class="table-wrap" id="wageTable"></div></div></section>
- <section id="month" class="page"><div class="panel"><div class="panel-head"><div><h3>Current Month Summary</h3><p id="monthLabel"></p></div></div><div id="monthContent"></div></div></section>
- <section id="report" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Date Range Report</h3><p>Choose dates to view company accounts</p></div></div>
-   <div class="form-grid">
-    <div class="field"><label>From Date</label><input type="date" id="reportFrom"></div>
-    <div class="field"><label>To Date</label><input type="date" id="reportTo"></div>
-    <div class="field"><label>Currency</label><select id="reportCurrency"></select></div>
-   </div>
-   <div class="form-actions"><button class="btn" onclick="renderReport()">Generate Report</button><button class="btn secondary" onclick="print()">Print</button></div>
-   <div id="reportContent" style="margin-top:20px"></div>
-  </div>
- </section>
- <section id="userlog" class="page"><div class="panel"><div class="panel-head"><div><h3>User Activity Log</h3><p>Records of actions performed in this browser</p></div></div><div class="table-wrap" id="logTable"></div></div></section>
- <section id="deleted" class="page"><div class="panel"><div class="panel-head"><div><h3>Deleted Users</h3><p>Restore or permanently remove users</p></div></div><div class="table-wrap" id="deletedTable"></div></div></section>
- <section id="currencies" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Currency Settings</h3><p>Add or edit currency symbols</p></div></div>
-   <form id="currencyForm">
-    <input type="hidden" name="id">
-    <div class="form-grid">
-     <div class="field"><label>Currency Name *</label><input name="name" required placeholder="Bangladeshi Taka"></div>
-     <div class="field"><label>Currency Code *</label><input name="code" required placeholder="BDT"></div>
-     <div class="field"><label>Currency Symbol *</label><input name="symbol" required placeholder="৳"></div>
-    </div>
-    <div class="form-actions"><button class="btn">Save Currency</button><button type="button" class="btn secondary" onclick="this.form.reset()">Clear</button></div>
-   </form>
-  </div>
-  <div class="panel"><h3>Available Currencies</h3><div class="table-wrap" id="currencyTable"></div></div>
- </section>
- <section id="settings" class="page">
-  <div class="panel">
-   <div class="panel-head"><div><h3>Dashboard Card Settings</h3><p>Choose which cards appear on your dashboard</p></div><div class="actions"><button class="btn small" onclick="setAllCards(true)">Show All</button><button class="btn secondary small" onclick="setAllCards(false)">Hide All</button></div></div>
-   <div id="cardSettings"></div>
-  </div>
-  <div class="panel">
-   <div class="panel-head"><div><h3>Appearance</h3><p>Personalize your dashboard</p></div></div>
-   <div class="setting-row"><div><strong>Dark Theme</strong><div style="color:var(--muted);font-size:11px;margin-top:4px">Use dark appearance</div></div><button class="toggle" id="themeToggle" onclick="toggleTheme()"></button></div>
-  </div>
-  <div class="panel">
-   <div class="panel-head"><div><h3>Data Management</h3><p>Download a backup or restore your data</p></div></div>
-   <div class="form-actions"><button class="btn" onclick="backupData()">⇩ Download Backup</button><button class="btn secondary" onclick="document.getElementById('restoreFile').click()">⇧ Restore Backup</button><button class="btn danger" onclick="clearAllData()">Clear All Data</button></div>
-  </div>
-  <div class="notice">Important: এই সংস্করণে ডেটা এই Browser-এর Local Storage-এ থাকে। Browser data clear করলে তথ্য হারাতে পারে। এটি এখনো server/database-ভিত্তিক multi-device বা secure production system নয়।</div>
- </section>
+ <div id="content"></div>
 </main>
-</div>
-<div class="toast" id="toast"></div>
-<div class="modal-backdrop" id="profileModal" onclick="if(event.target===this)closeProfile()">
- <div class="modal"><div class="panel-head"><h3>User Profile</h3><button class="icon-btn" onclick="closeProfile()">✕</button></div><div id="profileContent"></div></div>
-</div>
 
 <script>
-const KEY='company_wage_payment_v5';
-const today=()=>new Date().toISOString().slice(0,10);
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const defaultDB=()=>({
- users:[],deletedUsers:[],wages:[],payments:[],undoPayments:[],undoWages:[],logs:[],
- currencies:[
-  {id:'BDT',name:'Bangladeshi Taka',code:'BDT',symbol:'৳'},
-  {id:'USD',name:'US Dollar',code:'USD',symbol:'$'},
-  {id:'INR',name:'Indian Rupee',code:'INR',symbol:'₹'}
- ],
+const KEY='company_wage_payment_final_v1';
+const DEFAULT={
+ users:[],wages:[],payments:[],userLogs:[],deletedUsers:[],
+ currencies:[{code:'BDT',name:'Bangladeshi Taka',symbol:'৳'}],
  hiddenCards:[],theme:'light'
-});
-let db;
-try{db=JSON.parse(localStorage.getItem(KEY))||defaultDB()}catch(e){db=defaultDB()}
-function save(){localStorage.setItem(KEY,JSON.stringify(db))}
-function toast(s){let el=document.getElementById('toast');el.textContent=s;el.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display='none',2800)}
-function log(action,details=''){db.logs.unshift({id:uid(),date:new Date().toLocaleString(),action,details});save()}
-function money(n,c){let cur=db.currencies.find(x=>x.code===c);return (cur?.symbol||c||'')+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
-function sum(arr){return arr.reduce((a,x)=>a+Number(x.amount||0),0)}
-function netPayment(p){return Math.max(0,Number(p.amount||0)-db.undoPayments.filter(u=>u.paymentId===p.id).reduce((a,u)=>a+Number(u.amount||0),0))}
-function netWage(w){return Math.max(0,Number(w.amount||0)-db.undoWages.filter(u=>u.wageId===w.id).reduce((a,u)=>a+Number(u.amount||0),0))}
-function wallet(c){
- let wages=db.wages.filter(x=>x.currency===c).reduce((a,x)=>a+netWage(x),0);
- let paid=db.payments.filter(x=>x.currency===c).reduce((a,x)=>a+netPayment(x),0);
- return {wages,paid,balance:wages-paid};
+};
+
+function loadDB(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+  return {...structuredClone(DEFAULT),...saved};
+ }catch(e){return structuredClone(DEFAULT)}
 }
-function currentMonth(x){return (x.date||'').slice(0,7)===today().slice(0,7)}
-function userName(id){return db.users.concat(db.deletedUsers).find(u=>u.id===id)?.name||'Deleted User'}
-function userId(id){return db.users.concat(db.deletedUsers).find(u=>u.id===id)?.uid||'-'}
-const cards=[
- {id:'adduser',label:'Add User',icon:'♙',hint:'Create a new user',page:'adduser',value:()=>db.users.length},
- {id:'totaluser',label:'Total User',icon:'👥',hint:'All active users',page:'users',value:()=>db.users.length},
- {id:'totalpayment',label:'Total User Payment',icon:'↗',hint:'All-time net payments',page:'history',value:()=>totalCurrencies('payments')},
- {id:'totalwage',label:'Total Wages',icon:'＋',hint:'All-time net wages',page:'wagehistory',value:()=>totalCurrencies('wages')},
- {id:'totalearn',label:'Total Earn',icon:'◈',hint:'Wages minus payments',page:'dashboard',value:()=>totalCurrencies('balance')},
- {id:'addwage',label:'Add Wage',icon:'＋',hint:'Add company funds',page:'wage',value:()=> 'Add'},
- {id:'makepayment',label:'Make Payment',icon:'↗',hint:'Pay a user',page:'payment',value:()=> 'Pay'},
- {id:'userlog',label:'User Log',icon:'◉',hint:'Activity history',page:'userlog',value:()=>db.logs.length},
- {id:'deleted',label:'Deleted User',icon:'⌫',hint:'Restore deleted users',page:'deleted',value:()=>db.deletedUsers.length},
- {id:'undopayment',label:'Undo Payment',icon:'↶',hint:'Reverse a payment',page:'undopayment',value:()=>db.payments.filter(p=>netPayment(p)>0).length},
- {id:'undowage',label:'Undo Wage',icon:'↶',hint:'Reverse a wage',page:'undowage',value:()=>db.wages.filter(w=>netWage(w)>0).length},
- {id:'history',label:'Payment History',icon:'▤',hint:'View payment records',page:'history',value:()=>db.payments.length},
- {id:'currencies',label:'Currency Setting',icon:'৳',hint:'Manage currencies',page:'currencies',value:()=>db.currencies.length},
- {id:'monthwage',label:'Current Month Wage',icon:'▣',hint:'Wage added this month',page:'month',value:()=>totalMonth('wages')},
- {id:'monthpayment',label:'Current Month Payment',icon:'▣',hint:'Payment this month',page:'month',value:()=>totalMonth('payments')},
- {id:'monthearn',label:'Current Month Earn',icon:'◈',hint:'This month net amount',page:'month',value:()=>monthBalance()},
- {id:'monthpaidusers',label:'Current Month Payment User',icon:'✓',hint:'Users paid this month',page:'month',value:()=>monthPaidUsers().length},
- {id:'monthunpaidusers',label:'Current Month NON Payment User',icon:'!',hint:'Active users not paid',page:'month',value:()=>monthUnpaidUsers().length},
- {id:'report',label:'Report',icon:'▥',hint:'Date range report',page:'report',value:()=> 'View'}
-];
-function totalCurrencies(type){
- let c=document.getElementById('walletCurrency')?.value||'BDT',w=wallet(c);
- return type==='payments'?money(w.paid,c):type==='wages'?money(w.wages,c):money(w.balance,c);
+let db=loadDB();
+let page='dashboard';
+let editingUserId=null;
+let pendingPicture=null;
+
+function save(){
+ try{
+  localStorage.setItem(KEY,JSON.stringify(db));
+  render();
+ }catch(e){
+  alert('Storage full! ছবির সাইজ কমিয়ে আবার চেষ্টা করুন অথবা Backup নিয়ে পুরোনো ডেটা সরান।');
+ }
 }
-function totalMonth(type){
- let c=document.getElementById('walletCurrency')?.value||'BDT';
- let arr=type==='wages'?db.wages:db.payments;
- return money(arr.filter(x=>x.currency===c&&currentMonth(x)).reduce((a,x)=>a+(type==='wages'?netWage(x):netPayment(x)),0),c);
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function today(){return new Date().toISOString().slice(0,10)}
+function currency(code){return db.currencies.find(c=>c.code===code)||{code,symbol:code,name:code}}
+function money(n,code='BDT'){
+ return (currency(code).symbol||code)+' '+Number(n||0).toLocaleString('en-BD',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
-function monthBalance(){
- let c=document.getElementById('walletCurrency')?.value||'BDT';
- return money(wallet(c).wagesMonth-wallet(c).paidMonth,c);
+function getUser(id){
+ return db.users.find(u=>u.id===id)||db.deletedUsers.find(u=>u.id===id)||null;
 }
-function monthPaidUsers(){
- let paid=new Set(db.payments.filter(p=>currentMonth(p)&&netPayment(p)>0).map(p=>p.userId));
- return db.users.filter(u=>paid.has(u.id));
+function avatarDefault(){
+ return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"%3E%3Crect width="80" height="80" rx="40" fill="%23dce6e2"/%3E%3Ccircle cx="40" cy="29" r="15" fill="%2393a99f"/%3E%3Cpath d="M12 78c2-19 13-29 28-29s26 10 28 29" fill="%2393a99f"/%3E%3C/svg%3E';
 }
-function monthUnpaidUsers(){let ids=new Set(monthPaidUsers().map(u=>u.id));return db.users.filter(u=>u.status!=='Inactive'&&!ids.has(u.id))}
-function go(page){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
- document.getElementById(page)?.classList.add('active');
- document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
- let names={dashboard:['Dashboard','Company financial overview'],users:['Users','Manage all company users'],adduser:['Add User','Create or edit a user'],wage:['Add Wage','Add company funds'],payment:['Make Payment','Pay your users'],history:['Payment History','All payment records'],wagehistory:['Wage History','All wage records'],month:['Monthly Summary','Current month performance'],report:['Reports','Date range report'],userlog:['User Log','Activity history'],deleted:['Deleted Users','Restore deleted accounts'],undopayment:['Undo Payment','Reverse payment records'],undowage:['Undo Wage','Reverse wage records'],currencies:['Currency Settings','Manage currencies'],settings:['Settings','Customize your dashboard']};
- document.getElementById('pageTitle').textContent=names[page]?.[0]||'Dashboard';
- document.getElementById('pageSubtitle').textContent=names[page]?.[1]||'';
+function userCell(u){
+ if(!u)return `<div class="user-cell"><img class="avatar" src="${avatarDefault()}"><span><b>Unknown User</b></span></div>`;
+ return `<div class="user-cell">
+ <img class="avatar" src="${u.picture||avatarDefault()}" onerror="this.src='${avatarDefault()}'" alt="">
+ <span><b>${esc(u.name)}</b><small>${esc(u.userId||'')}</small></span>
+ </div>`;
+}
+function netPayment(p){return Math.max(0,Number(p.amount||0)-Number(p.undone||0))}
+function netWage(w){return Math.max(0,Number(w.amount||0)-Number(w.undone||0))}
+function total(arr,fn){return arr.reduce((a,x)=>a+fn(x),0)}
+function wallet(code){
+ const wages=total(db.wages.filter(w=>w.currency===code),netWage);
+ const payments=total(db.payments.filter(p=>p.currency===code),netPayment);
+ return {wages,payments,balance:wages-payments};
+}
+function isThisMonth(x){
+ const d=new Date((x.date||x.createdAt||'').slice(0,10)+'T12:00:00');
+ const n=new Date();
+ return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();
+}
+function paidUsers(){
+ const ids=new Set(db.payments.filter(p=>isThisMonth(p)&&netPayment(p)>0).map(p=>p.userId));
+ return db.users.filter(u=>ids.has(u.id));
+}
+function unpaidUsers(){
+ const ids=new Set(paidUsers().map(u=>u.id));
+ return db.users.filter(u=>!ids.has(u.id));
+}
+function logUser(id,action){
+ db.userLogs.unshift({id:uid(),userId:id,action,date:new Date().toISOString()});
+}
+function go(p){
+ page=p;
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
  document.getElementById('sidebar').classList.remove('open');
- renderAll();
+ render();
 }
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
-function toggleTheme(){db.theme=db.theme==='dark'?'light':'dark';save();theme()}
-function theme(){document.body.classList.toggle('dark',db.theme==='dark');document.getElementById('themeToggle')?.classList.toggle('on',db.theme==='dark')}
-function renderCurrencyOptions(){
- let html=db.currencies.map(c=>`<option value="${esc(c.code)}">${esc(c.code)} — ${esc(c.name)}</option>`).join('');
- ['walletCurrency','wageCurrency','paymentCurrency','reportCurrency'].forEach(id=>{
-  let el=document.getElementById(id);if(!el)return;let old=el.value;el.innerHTML=html;if(db.currencies.some(c=>c.code===old))el.value=old;
+function toggleTheme(){
+ db.theme=db.theme==='dark'?'light':'dark';
+ applyTheme();save();
+}
+function applyTheme(){document.body.classList.toggle('dark',db.theme==='dark')}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+
+const cards=[
+ ['adduser','Add User','＋','Create new user','adduser',()=>db.users.length],
+ ['totalusers','Total User','👥','All active users','users',()=>db.users.length],
+ ['totalpayment','Total User Payment','💳','Total net payment','history',()=>money(total(db.payments,netPayment),'BDT')],
+ ['totalwage','Total Wages','💰','Total company wage','wagehistory',()=>money(total(db.wages,netWage),'BDT')],
+ ['totalearn','Total Earn','📈','Wallet balance in BDT','monthly',()=>money(wallet('BDT').balance,'BDT')],
+ ['addwage','Add Wage','＋','Add company wage','addwage',()=>db.wages.length],
+ ['payment','Make Payment','↗','Pay a user','payment',()=>db.payments.length],
+ ['userlog','User Log','◷','User activity','userlog',()=>db.userLogs.length],
+ ['deleted','Deleted User','♻','Restore deleted users','deleted',()=>db.deletedUsers.length],
+ ['undopayment','Undo Payment','↶','Reverse payment','undopayment',()=>db.payments.filter(p=>netPayment(p)>0).length],
+ ['undowage','Undo Wage','↶','Reverse wage','undowage',()=>db.wages.filter(w=>netWage(w)>0).length],
+ ['history','Payment History','▤','All payment records','history',()=>db.payments.length],
+ ['wagehistory','Wage History','▤','All wage records','wagehistory',()=>db.wages.length],
+ ['currency','Currency Setting','৳','Manage currencies','currency',()=>db.currencies.length],
+ ['monthwage','Current Month Wage','📅','Wage this month','monthly',()=>money(total(db.wages.filter(isThisMonth),netWage),'BDT')],
+ ['monthpayment','Current Month Total Payment','📆','Payment this month','monthly',()=>money(total(db.payments.filter(isThisMonth),netPayment),'BDT')],
+ ['monthearn','Current Month Earn','📊','Month wage minus payment','monthly',()=>money(total(db.wages.filter(isThisMonth),netWage)-total(db.payments.filter(isThisMonth),netPayment),'BDT')],
+ ['paidusers','Current Month Payment User','✅','Users paid this month','monthly',()=>paidUsers().length],
+ ['unpaidusers','Current Month NON Payment User','⌛','Users not paid this month','monthly',()=>unpaidUsers().length],
+ ['report','Report','📑','Financial report','report',()=>db.wages.length+db.payments.length]
+];
+
+function render(){
+ applyTheme();
+ const titles={
+ dashboard:'Dashboard',users:'User Management',adduser:editingUserId?'Edit User':'Add User',
+ addwage:'Add Wage',payment:'Make Payment',history:'Payment History',
+ wagehistory:'Wage History',userlog:'User Log',deleted:'Deleted User',
+ undopayment:'Undo Payment',undowage:'Undo Wage',monthly:'Monthly Summary',
+ report:'Report',currency:'Currency Setting',cards:'Dashboard Cards',backup:'Backup & Restore'
+ };
+ document.getElementById('pageTitle').textContent=titles[page]||'Dashboard';
+ const views={
+ dashboard:dashboardPage,users:usersPage,adduser:addUserPage,
+ addwage:addWagePage,payment:paymentPage,history:historyPage,
+ wagehistory:wageHistoryPage,userlog:userLogPage,deleted:deletedPage,
+ undopayment:undoPaymentPage,undowage:undoWagePage,
+ monthly:monthlyPage,report:reportPage,currency:currencyPage,
+ cards:cardsPage,backup:backupPage
+ };
+ document.getElementById('content').innerHTML=(views[page]||dashboardPage)();
+ if(page==='dashboard')updateWallet();
+}
+
+function dashboardPage(){
+ return `
+ <div class="panel">
+  <div class="between"><div><h3>Company Wallet Balance</h3><div class="smalltext">Wage adds balance. Payment deducts balance.</div></div>
+  <select id="walletCurrency" style="max-width:190px" onchange="updateWallet()">${currencyOptions()}</select></div>
+  <div class="balancebar" id="walletBalances"></div>
+ </div>
+ <div class="between" style="margin:15px 0"><h3>Dashboard Overview</h3><button class="btn secondary small" onclick="go('cards')">⚙ Manage Cards</button></div>
+ <div class="cards-grid">${cards.filter(c=>!db.hiddenCards.includes(c[0])).map(c=>`
+ <button class="dash-card" onclick="go('${c[4]}')">
+ <span class="ico">${c[2]}</span><b>${c[1]}</b><small>${c[3]} · ${c[5]()}</small>
+ </button>`).join('')||'<div class="empty">All cards hidden. Manage Cards to show them.</div>'}</div>
+ <div class="panel" style="margin-top:18px"><div class="between"><h3>Recent Payments</h3><button class="btn secondary small" onclick="go('history')">View All</button></div>${paymentTable(db.payments.slice(0,5))}</div>
+ <div class="panel"><div class="between"><h3>Recent Wages</h3><button class="btn secondary small" onclick="go('wagehistory')">View All</button></div>${wageTable(db.wages.slice(0,5))}</div>`;
+}
+function updateWallet(){
+ const code=document.getElementById('walletCurrency')?.value||db.currencies[0]?.code||'BDT';
+ const w=wallet(code),el=document.getElementById('walletBalances');
+ if(el)el.innerHTML=`
+ <div class="balance"><span class="smalltext">Total Wage</span><b>${money(w.wages,code)}</b></div>
+ <div class="balance"><span class="smalltext">Total Payment</span><b>${money(w.payments,code)}</b></div>
+ <div class="balance"><span class="smalltext">Available Balance</span><b style="color:${w.balance<0?'var(--red)':'var(--green)'}">${money(w.balance,code)}</b></div>`;
+}
+function currencyOptions(){return db.currencies.map(c=>`<option value="${esc(c.code)}">${esc(c.code)} — ${esc(c.name)}</option>`).join('')}
+function userOptions(){return db.users.map(u=>`<option value="${u.id}">${esc(u.name)} (${esc(u.userId||'')})</option>`).join('')}
+function emptyRow(n,msg){return `<tr><td colspan="${n}"><div class="empty">${msg}</div></td></tr>`}
+
+function usersPage(){
+ return `<div class="panel">
+ <div class="between"><h3>All Users (${db.users.length})</h3><button class="btn" onclick="go('adduser')">＋ Add User</button></div>
+ <div class="toolbar"><input id="userSearch" placeholder="Search name, ID, phone..." oninput="filterUsers()"><select id="userStatus" onchange="filterUsers()"><option value="">All Status</option><option>Active</option><option>Inactive</option></select></div>
+ <div class="table-wrap"><table id="usersTable"><thead><tr><th>User</th><th>Phone</th><th>Email</th><th>Area</th><th>Active Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+ ${db.users.map(u=>`<tr data-id="${u.id}"><td>${userCell(u)}</td><td>${esc(u.phone||'-')}</td><td>${esc(u.email||'-')}</td><td>${esc(u.area||'-')}</td><td>${esc(u.activeDate||'-')}</td><td><span class="pill ${u.status==='Inactive'?'red':''}">${esc(u.status||'Active')}</span></td><td><button class="btn secondary small" onclick="editUser('${u.id}')">Edit</button> <button class="btn danger small" onclick="deleteUser('${u.id}')">Delete</button></td></tr>`).join('')||emptyRow(7,'No users added yet')}
+ </tbody></table></div></div>`;
+}
+function filterUsers(){
+ const q=document.getElementById('userSearch').value.toLowerCase(),status=document.getElementById('userStatus').value;
+ document.querySelectorAll('#usersTable tbody tr[data-id]').forEach(r=>{
+ const u=getUser(r.dataset.id),match=(u.name+' '+u.userId+' '+u.phone+' '+u.email+' '+u.area).toLowerCase().includes(q);
+ r.style.display=match&&(!status||(u.status||'Active')===status)?'':'none';
  });
 }
-function renderWallet(){
- let c=document.getElementById('walletCurrency')?.value||db.currencies[0]?.code||'BDT';
- let w=wallet(c);
- document.getElementById('walletBalance').textContent=money(w.balance,c);
- document.getElementById('walletWage').textContent=money(w.wages,c);
- document.getElementById('walletPaid').textContent=money(w.paid,c);
- document.getElementById('walletEarn').textContent=money(w.balance,c);
+function addUserPage(){
+ const u=db.users.find(x=>x.id===editingUserId)||{};
+ return `<div class="panel"><h3>${editingUserId?'Edit User':'Add New User'}</h3>
+ <form class="form-grid" onsubmit="submitUser(event)">
+ <div class="field"><label>User Name *</label><input name="name" required value="${esc(u.name||'')}" placeholder="User name"></div>
+ <div class="field"><label>User ID *</label><input name="userId" required value="${esc(u.userId||'')}" placeholder="Unique user ID"></div>
+ <div class="field"><label>User Password</label><input name="password" value="${esc(u.password||'')}" placeholder="Optional"></div>
+ <div class="field"><label>User Number</label><input name="phone" value="${esc(u.phone||'')}" placeholder="Phone number"></div>
+ <div class="field"><label>User Gmail</label><input name="email" type="email" value="${esc(u.email||'')}" placeholder="Email address"></div>
+ <div class="field"><label>User Area</label><input name="area" value="${esc(u.area||'')}" placeholder="Area"></div>
+ <div class="field"><label>User Active Date</label><input name="activeDate" type="date" value="${esc(u.activeDate||today())}"></div>
+ <div class="field"><label>User Status</label><select name="status"><option ${!u.status||u.status==='Active'?'selected':''}>Active</option><option ${u.status==='Inactive'?'selected':''}>Inactive</option></select></div>
+ <div class="field full"><label>User Picture</label><input type="file" id="userPicture" accept="image/*" onchange="previewPicture(event)"><div class="profile-preview"><img id="picturePreview" src="${u.picture||avatarDefault()}"><span class="smalltext">ছবি না দিলে Default Avatar থাকবে।</span></div></div>
+ <div class="field full"><label>Comment</label><textarea name="comment">${esc(u.comment||'')}</textarea></div>
+ <div class="field full actions"><button class="btn">${editingUserId?'Update User':'Save User'}</button><button type="button" class="btn secondary" onclick="cancelUser()">Cancel</button></div>
+ </form></div>`;
 }
-function renderCards(){
- let grid=document.getElementById('cardGrid');
- grid.innerHTML='';
- cards.filter(c=>!db.hiddenCards.includes(c.id)).forEach(c=>{
-  let val;try{val=c.value()}catch(e){val='—'}
-  let el=document.createElement('div');el.className='stat-card';
-  el.innerHTML=`<div class="stat-head"><div class="stat-icon">${c.icon}</div><span style="color:var(--muted)">↗</span></div><div class="stat-label">${esc(c.label)}</div><div class="stat-value">${esc(String(val))}</div><div class="stat-hint">${esc(c.hint)}</div>`;
-  el.onclick=()=>go(c.page);grid.appendChild(el);
- });
- if(!grid.children.length)grid.innerHTML='<div class="empty" style="grid-column:1/-1">All cards are hidden. Go to Settings → Manage Cards → Show All.</div>';
+function previewPicture(e){
+ const file=e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){alert('Please select an image.');return}
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const img=new Image();
+  img.onload=()=>{
+   const canvas=document.createElement('canvas');
+   const max=420,scale=Math.min(1,max/Math.max(img.width,img.height));
+   canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+   canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+   pendingPicture=canvas.toDataURL('image/jpeg',.78);
+   document.getElementById('picturePreview').src=pendingPicture;
+  };
+  img.src=reader.result;
+ };
+ reader.readAsDataURL(file);
 }
-function renderCardSettings(){
- document.getElementById('cardSettings').innerHTML=cards.map(c=>`
- <div class="setting-row"><div><strong>${esc(c.icon)} ${esc(c.label)}</strong><div style="font-size:11px;color:var(--muted);margin-top:4px">${esc(c.hint)}</div></div>
- <button class="toggle ${db.hiddenCards.includes(c.id)?'':'on'}" onclick="toggleCard('${c.id}')"></button></div>`).join('');
+function cancelUser(){editingUserId=null;pendingPicture=null;go('users')}
+function submitUser(e){
+ e.preventDefault();
+ const d=Object.fromEntries(new FormData(e.target));
+ const old=db.users.find(u=>u.id===editingUserId);
+ if(db.users.some(u=>u.userId.toLowerCase()===d.userId.toLowerCase()&&u.id!==editingUserId)){alert('এই User ID আগে থেকেই আছে।');return}
+ const u={...(old||{}),...d,id:editingUserId||uid(),picture:pendingPicture||old?.picture||'',createdAt:old?.createdAt||new Date().toISOString()};
+ if(old){db.users=db.users.map(x=>x.id===u.id?u:x);logUser(u.id,'Updated user')}
+ else{db.users.push(u);logUser(u.id,'Added user')}
+ editingUserId=null;pendingPicture=null;save();go('users');
 }
-function toggleCard(id){db.hiddenCards=db.hiddenCards.includes(id)?db.hiddenCards.filter(x=>x!==id):[...db.hiddenCards,id];save();renderAll()}
-function setAllCards(show){db.hiddenCards=show?[]:cards.map(c=>c.id);save();renderAll();toast(show?'All cards are visible':'All cards hidden')}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function table(headers,rows){
- if(!rows.length)return '<div class="empty">No records found</div>';
- return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
+function editUser(id){editingUserId=id;pendingPicture=null;go('adduser')}
+function deleteUser(id){
+ const u=db.users.find(x=>x.id===id);if(!u||!confirm('এই User Delete করবেন?'))return;
+ db.users=db.users.filter(x=>x.id!==id);
+ db.deletedUsers.unshift({...u,deletedAt:new Date().toISOString()});
+ logUser(id,'Deleted user');save();
 }
-function renderUsers(){
- let q=(document.getElementById('userSearch')?.value||'').toLowerCase(),f=document.getElementById('userFilter')?.value||'all';
- let list=db.users.filter(u=>(f==='all'||u.status.toLowerCase()===f)&&(`${u.name} ${u.uid} ${u.phone} ${u.area}`).toLowerCase().includes(q));
- document.getElementById('usersTable').innerHTML=table(['User','User ID','Phone','Area','Active Date','Status','Actions'],list.map(u=>`<tr><td><b>${esc(u.name)}</b></td><td>${esc(u.uid)}</td><td>${esc(u.phone||'-')}</td><td>${esc(u.area||'-')}</td><td>${esc(u.activeDate||'-')}</td><td><span class="badge ${u.status==='Inactive'?'red':''}">${esc(u.status)}</span></td><td><div class="actions"><button class="btn small secondary" onclick="showProfile('${u.id}')">View</button><button class="btn small" onclick="editUser('${u.id}')">Edit</button><button class="btn small danger" onclick="deleteUser('${u.id}')">Delete</button></div></td></tr>`));
+function restoreUser(id){
+ const u=db.deletedUsers.find(x=>x.id===id);if(!u)return;
+ db.deletedUsers=db.deletedUsers.filter(x=>x.id!==id);
+ delete u.deletedAt;db.users.push(u);logUser(id,'Restored user');save();
 }
-function resetUserForm(){document.getElementById('userForm').reset();document.querySelector('#userForm [name=id]').value='';document.getElementById('userFormTitle').textContent='Add New User'}
-function editUser(id){
- let u=db.users.find(x=>x.id===id);if(!u)return;
- let f=document.getElementById('userForm');['id','name','uid','password','phone','email','area','activeDate','status'].forEach(k=>f.elements[k].value=u[k]||'');
- document.getElementById('userFormTitle').textContent='Edit User';go('adduser');
+
+function addWagePage(){
+ return `<div class="panel"><h3>Add Company Wage</h3><form class="form-grid" onsubmit="submitWage(event)">
+ <div class="field"><label>Company Name *</label><input name="company" required placeholder="Company name"></div>
+ <div class="field"><label>Wage Type</label><input name="type" placeholder="Monthly / Project / Other"></div>
+ <div class="field"><label>Wage Amount *</label><input name="amount" type="number" min=".01" step=".01" required></div>
+ <div class="field"><label>Currency</label><select name="currency">${currencyOptions()}</select></div>
+ <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
+ <div class="field"><label>Date</label><input name="date" type="date" value="${today()}"></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ <div class="field full"><button class="btn">＋ Save Wage</button></div></form></div>`;
 }
-document.getElementById('userForm').addEventListener('submit',async e=>{
- e.preventDefault();let f=e.target,d=Object.fromEntries(new FormData(f).entries());
- let id=d.id||uid();if(db.users.some(u=>u.uid.toLowerCase()===d.uid.toLowerCase()&&u.id!==id)){toast('This User ID already exists');return}
- let old=db.users.find(u=>u.id===id),picture=old?.picture||'';
- let file=f.elements.picture.files[0];
- if(file){if(file.size>500000){toast('Please use an image smaller than 500 KB');return}picture=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
- let user={...old,...d,id,picture,status:d.status||'Active'};
- if(old)db.users=db.users.map(u=>u.id===id?user:u);else db.users.push(user);
- log(old?'Edited user':'Added user',user.name+' ('+user.uid+')');save();resetUserForm();toast('User saved successfully');go('users');
-});
-function deleteUser(id){let u=db.users.find(x=>x.id===id);if(!u||!confirm('Move this user to Deleted Users?'))return;db.users=db.users.filter(x=>x.id!==id);db.deletedUsers.push({...u,deletedAt:today()});log('Deleted user',u.name);save();renderAll();toast('User moved to Deleted Users')}
-function restoreUser(id){let u=db.deletedUsers.find(x=>x.id===id);if(!u)return;db.deletedUsers=db.deletedUsers.filter(x=>x.id!==id);delete u.deletedAt;db.users.push(u);log('Restored user',u.name);save();renderAll();toast('User restored')}
-function permanentDelete(id){if(!confirm('Permanently delete this user?'))return;db.deletedUsers=db.deletedUsers.filter(x=>x.id!==id);save();renderAll()}
-function renderDeleted(){document.getElementById('deletedTable').innerHTML=table(['Name','User ID','Deleted Date','Actions'],db.deletedUsers.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.uid)}</td><td>${esc(u.deletedAt||'-')}</td><td><div class="actions"><button class="btn small success" onclick="restoreUser('${u.id}')">Restore</button><button class="btn small danger" onclick="permanentDelete('${u.id}')">Delete Forever</button></div></td></tr>`))}
-function showProfile(id){
- let u=db.users.find(x=>x.id===id);if(!u)return;
- let userPays=db.payments.filter(p=>p.userId===id),total={};
- userPays.forEach(p=>total[p.currency]=(total[p.currency]||0)+netPayment(p));
- let totalHtml=Object.keys(total).map(c=>`<div>${esc(c)}: <b>${money(total[c],c)}</b></div>`).join('')||'No payments yet';
- document.getElementById('profileContent').innerHTML=`<div class="profile-card"><img class="avatar" src="${u.picture||''}" onerror="this.style.display='none'" alt=""><div class="profile-info"><h3>${esc(u.name)}</h3><p>User ID: ${esc(u.uid)}</p><p>${esc(u.phone||'No phone')} · ${esc(u.area||'No area')}</p><span class="badge">${esc(u.status)}</span></div></div><h4>Payment Summary</h4>${totalHtml}<div style="margin-top:15px"><button class="btn" onclick="closeProfile();go('payment');document.getElementById('paymentUser').value='${id}'">Make Payment</button></div>`;
- document.getElementById('profileModal').classList.add('open');
+function submitWage(e){
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ d.id=uid();d.amount=Number(d.amount);d.undone=0;d.createdAt=new Date().toISOString();
+ db.wages.unshift(d);save();alert('Wage added successfully.');
 }
-function closeProfile(){document.getElementById('profileModal').classList.remove('open')}
-function refreshSelects(){
- let users=db.users.map(u=>`<option value="${u.id}">${esc(u.name)} (${esc(u.uid)})</option>`).join('');
- document.getElementById('paymentUser').innerHTML='<option value="">Select User</option>'+users;
- let payOpts=db.payments.filter(p=>netPayment(p)>0).map(p=>`<option value="${p.id}">${esc(userName(p.userId))} — ${money(netPayment(p),p.currency)} (${esc(p.date)})</option>`).join('');
- document.getElementById('undoPaymentSelect').innerHTML='<option value="">Select Payment</option>'+payOpts;
- let wageOpts=db.wages.filter(w=>netWage(w)>0).map(w=>`<option value="${w.id}">${esc(w.company)} — ${money(netWage(w),w.currency)} (${esc(w.date)})</option>`).join('');
- document.getElementById('undoWageSelect').innerHTML='<option value="">Select Wage</option>'+wageOpts;
+function paymentPage(){
+ return `<div class="panel"><h3>Make Payment</h3>${db.users.length?`
+ <form class="form-grid" onsubmit="submitPayment(event)">
+ <div class="field full"><label>Select User *</label><select name="userId" required><option value="">Choose user</option>${userOptions()}</select></div>
+ <div class="field"><label>Payment Amount *</label><input name="amount" type="number" min=".01" step=".01" required></div>
+ <div class="field"><label>Currency</label><select name="currency">${currencyOptions()}</select></div>
+ <div class="field"><label>Payment Method</label><select name="method"><option>Cash</option><option>Bkash</option><option>Nagad</option><option>Bank</option><option>Other</option></select></div>
+ <div class="field"><label>Date</label><input name="date" type="date" value="${today()}"></div>
+ <div class="field full"><label>Comment</label><textarea name="comment"></textarea></div>
+ <div class="field full"><button class="btn">Confirm Payment</button></div></form>`:'<div class="empty">আগে User Add করুন। <button class="btn" onclick="go(\'adduser\')">Add User</button></div>'}</div>`;
 }
-function dateDefault(){document.querySelectorAll('input[type=date]').forEach(x=>{if(!x.value)x.value=today()})}
-document.getElementById('wageForm').addEventListener('submit',e=>{
- e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),amount=Number(d.amount);
- if(!(amount>0)){toast('Enter a valid amount');return}
- db.wages.unshift({...d,id:uid(),amount});log('Added wage',money(amount,d.currency)+' from '+d.company);save();e.target.reset();dateDefault();toast('Wage added. Company balance increased.');renderAll();go('dashboard');
-});
-document.getElementById('paymentForm').addEventListener('submit',e=>{
- e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),amount=Number(d.amount);
- if(!d.userId||!(amount>0)){toast('Enter payment details');return}
- let w=wallet(d.currency);
- if(amount>w.balance+0.000001){toast('Insufficient company balance. Available: '+money(w.balance,d.currency));return}
- db.payments.unshift({...d,id:uid(),amount});log('Made payment',userName(d.userId)+' — '+money(amount,d.currency));save();e.target.reset();dateDefault();toast('Payment successful. Wallet balance reduced.');renderAll();go('dashboard');
-});
-document.getElementById('undoPaymentForm').addEventListener('submit',e=>{
- e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),p=db.payments.find(x=>x.id===d.paymentId),amount=Number(d.amount);
- if(!p||!(amount>0)){toast('Select a valid payment');return}
- let remaining=netPayment(p);
- if(amount>remaining+0.000001){toast('Undo amount is greater than remaining payment');return}
- db.undoPayments.unshift({...d,id:uid(),amount,date:today(),currency:p.currency,userId:p.userId});
- log('Undo payment',userName(p.userId)+' — '+money(amount,p.currency));save();e.target.reset();toast('Payment reversed. Money returned to wallet.');renderAll();go('dashboard');
-});
-document.getElementById('undoWageForm').addEventListener('submit',e=>{
- e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),w=db.wages.find(x=>x.id===d.wageId),amount=Number(d.amount);
- if(!w||!(amount>0)){toast('Select a valid wage');return}
- if(amount>netWage(w)+0.000001){toast('Undo amount exceeds remaining wage');return}
- let available=wallet(w.currency).balance;
- if(amount>available+0.000001){toast('Cannot undo wage: insufficient available wallet balance');return}
- db.undoWages.unshift({...d,id:uid(),amount,date:today(),currency:w.currency});
- log('Undo wage',w.company+' — '+money(amount,w.currency));save();e.target.reset();toast('Wage reversed. Wallet balance reduced.');renderAll();go('dashboard');
-});
-function renderHistory(){
- let q=(document.getElementById('paymentSearch')?.value||'').toLowerCase();
- document.getElementById('paymentTable').innerHTML=table(['Date','User','User ID','Amount','Currency','Method','Comment','Remaining','Undo'],db.payments.filter(p=>(userName(p.userId)+' '+userId(p.userId)+' '+p.comment).toLowerCase().includes(q)).map(p=>`<tr><td>${esc(p.date)}</td><td>${esc(userName(p.userId))}</td><td>${esc(userId(p.userId))}</td><td>${money(p.amount,p.currency)}</td><td>${esc(p.currency)}</td><td>${esc(p.method)}</td><td>${esc(p.comment||'-')}</td><td>${money(netPayment(p),p.currency)}</td><td><button class="btn small secondary" onclick="go('undopayment');document.getElementById('undoPaymentSelect').value='${p.id}'">Undo</button></td></tr>`));
+function submitPayment(e){
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ d.id=uid();d.amount=Number(d.amount);d.undone=0;d.createdAt=new Date().toISOString();
+ db.payments.unshift(d);logUser(d.userId,'Payment: '+money(d.amount,d.currency));save();alert('Payment saved successfully.');
 }
-function renderWageHistory(){
- document.getElementById('wageTable').innerHTML=table(['Date','Company','Amount','Currency','Method','Comment','Remaining','Undo'],db.wages.map(w=>`<tr><td>${esc(w.date)}</td><td>${esc(w.company)}</td><td>${money(w.amount,w.currency)}</td><td>${esc(w.currency)}</td><td>${esc(w.method)}</td><td>${esc(w.comment||'-')}</td><td>${money(netWage(w),w.currency)}</td><td><button class="btn small secondary" onclick="go('undowage');document.getElementById('undoWageSelect').value='${w.id}'">Undo</button></td></tr>`));
+
+function paymentTable(items){
+ return `<div class="table-wrap"><table><thead><tr><th>User</th><th>Amount</th><th>Currency</th><th>Method</th><th>Date</th><th>Remaining</th><th>Comment</th></tr></thead><tbody>
+ ${items.map(p=>`<tr><td>${userCell(getUser(p.userId))}</td><td>${money(p.amount,p.currency)}</td><td>${esc(p.currency)}</td><td>${esc(p.method)}</td><td>${esc(p.date)}</td><td>${money(netPayment(p),p.currency)}</td><td>${esc(p.comment||'-')}</td></tr>`).join('')||emptyRow(7,'No payment records found')}
+ </tbody></table></div>`;
 }
-function renderMonth(){
- let c=document.getElementById('walletCurrency')?.value||'BDT';
- let wages=db.wages.filter(x=>x.currency===c&&currentMonth(x)).reduce((a,x)=>a+netWage(x),0);
- let paid=db.payments.filter(x=>x.currency===c&&currentMonth(x)).reduce((a,x)=>a+netPayment(x),0);
- let paidUsers=monthPaidUsers(),unpaid=monthUnpaidUsers();
- document.getElementById('monthLabel').textContent=new Date().toLocaleString(undefined,{month:'long',year:'numeric'})+' · '+c;
- document.getElementById('monthContent').innerHTML=`
- <div class="card-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:20px">
- <div class="stat-card"><div class="stat-label">Month Wage</div><div class="stat-value">${money(wages,c)}</div></div>
- <div class="stat-card"><div class="stat-label">Month Payment</div><div class="stat-value">${money(paid,c)}</div></div>
- <div class="stat-card"><div class="stat-label">Month Earn</div><div class="stat-value">${money(wages-paid,c)}</div></div></div>
- <h3>Payment Users (${paidUsers.length})</h3>${table(['Name','User ID','Status'],paidUsers.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.uid)}</td><td><span class="badge">Paid</span></td></tr>`))}
- <h3 style="margin-top:25px">Non Payment Users (${unpaid.length})</h3>${table(['Name','User ID','Status'],unpaid.map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.uid)}</td><td><span class="badge red">Not Paid</span></td></tr>`))}`;
+function wageTable(items){
+ return `<div class="table-wrap"><table><thead><tr><th>Company</th><th>Wage Type</th><th>Amount</th><th>Currency</th><th>Method</th><th>Date</th><th>Remaining</th><th>Comment</th></tr></thead><tbody>
+ ${items.map(w=>`<tr><td><b>${esc(w.company)}</b></td><td>${esc(w.type||'-')}</td><td>${money(w.amount,w.currency)}</td><td>${esc(w.currency)}</td><td>${esc(w.method)}</td><td>${esc(w.date)}</td><td>${money(netWage(w),w.currency)}</td><td>${esc(w.comment||'-')}</td></tr>`).join('')||emptyRow(8,'No wage records found')}
+ </tbody></table></div>`;
 }
-function renderReport(){
- let from=document.getElementById('reportFrom').value,to=document.getElementById('reportTo').value,c=document.getElementById('reportCurrency').value;
- if(!from||!to||from>to){toast('Select a valid date range');return}
- let wages=db.wages.filter(x=>x.currency===c&&x.date>=from&&x.date<=to),pays=db.payments.filter(x=>x.currency===c&&x.date>=from&&x.date<=to);
- let w=sum(wages.map(x=>({amount:netWage(x)}))),p=sum(pays.map(x=>({amount:netPayment(x)})));
- document.getElementById('reportContent').innerHTML=`<h3>Report: ${esc(from)} to ${esc(to)}</h3><div class="card-grid" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:15px 0"><div class="stat-card"><div class="stat-label">Total Wage</div><div class="stat-value">${money(w,c)}</div></div><div class="stat-card"><div class="stat-label">Total Payment</div><div class="stat-value">${money(p,c)}</div></div><div class="stat-card"><div class="stat-label">Net Earn</div><div class="stat-value">${money(w-p,c)}</div></div></div>
- <h3>Wage Records</h3>${table(['Date','Company','Amount','Method'],wages.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.company)}</td><td>${money(netWage(x),c)}</td><td>${esc(x.method)}</td></tr>`))}
- <h3 style="margin-top:20px">Payment Records</h3>${table(['Date','User','User ID','Amount','Method'],pays.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(userName(x.userId))}</td><td>${esc(userId(x.userId))}</td><td>${money(netPayment(x),c)}</td><td>${esc(x.method)}</td></tr>`))}`;
+function historyPage(){
+ return `<div class="panel"><div class="between"><h3>Payment History (${db.payments.length})</h3><button class="btn secondary small" onclick="exportCSV('payments')">Export CSV</button></div>
+ <div class="toolbar"><input id="paymentSearch" placeholder="Search user..." oninput="filterHistory()"></div>
+ <div id="paymentResults">${paymentTable(db.payments)}</div></div>`;
 }
-function renderLogs(){document.getElementById('logTable').innerHTML=table(['Date','Action','Details'],db.logs.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.action)}</td><td>${esc(x.details)}</td></tr>`))}
-document.getElementById('currencyForm').addEventListener('submit',e=>{
- e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),id=d.id||d.code.toUpperCase();
- d.code=d.code.toUpperCase();
- if(db.currencies.some(c=>c.code===d.code&&c.id!==id)){toast('Currency code already exists');return}
- let old=db.currencies.find(c=>c.id===id);
- if(old)db.currencies=db.currencies.map(c=>c.id===id?{...d,id}:c);else db.currencies.push({...d,id});
- save();e.target.reset();renderAll();toast('Currency saved');
-});
-function editCurrency(id){let c=db.currencies.find(x=>x.id===id);if(!c)return;let f=document.getElementById('currencyForm');f.elements.id.value=c.id;f.elements.name.value=c.name;f.elements.code.value=c.code;f.elements.symbol.value=c.symbol;window.scrollTo(0,0)}
-function deleteCurrency(id){
- if(db.currencies.length<=1){toast('At least one currency is required');return}
- let code=db.currencies.find(c=>c.id===id)?.code;
- if(db.wages.some(x=>x.currency===code)||db.payments.some(x=>x.currency===code)){toast('Currency has transaction history and cannot be deleted');return}
- if(!confirm('Delete this currency?'))return;db.currencies=db.currencies.filter(c=>c.id!==id);save();renderAll()
+function filterHistory(){
+ const q=document.getElementById('paymentSearch').value.toLowerCase();
+ const items=db.payments.filter(p=>{const u=getUser(p.userId);return (u?.name+' '+u?.userId+' '+p.method+' '+p.date).toLowerCase().includes(q)});
+ document.getElementById('paymentResults').innerHTML=paymentTable(items);
 }
-function renderCurrencies(){document.getElementById('currencyTable').innerHTML=table(['Name','Code','Symbol','Actions'],db.currencies.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.code)}</td><td>${esc(c.symbol)}</td><td><div class="actions"><button class="btn small" onclick="editCurrency('${c.id}')">Edit</button><button class="btn small danger" onclick="deleteCurrency('${c.id}')">Delete</button></div></td></tr>`))}
-function renderAll(){
- theme();renderCurrencyOptions();renderWallet();renderCards();renderCardSettings();refreshSelects();
- renderUsers();renderDeleted();renderHistory();renderWageHistory();renderMonth();renderLogs();renderCurrencies();
+function wageHistoryPage(){
+ return `<div class="panel"><div class="between"><h3>Wage History (${db.wages.length})</h3><button class="btn secondary small" onclick="exportCSV('wages')">Export CSV</button></div>${wageTable(db.wages)}</div>`;
 }
-function backupData(){
- let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download='company-wage-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url);toast('Backup downloaded');
+function userLogPage(){
+ return `<div class="panel"><h3>User Activity Log</h3><div class="table-wrap"><table><thead><tr><th>User</th><th>Activity</th><th>Date & Time</th></tr></thead><tbody>
+ ${db.userLogs.map(l=>`<tr><td>${userCell(getUser(l.userId))}</td><td>${esc(l.action)}</td><td>${new Date(l.date).toLocaleString()}</td></tr>`).join('')||emptyRow(3,'No user activity yet')}
+ </tbody></table></div></div>`;
 }
-function restoreData(event){
- let file=event.target.files[0];if(!file)return;let reader=new FileReader();
- reader.onload=()=>{try{let data=JSON.parse(reader.result);if(!data.users||!data.wages||!data.payments||!data.currencies)throw Error();if(!confirm('Replace current data with this backup?'))return;db={...defaultDB(),...data};save();renderAll();toast('Backup restored successfully')}catch(e){toast('Invalid backup file')}event.target.value=''};
- reader.readAsText(file);
+function deletedPage(){
+ return `<div class="panel"><h3>Deleted Users (${db.deletedUsers.length})</h3><div class="table-wrap"><table><thead><tr><th>User</th><th>Phone</th><th>Deleted At</th><th>Action</th></tr></thead><tbody>
+ ${db.deletedUsers.map(u=>`<tr><td>${userCell(u)}</td><td>${esc(u.phone||'-')}</td><td>${new Date(u.deletedAt).toLocaleString()}</td><td><button class="btn small" onclick="restoreUser('${u.id}')">Restore</button></td></tr>`).join('')||emptyRow(4,'No deleted users')}
+ </tbody></table></div></div>`;
 }
-function clearAllData(){if(!confirm('Are you sure? This will permanently erase all users and financial records in this browser. Download a backup first.'))return;if(!confirm('Final confirmation: delete all data?'))return;db=defaultDB();save();renderAll();go('dashboard');toast('All data cleared')}
-dateDefault();renderAll();
+function undoPaymentPage(){
+ return `<div class="panel"><h3>Undo Payment</h3><form class="form-grid" onsubmit="submitUndoPayment(event)">
+ <div class="field full"><label>Select Payment *</label><select name="paymentId" required><option value="">Choose payment record</option>
+ ${db.payments.filter(p=>netPayment(p)>0).map(p=>`<option value="${p.id}">${esc(getUser(p.userId)?.name||'Unknown User')} — ${money(netPayment(p),p.currency)} — ${esc(p.date)}</option>`).join('')}</select></div>
+ <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min=".01" step=".01" required></div>
+ <div class="field"><label>Comment</label><input name="comment"></div>
+ <div class="field full"><button class="btn">Confirm Undo Payment</button></div></form></div>`;
+}
+function submitUndoPayment(e){
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ const p=db.payments.find(x=>x.id===d.paymentId),a=Number(d.amount);
+ if(!p||a<=0||a>netPayment(p)){alert('Undo amount remaining payment-এর চেয়ে বেশি হতে পারবে না।');return}
+ p.undone=Number(p.undone||0)+a;
+ p.undoNotes=p.undoNotes||[];p.undoNotes.push({amount:a,comment:d.comment,date:new Date().toISOString()});
+ logUser(p.userId,'Undo payment: '+money(a,p.currency));save();alert('Payment undo successful.');
+}
+function undoWagePage(){
+ return `<div class="panel"><h3>Undo Wage</h3><form class="form-grid" onsubmit="submitUndoWage(event)">
+ <div class="field full"><label>Select Wage *</label><select name="wageId" required><option value="">Choose wage record</option>
+ ${db.wages.filter(w=>netWage(w)>0).map(w=>`<option value="${w.id}">${esc(w.company)} — ${money(netWage(w),w.currency)} — ${esc(w.date)}</option>`).join('')}</select></div>
+ <div class="field"><label>Undo Amount *</label><input name="amount" type="number" min=".01" step=".01" required></div>
+ <div class="field"><label>Comment</label><input name="comment"></div>
+ <div class="field full"><button class="btn">Confirm Undo Wage</button></div></form></div>`;
+}
+function submitUndoWage(e){
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ const w=db.wages.find(x=>x.id===d.wageId),a=Number(d.amount);
+ if(!w||a<=0||a>netWage(w)){alert('Undo amount remaining wage-এর চেয়ে বেশি হতে পারবে না।');return}
+ if(a>wallet(w.currency).balance){alert('Wallet balance-এর চেয়ে বেশি wage undo করা যাবে না।');return}
+ w.undone=Number(w.undone||0)+a;
+ w.undoNotes=w.undoNotes||[];w.undoNotes.push({amount:a,comment:d.comment,date:new Date().toISOString()});
+ save();alert('Wage undo successful.');
+}
+
+function userListTable(items,paid){
+ return `<div class="table-wrap"><table><thead><tr><th>User</th><th>Phone</th><th>Area</th><th>Status</th></tr></thead><tbody>
+ ${items.map(u=>`<tr><td>${userCell(u)}</td><td>${esc(u.phone||'-')}</td><td>${esc(u.area||'-')}</td><td><span class="pill ${paid?'':'orange'}">${paid?'Paid':'Not Paid'}</span></td></tr>`).join('')||emptyRow(4,'No users found')}
+ </tbody></table></div>`;
+}
+function monthlyPage(){
+ const wages=db.wages.filter(isThisMonth),payments=db.payments.filter(isThisMonth);
+ return `<div class="grid">
+ <div class="stat"><div class="stat-label">Current Month Wage</div><div class="stat-value">${money(total(wages,netWage),'BDT')}</div></div>
+ <div class="stat"><div class="stat-label">Current Month Payment</div><div class="stat-value">${money(total(payments,netPayment),'BDT')}</div></div>
+ <div class="stat"><div class="stat-label">Current Month Earn</div><div class="stat-value">${money(total(wages,netWage)-total(payments,netPayment),'BDT')}</div></div>
+ <div class="stat"><div class="stat-label">Payment Users</div><div class="stat-value">${paidUsers().length}</div></div></div>
+ <div class="panel"><h3>Current Month Paid Users</h3>${userListTable(paidUsers(),true)}</div>
+ <div class="panel"><h3>Current Month Non-Payment Users</h3>${userListTable(unpaidUsers(),false)}</div>`;
+}
+function reportPage(){
+ return `<div class="panel"><h3>Financial Report</h3><div class="toolbar">
+ <label class="smalltext">From <input type="date" id="reportFrom"></label>
+ <label class="smalltext">To <input type="date" id="reportTo"></label>
+ <button class="btn" onclick="runReport()">Generate</button><button class="btn secondary" onclick="exportCSV('all')">Export CSV</button>
+ </div><div id="reportResult"><p class="muted">Select date range and Generate.</p></div></div>`;
+}
+function runReport(){
+ const from=document.getElementById('reportFrom').value,to=document.getElementById('reportTo').value;
+ const ws=db.wages.filter(w=>(!from||w.date>=from)&&(!to||w.date<=to));
+ const ps=db.payments.filter(p=>(!from||p.date>=from)&&(!to||p.date<=to));
+ document.getElementById('reportResult').innerHTML=`
+ <div class="grid">
+ <div class="stat"><div class="stat-label">Wage Records</div><div class="stat-value">${ws.length}</div></div>
+ <div class="stat"><div class="stat-label">Payment Records</div><div class="stat-value">${ps.length}</div></div>
+ <div class="stat"><div class="stat-label">BDT Wage Total</div><div class="stat-value">${money(total(ws.filter(x=>x.currency==='BDT'),netWage),'BDT')}</div></div>
+ <div class="stat"><div class="stat-label">BDT Payment Total</div><div class="stat-value">${money(total(ps.filter(x=>x.currency==='BDT'),netPayment),'BDT')}</div></div></div>
+ <h3>Payment Records</h3>${paymentTable(ps)}<h3 style="margin-top:18px">Wage Records</h3>${wageTable(ws)}`;
+}
+function currencyPage(){
+ return `<div class="panel"><h3>Add Currency</h3><form class="form-grid" onsubmit="addCurrency(event)">
+ <div class="field"><label>Currency Code *</label><input name="code" required placeholder="BDT / USD"></div>
+ <div class="field"><label>Currency Name *</label><input name="name" required placeholder="Currency name"></div>
+ <div class="field"><label>Currency Symbol *</label><input name="symbol" required placeholder="৳ / $"></div>
+ <div class="field actions"><button class="btn">Add Currency</button></div></form></div>
+ <div class="panel"><h3>Currency List</h3><div class="table-wrap"><table><thead><tr><th>Code</th><th>Name</th><th>Symbol</th><th>Actions</th></tr></thead><tbody>
+ ${db.currencies.map(c=>`<tr><td>${esc(c.code)}</td><td>${esc(c.name)}</td><td>${esc(c.symbol)}</td><td><button class="btn secondary small" onclick="editCurrency('${c.code}')">Edit</button> <button class="btn danger small" onclick="removeCurrency('${c.code}')">Delete</button></td></tr>`).join('')}
+ </tbody></table></div></div>`;
+}
+function addCurrency(e){
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));d.code=d.code.trim().toUpperCase();
+ if(db.currencies.some(c=>c.code===d.code)){alert('Currency already exists.');return}
+ db.currencies.push(d);save();
+}
+function editCurrency(code){
+ const c=currency(code),name=prompt('Currency Name',c.name);if(name===null)return;
+ const symbol=prompt('Currency Symbol',c.symbol);if(symbol===null)return;
+ c.name=name;c.symbol=symbol;save();
+}
+function removeCurrency(code){
+ if(code==='BDT'){alert('BDT cannot be deleted.');return}
+ if(!confirm('Delete this currency?'))return;
+ db.currencies=db.currencies.filter(c=>c.code!==code);save();
+}
+function cardsPage(){
+ return `<div class="panel"><div class="between"><h3>Dashboard Card Visibility</h3><button class="btn secondary small" onclick="showAllCards()">Show All</button></div>
+ <p class="smalltext">Dashboard-এ যেসব Card দেখতে চাও সেগুলো ON রাখো।</p>
+ ${cards.map(c=>`<div class="between" style="padding:10px 0;border-bottom:1px solid var(--line)">
+ <div><b>${c[2]} ${c[1]}</b><div class="smalltext">${c[3]}</div></div>
+ <input style="width:20px" type="checkbox" ${db.hiddenCards.includes(c[0])?'':'checked'} onchange="toggleCard('${c[0]}',this.checked)">
+ </div>`).join('')}</div>`;
+}
+function toggleCard(id,show){
+ if(show)db.hiddenCards=db.hiddenCards.filter(x=>x!==id);
+ else if(!db.hiddenCards.includes(id))db.hiddenCards.push(id);
+ localStorage.setItem(KEY,JSON.stringify(db));
+}
+function showAllCards(){db.hiddenCards=[];save()}
+function backupPage(){
+ return `<div class="panel"><h3>Backup & Restore</h3>
+ <p class="muted">Users, Pictures, Wages, Payments, History এবং Settings JSON Backup-এ থাকবে।</p>
+ <div class="actions"><button class="btn" onclick="downloadBackup()">⬇ Download JSON Backup</button>
+ <label class="btn secondary">⬆ Restore JSON<input type="file" accept=".json,application/json" style="display:none" onchange="restoreBackup(event)"></label></div>
+ <p class="smalltext" style="margin-top:15px">Restore করলে বর্তমান ডেটা Backup-এর ডেটা দিয়ে Replace হবে।</p>
+ <button class="btn danger" onclick="clearAllData()">Clear All Data</button></div>`;
+}
+function downloadBackup(){
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='company-wage-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href);
+}
+function restoreBackup(e){
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const d=JSON.parse(r.result);
+   if(!Array.isArray(d.users)||!Array.isArray(d.wages)||!Array.isArray(d.payments))throw Error();
+   if(!confirm('বর্তমান ডেটা Replace করে Restore করবেন?'))return;
+   db={...structuredClone(DEFAULT),...d};save();alert('Backup restored successfully.');
+  }catch(err){alert('Invalid backup file.')}
+ };
+ r.readAsText(f);
+}
+function clearAllData(){
+ if(!confirm('সব User, Wage, Payment ও History মুছে ফেলবেন?'))return;
+ if(!confirm('শেষবার নিশ্চিত করুন।'))return;
+ db=structuredClone(DEFAULT);editingUserId=null;pendingPicture=null;save();
+}
+function exportCSV(type){
+ let rows=[],filename='export.csv';
+ if(type==='payments'){
+  rows=[['User','User ID','Amount','Currency','Method','Date','Remaining','Comment'],
+  ...db.payments.map(p=>{const u=getUser(p.userId);return [u?.name||'',u?.userId||'',p.amount,p.currency,p.method,p.date,netPayment(p),p.comment||'']})];
+  filename='payment-history.csv';
+ }else if(type==='wages'){
+  rows=[['Company','Type','Amount','Currency','Method','Date','Remaining','Comment'],
+  ...db.wages.map(w=>[w.company,w.type,w.amount,w.currency,w.method,w.date,netWage(w),w.comment||''])];
+  filename='wage-history.csv';
+ }else{
+  rows=[['Type','Name','Amount','Currency','Date','Remaining'],
+  ...db.payments.map(p=>['Payment',getUser(p.userId)?.name||'',p.amount,p.currency,p.date,netPayment(p)]),
+  ...db.wages.map(w=>['Wage',w.company,w.amount,w.currency,w.date,netWage(w)])];
+  filename='company-report.csv';
+ }
+ const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
+ a.download=filename;a.click();URL.revokeObjectURL(a.href);
+}
+
+render();
 </script>
 </body>
 </html>
